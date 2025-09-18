@@ -1,0 +1,53 @@
+import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "react-router-dom";
+
+const Navigation = () => {
+  const location = useLocation();
+
+  return (
+    <nav className="fixed top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 border-b border-border">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-lg">F</span>
+              </div>
+              <span className="font-bold text-xl text-foreground">FormulaGenie</span>
+            </Link>
+          </div>
+
+          <div className="hidden md:flex items-center space-x-8">
+            <Link 
+              to="/pricing" 
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                location.pathname === '/pricing' ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Pricing
+            </Link>
+            <Link 
+              to="/dashboard" 
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                location.pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Dashboard
+            </Link>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <Button variant="ghost" className="text-sm font-medium">
+              Sign In
+            </Button>
+            <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant">
+              Get Started
+            </Button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navigation;
