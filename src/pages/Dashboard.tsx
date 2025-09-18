@@ -148,191 +148,193 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen bg-background flex flex-col">
       <Navigation />
       
-      <div className="pt-20 pb-12 px-4 sm:px-6 lg:px-8">
-        <div className="container max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
-              <p className="text-muted-foreground">Convert formulas and plain English instantly</p>
+      <div className="flex-1 overflow-hidden">
+        <div className="h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="container max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+              <div>
+                <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
+                <p className="text-muted-foreground">Convert formulas and plain English instantly</p>
+              </div>
+              
+              <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+                <Badge variant="outline" className="flex items-center space-x-2">
+                  <Zap className="w-4 h-4" />
+                  <span>{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
+                </Badge>
+                <Badge 
+                  variant={requestsRemaining > 1 ? "default" : "destructive"} 
+                  className="flex items-center space-x-2"
+                >
+                  <span>{requestsRemaining} of {requestsLimit} requests left</span>
+                </Badge>
+              </div>
             </div>
-            
-            <div className="flex items-center space-x-4 mt-4 sm:mt-0">
-              <Badge variant="outline" className="flex items-center space-x-2">
-                <Zap className="w-4 h-4" />
-                <span>{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
-              </Badge>
-              <Badge 
-                variant={requestsRemaining > 1 ? "default" : "destructive"} 
-                className="flex items-center space-x-2"
-              >
-                <span>{requestsRemaining} of {requestsLimit} requests left</span>
-              </Badge>
-            </div>
-          </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Main Converter */}
-            <div className="lg:col-span-2">
-              <Card className="p-6 shadow-soft">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-foreground">Formula Converter</h2>
-                  <Button
-                    variant="outline"
-                    onClick={handleModeSwitch}
-                    className="flex items-center space-x-2"
-                  >
-                    <ArrowLeftRight className="w-4 h-4" />
-                    <span>Switch Mode</span>
-                  </Button>
-                </div>
-
-                <div className="space-y-6">
-                  <div>
-                    <div className="flex items-center space-x-2 mb-2">
-                      <Badge variant="secondary">
-                        {mode === "english-to-formula" ? "English → Formula" : "Formula → English"}
-                      </Badge>
-                    </div>
-                    <Textarea
-                      placeholder={
-                        mode === "english-to-formula" 
-                          ? "Describe what you want your formula to do... (e.g., 'Sum all values in column A where column B contains completed')"
-                          : "Paste your formula here... (e.g., '=SUMIF(B:B,\"completed\",A:A)')"
-                      }
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      className="min-h-[120px] resize-none"
-                    />
-                  </div>
-
-                  <div className="flex justify-center">
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* Main Converter */}
+              <div className="lg:col-span-2">
+                <Card className="p-6 shadow-soft">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-semibold text-foreground">Formula Converter</h2>
                     <Button
-                      onClick={handleProcess}
-                      disabled={!input.trim() || isProcessing || requestsRemaining === 0}
-                      className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant"
+                      variant="outline"
+                      onClick={handleModeSwitch}
+                      className="flex items-center space-x-2"
                     >
-                      {isProcessing ? (
-                        <>
-                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                          Processing...
-                        </>
-                      ) : (
-                        <>
-                          Generate {mode === "english-to-formula" ? "Formula" : "Explanation"}
-                        </>
-                      )}
+                      <ArrowLeftRight className="w-4 h-4" />
+                      <span>Switch Mode</span>
                     </Button>
                   </div>
 
-                  {output && (
+                  <div className="space-y-6">
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <label className="font-medium text-foreground">
-                          {mode === "english-to-formula" ? "Excel Formula" : "Plain English Explanation"}
-                        </label>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={copyToClipboard}
-                          className="h-8 w-8 p-0"
-                        >
-                          <Copy className="w-4 h-4" />
-                        </Button>
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Badge variant="secondary">
+                          {mode === "english-to-formula" ? "English → Formula" : "Formula → English"}
+                        </Badge>
                       </div>
-                      <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                        {output}
-                      </div>
+                      <Textarea
+                        placeholder={
+                          mode === "english-to-formula" 
+                            ? "Describe what you want your formula to do... (e.g., 'Sum all values in column A where column B contains completed')"
+                            : "Paste your formula here... (e.g., '=SUMIF(B:B,\"completed\",A:A)')"
+                        }
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        className="min-h-[120px] resize-none"
+                      />
                     </div>
-                  )}
-                </div>
-              </Card>
 
-              {requestsRemaining === 0 && (
-                <Card className="p-6 mt-6 border-destructive/20 bg-destructive/5">
-                  <div className="text-center">
-                    <h3 className="font-semibold text-foreground mb-2">Daily Limit Reached</h3>
-                    <p className="text-muted-foreground mb-4">
-                      You've used all your free requests for today. Upgrade to Pro for unlimited access.
-                    </p>
-                    <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90">
-                      Upgrade to Pro
-                    </Button>
+                    <div className="flex justify-center">
+                      <Button
+                        onClick={handleProcess}
+                        disabled={!input.trim() || isProcessing || requestsRemaining === 0}
+                        className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant"
+                      >
+                        {isProcessing ? (
+                          <>
+                            <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                            Processing...
+                          </>
+                        ) : (
+                          <>
+                            Generate {mode === "english-to-formula" ? "Formula" : "Explanation"}
+                          </>
+                        )}
+                      </Button>
+                    </div>
+
+                    {output && (
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="font-medium text-foreground">
+                            {mode === "english-to-formula" ? "Excel Formula" : "Plain English Explanation"}
+                          </label>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={copyToClipboard}
+                            className="h-8 w-8 p-0"
+                          >
+                            <Copy className="w-4 h-4" />
+                          </Button>
+                        </div>
+                        <div className="bg-muted p-4 rounded-lg font-mono text-sm">
+                          {output}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Card>
-              )}
-            </div>
 
-            {/* Sidebar */}
-            <div className="space-y-6">
-              {/* Usage Stats */}
-              <Card className="p-6">
-                <h3 className="font-semibold text-foreground mb-4">Today's Usage</h3>
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-muted-foreground">Requests Used</span>
-                      <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
+                {requestsRemaining === 0 && (
+                  <Card className="p-6 mt-6 border-destructive/20 bg-destructive/5">
+                    <div className="text-center">
+                      <h3 className="font-semibold text-foreground mb-2">Daily Limit Reached</h3>
+                      <p className="text-muted-foreground mb-4">
+                        You've used all your free requests for today. Upgrade to Pro for unlimited access.
+                      </p>
+                      <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90">
+                        Upgrade to Pro
+                      </Button>
                     </div>
-                    <div className="w-full bg-secondary rounded-full h-2">
-                      <div 
-                        className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${(requestsUsed / requestsLimit) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  
-                  <div className="pt-2 border-t">
-                    <p className="text-xs text-muted-foreground">
-                      Usage resets daily at midnight UTC
-                    </p>
-                  </div>
-                </div>
-              </Card>
+                  </Card>
+                )}
+              </div>
 
-              {/* Recent History */}
-              <Card className="p-6">
-                <h3 className="font-semibold text-foreground mb-4">Recent History</h3>
-                <div className="space-y-4">
-                  {recentHistory.length > 0 ? (
-                    recentHistory.map((item, index) => (
-                      <div key={index} className="border-b pb-3 last:border-b-0">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <Badge variant="outline" className="text-xs">
-                            {item.type === "english-to-formula" ? "E→F" : "F→E"}
-                          </Badge>
-                          <div className="flex items-center text-xs text-muted-foreground">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {formatTimestamp(item.timestamp)}
-                          </div>
-                        </div>
-                        <p className="text-sm text-foreground truncate">{item.input}</p>
-                        <p className="text-xs text-muted-foreground mt-1 font-mono truncate">
-                          {item.output}
-                        </p>
+              {/* Sidebar */}
+              <div className="space-y-6">
+                {/* Usage Stats */}
+                <Card className="p-6">
+                  <h3 className="font-semibold text-foreground mb-4">Today's Usage</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span className="text-muted-foreground">Requests Used</span>
+                        <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
                       </div>
-                    ))
-                  ) : (
-                    <p className="text-sm text-muted-foreground text-center py-4">
-                      No recent activity
-                    </p>
-                  )}
-                </div>
-              </Card>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div 
+                          className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${(requestsUsed / requestsLimit) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    
+                    <div className="pt-2 border-t">
+                      <p className="text-xs text-muted-foreground">
+                        Usage resets daily at midnight UTC
+                      </p>
+                    </div>
+                  </div>
+                </Card>
 
-              {/* Upgrade CTA */}
-              <Card className="p-6 bg-gradient-hero text-primary-foreground">
-                <h3 className="font-semibold mb-2">Unlock Unlimited Access</h3>
-                <p className="text-sm text-primary-foreground/90 mb-4">
-                  Upgrade to Pro for unlimited conversions and advanced features.
-                </p>
-                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">
-                  Upgrade Now
-                </Button>
-              </Card>
+                {/* Recent History */}
+                <Card className="p-6">
+                  <h3 className="font-semibold text-foreground mb-4">Recent History</h3>
+                  <div className="space-y-4 max-h-60 overflow-y-auto">
+                    {recentHistory.length > 0 ? (
+                      recentHistory.map((item, index) => (
+                        <div key={index} className="border-b pb-3 last:border-b-0">
+                          <div className="flex items-center space-x-2 mb-1">
+                            <Badge variant="outline" className="text-xs">
+                              {item.type === "english-to-formula" ? "E→F" : "F→E"}
+                            </Badge>
+                            <div className="flex items-center text-xs text-muted-foreground">
+                              <Clock className="w-3 h-3 mr-1" />
+                              {formatTimestamp(item.timestamp)}
+                            </div>
+                          </div>
+                          <p className="text-sm text-foreground truncate">{item.input}</p>
+                          <p className="text-xs text-muted-foreground mt-1 font-mono truncate">
+                            {item.output}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-muted-foreground text-center py-4">
+                        No recent activity
+                      </p>
+                    )}
+                  </div>
+                </Card>
+
+                {/* Upgrade CTA */}
+                <Card className="p-6 bg-gradient-hero text-primary-foreground">
+                  <h3 className="font-semibold mb-2">Unlock Unlimited Access</h3>
+                  <p className="text-sm text-primary-foreground/90 mb-4">
+                    Upgrade to Pro for unlimited conversions and advanced features.
+                  </p>
+                  <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">
+                    Upgrade Now
+                  </Button>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
