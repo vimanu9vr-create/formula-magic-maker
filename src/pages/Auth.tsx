@@ -34,6 +34,15 @@ const Auth = () => {
       return;
     }
 
+    if (password.length < 6) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 6 characters",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setLoading(true);
     try {
       const { error } = isSignUp ? 
@@ -49,7 +58,13 @@ const Auth = () => {
       } else if (isSignUp) {
         toast({
           title: "Success",
-          description: "Please check your email to confirm your account",
+          description: "Account created successfully! Please check your email to confirm your account.",
+        });
+        setIsSignUp(false); // Switch to sign in mode
+      } else {
+        toast({
+          title: "Success",
+          description: "Signed in successfully!",
         });
       }
     } catch (error) {
@@ -68,11 +83,20 @@ const Auth = () => {
     try {
       const { error } = await signInWithGoogle();
       if (error) {
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive"
-        });
+        // If Google OAuth is not configured, show a helpful message
+        if (error.message.includes('provider') || error.message.includes('not enabled')) {
+          toast({
+            title: "Google Sign-In Not Available",
+            description: "Google authentication is not configured. Please use email/password sign-in.",
+            variant: "destructive"
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: error.message,
+            variant: "destructive"
+          });
+        }
       }
     } catch (error) {
       toast({
