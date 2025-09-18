@@ -83,25 +83,30 @@ const Auth = () => {
     try {
       const { error } = await signInWithGoogle();
       if (error) {
-        // If Google OAuth is not configured, show a helpful message
-        if (error.message.includes('provider') || error.message.includes('not enabled')) {
+        console.log('Google OAuth Error:', error);
+        // Handle specific Google OAuth errors
+        if (error.message.includes('provider') || 
+            error.message.includes('not enabled') ||
+            error.message.includes('Invalid login credentials') ||
+            error.message.includes('validation_failed')) {
           toast({
             title: "Google Sign-In Not Available",
-            description: "Google authentication is not configured. Please use email/password sign-in.",
+            description: "Google authentication is not configured. Please use email/password or configure Google OAuth in Supabase settings.",
             variant: "destructive"
           });
         } else {
           toast({
-            title: "Error",
+            title: "Google Sign-In Error",
             description: error.message,
             variant: "destructive"
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Google OAuth catch error:', error);
       toast({
-        title: "Error",
-        description: "An unexpected error occurred",
+        title: "Google Sign-In Unavailable",
+        description: "Google authentication needs to be configured in your Supabase project settings.",
         variant: "destructive"
       });
     } finally {
@@ -169,6 +174,7 @@ const Auth = () => {
           disabled={loading}
         >
           Continue with Google
+          <span className="text-xs text-muted-foreground ml-2">(Setup Required)</span>
         </Button>
 
         <div className="text-center mt-6">
