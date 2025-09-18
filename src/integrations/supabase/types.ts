@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      formula_examples: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          difficulty: string
+          example_input: string
+          expected_output: string
+          id: string
+          is_popular: boolean
+          tags: string[] | null
+          title: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description: string
+          difficulty: string
+          example_input: string
+          expected_output: string
+          id?: string
+          is_popular?: boolean
+          tags?: string[] | null
+          title: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          difficulty?: string
+          example_input?: string
+          expected_output?: string
+          id?: string
+          is_popular?: boolean
+          tags?: string[] | null
+          title?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -70,6 +109,48 @@ export type Database = {
           output?: string
           timestamp?: string
           type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      saved_formulas: {
+        Row: {
+          created_at: string
+          description: string | null
+          formula_output: string
+          id: string
+          input_text: string
+          is_favorite: boolean
+          tags: string[] | null
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          formula_output: string
+          id?: string
+          input_text: string
+          is_favorite?: boolean
+          tags?: string[] | null
+          title: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          formula_output?: string
+          id?: string
+          input_text?: string
+          is_favorite?: boolean
+          tags?: string[] | null
+          title?: string
+          type?: string
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
