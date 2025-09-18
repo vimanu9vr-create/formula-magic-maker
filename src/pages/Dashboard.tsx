@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Copy, RefreshCw, ArrowLeftRight, Zap, Clock } from "lucide-react";
+import { Copy, RefreshCw, ArrowLeftRight, Zap, Clock, RotateCcw } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
@@ -27,6 +27,11 @@ const Dashboard = () => {
 
   const handleModeSwitch = () => {
     setMode(mode === "english-to-formula" ? "formula-to-english" : "english-to-formula");
+    setInput("");
+    setOutput("");
+  };
+
+  const handleReset = () => {
     setInput("");
     setOutput("");
   };
@@ -180,14 +185,24 @@ const Dashboard = () => {
               <Card className="p-6 shadow-soft">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-semibold text-foreground">Formula Converter</h2>
-                  <Button
-                    variant="outline"
-                    onClick={handleModeSwitch}
-                    className="flex items-center space-x-2"
-                  >
-                    <ArrowLeftRight className="w-4 h-4" />
-                    <span>Switch Mode</span>
-                  </Button>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      onClick={handleReset}
+                      className="flex items-center space-x-2"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                      <span>Reset</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={handleModeSwitch}
+                      className="flex items-center space-x-2"
+                    >
+                      <ArrowLeftRight className="w-4 h-4" />
+                      <span>Switch Mode</span>
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="space-y-6">
