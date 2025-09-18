@@ -4,19 +4,26 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Copy, RefreshCw, ArrowLeftRight, Zap, Clock } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
   const [mode, setMode] = useState<"english-to-formula" | "formula-to-english">("english-to-formula");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [recentHistory, setRecentHistory] = useState<any[]>([]);
   
-  // Mock user data - in real app this would come from Supabase
-  const userPlan = "Free";
-  const requestsUsed = 3;
-  const requestsLimit = 5;
-  const requestsRemaining = requestsLimit - requestsUsed;
+  const { user, session } = useAuth();
+  const { profile, loading: profileLoading, refreshProfile } = useProfile();
+  const { toast } = useToast();
+  
+  const requestsLimit = profile?.plan === 'free' ? 5 : Infinity;
+  const requestsUsed = profile?.usage_count || 0;
+  const requestsRemaining = Math.max(0, requestsLimit - requestsUsed);
 
   const handleModeSwitch = () => {
     setMode(mode === "english-to-formula" ? "formula-to-english" : "english-to-formula");
@@ -25,45 +32,120 @@ const Dashboard = () => {
   };
 
   const handleProcess = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || !session) return;
     
     setIsProcessing(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      if (mode === "english-to-formula") {
-        setOutput("=SUMIF(B:B,\"completed\",A:A)");
-      } else {
-        setOutput("This formula sums all values in column A where the corresponding cell in column B contains the text 'completed'.");
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-formula', {
+        body: {
+          input: input.trim(),
+          type: mode
+        }
+      });
+
+      if (error) {
+        throw error;
       }
+
+      if (data.error) {
+        toast({
+          title: "Error",
+          description: data.message || data.error,
+          variant: "destructive"
+        });
+        return;
+      }
+
+      setOutput(data.output);
+      refreshProfile();
+      fetchRecentHistory();
+      
+      toast({
+        title: "Success",
+        description: `${mode === "english-to-formula" ? "Formula" : "Explanation"} generated successfully!`
+      });
+
+    } catch (error: any) {
+      console.error('Error:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to process request",
+        variant: "destructive"
+      });
+    } finally {
       setIsProcessing(false);
-    }, 1500);
-  };
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
-  };
-
-  const recentHistory = [
-    {
-      input: "Sum values where status is complete",
-      output: "=SUMIF(B:B,\"complete\",A:A)",
-      timestamp: "2 hours ago",
-      type: "english-to-formula"
-    },
-    {
-      input: "=VLOOKUP(A2,Table1,2,FALSE)",
-      output: "Looks up the value in A2 within Table1 and returns the corresponding value from the 2nd column",
-      timestamp: "1 day ago", 
-      type: "formula-to-english"
-    },
-    {
-      input: "Count cells that are not empty",
-      output: "=COUNTA(A:A)",
-      timestamp: "2 days ago",
-      type: "english-to-formula"
     }
-  ];
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(output);
+      toast({
+        title: "Copied!",
+        description: "Output copied to clipboard"
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to copy to clipboard",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const fetchRecentHistory = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('requests')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('timestamp', { ascending: false })
+        .limit(5);
+
+      if (error) {
+        console.error('Error fetching history:', error);
+      } else {
+        setRecentHistory(data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching history:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchRecentHistory();
+    }
+  }, [user]);
+
+  const formatTimestamp = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    
+    if (diffInHours < 1) return 'Just now';
+    if (diffInHours < 24) return `${diffInHours} hours ago`;
+    
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays === 1) return '1 day ago';
+    if (diffInDays < 7) return `${diffInDays} days ago`;
+    
+    return date.toLocaleDateString();
+  };
+
+  if (profileLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -81,7 +163,7 @@ const Dashboard = () => {
             <div className="flex items-center space-x-4 mt-4 sm:mt-0">
               <Badge variant="outline" className="flex items-center space-x-2">
                 <Zap className="w-4 h-4" />
-                <span>{userPlan} Plan</span>
+                <span>{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
               </Badge>
               <Badge 
                 variant={requestsRemaining > 1 ? "default" : "destructive"} 
@@ -215,23 +297,29 @@ const Dashboard = () => {
               <Card className="p-6">
                 <h3 className="font-semibold text-foreground mb-4">Recent History</h3>
                 <div className="space-y-4">
-                  {recentHistory.map((item, index) => (
-                    <div key={index} className="border-b pb-3 last:border-b-0">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <Badge variant="outline" className="text-xs">
-                          {item.type === "english-to-formula" ? "E→F" : "F→E"}
-                        </Badge>
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {item.timestamp}
+                  {recentHistory.length > 0 ? (
+                    recentHistory.map((item, index) => (
+                      <div key={index} className="border-b pb-3 last:border-b-0">
+                        <div className="flex items-center space-x-2 mb-1">
+                          <Badge variant="outline" className="text-xs">
+                            {item.type === "english-to-formula" ? "E→F" : "F→E"}
+                          </Badge>
+                          <div className="flex items-center text-xs text-muted-foreground">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {formatTimestamp(item.timestamp)}
+                          </div>
                         </div>
+                        <p className="text-sm text-foreground truncate">{item.input}</p>
+                        <p className="text-xs text-muted-foreground mt-1 font-mono truncate">
+                          {item.output}
+                        </p>
                       </div>
-                      <p className="text-sm text-foreground truncate">{item.input}</p>
-                      <p className="text-xs text-muted-foreground mt-1 font-mono truncate">
-                        {item.output}
-                      </p>
-                    </div>
-                  ))}
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-4">
+                      No recent activity
+                    </p>
+                  )}
                 </div>
               </Card>
 

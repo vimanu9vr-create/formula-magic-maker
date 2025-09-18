@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Copy, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
 
 const Hero = () => {
@@ -26,9 +27,11 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant">
-              Start Free Trial
-              <ArrowRight className="ml-2 w-4 h-4" />
+            <Button size="lg" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant" asChild>
+              <Link to="/auth">
+                Start Free Trial
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
             </Button>
             <Button size="lg" variant="outline" className="border-primary/20 hover:bg-primary/5">
               Watch Demo
