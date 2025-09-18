@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
-  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english">("english-to-formula");
+  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "error-fix" | "optimize">("english-to-formula");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -25,10 +25,54 @@ const Dashboard = () => {
   const requestsUsed = profile?.usage_count || 0;
   const requestsRemaining = Math.max(0, requestsLimit - requestsUsed);
 
+  const modes = [
+    { key: "english-to-formula", label: "English → Formula", icon: "→" },
+    { key: "formula-to-english", label: "Formula → English", icon: "←" },
+    { key: "error-fix", label: "Fix Formula", icon: "🔧" },
+    { key: "optimize", label: "Optimize Formula", icon: "⚡" }
+  ];
+
+  const currentModeIndex = modes.findIndex(m => m.key === mode);
+  
   const handleModeSwitch = () => {
-    setMode(mode === "english-to-formula" ? "formula-to-english" : "english-to-formula");
+    const nextIndex = (currentModeIndex + 1) % modes.length;
+    setMode(modes[nextIndex].key as typeof mode);
     setInput("");
     setOutput("");
+  };
+
+  const getModeDisplay = () => {
+    return modes.find(m => m.key === mode)?.label || "Unknown Mode";
+  };
+
+  const getPlaceholder = () => {
+    switch (mode) {
+      case "english-to-formula":
+        return "Describe what you want your formula to do... (e.g., 'Sum all values in column A where column B contains completed')";
+      case "formula-to-english":
+        return "Paste your formula here... (e.g., '=SUMIF(B:B,\"completed\",A:A)')";
+      case "error-fix":
+        return "Paste your broken formula here and I'll fix it... (e.g., '=SUMIF(B:B,completed,A:A)')";
+      case "optimize":
+        return "Paste your formula here and I'll suggest optimizations... (e.g., '=IF(A1>0,IF(A1<100,\"Medium\",\"High\"),\"Low\")')";
+      default:
+        return "Enter your input...";
+    }
+  };
+
+  const getButtonText = () => {
+    switch (mode) {
+      case "english-to-formula":
+        return "Generate Formula";
+      case "formula-to-english":
+        return "Generate Explanation";
+      case "error-fix":
+        return "Fix Formula";
+      case "optimize":
+        return "Optimize Formula";
+      default:
+        return "Process";
+    }
   };
 
   const handleReset = () => {
@@ -205,19 +249,34 @@ const Dashboard = () => {
                   </div>
                 </div>
 
+                {/* Mode Selector */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {modes.map((modeOption) => (
+                    <Button
+                      key={modeOption.key}
+                      variant={mode === modeOption.key ? "default" : "outline"}
+                      onClick={() => {
+                        setMode(modeOption.key as typeof mode);
+                        setInput("");
+                        setOutput("");
+                      }}
+                      className="flex items-center space-x-2"
+                    >
+                      <span>{modeOption.icon}</span>
+                      <span>{modeOption.label}</span>
+                    </Button>
+                  ))}
+                </div>
+
                 <div className="space-y-6">
                   <div>
                     <div className="flex items-center space-x-2 mb-2">
                       <Badge variant="secondary">
-                        {mode === "english-to-formula" ? "English → Formula" : "Formula → English"}
+                        {getModeDisplay()}
                       </Badge>
                     </div>
                     <Textarea
-                      placeholder={
-                        mode === "english-to-formula" 
-                          ? "Describe what you want your formula to do... (e.g., 'Sum all values in column A where column B contains completed')"
-                          : "Paste your formula here... (e.g., '=SUMIF(B:B,\"completed\",A:A)')"
-                      }
+                      placeholder={getPlaceholder()}
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       className="min-h-[120px] resize-none"
@@ -237,7 +296,7 @@ const Dashboard = () => {
                         </>
                       ) : (
                         <>
-                          Generate {mode === "english-to-formula" ? "Formula" : "Explanation"}
+                          {getButtonText()}
                         </>
                       )}
                     </Button>
@@ -247,7 +306,9 @@ const Dashboard = () => {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <label className="font-medium text-foreground">
-                          {mode === "english-to-formula" ? "Excel Formula" : "Plain English Explanation"}
+                          {mode === "english-to-formula" ? "Excel Formula" : 
+                           mode === "formula-to-english" ? "Plain English Explanation" :
+                           mode === "error-fix" ? "Fixed Formula" : "Optimized Formula"}
                         </label>
                         <Button
                           size="sm"
