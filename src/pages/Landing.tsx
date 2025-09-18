@@ -3,8 +3,11 @@ import Hero from "@/components/Hero";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Landing = () => {
+  const { user } = useAuth();
   const features = [
     {
       title: "English to Formula",
@@ -133,9 +136,12 @@ const Landing = () => {
                 <Button 
                   className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant' : ''}`}
                   variant={plan.popular ? 'default' : 'outline'}
+                  asChild
                 >
-                  {plan.cta}
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                  <Link to={user ? "/dashboard" : "/auth"}>
+                    {plan.cta}
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
                 </Button>
               </Card>
             ))}
@@ -153,12 +159,14 @@ const Landing = () => {
             Join thousands of professionals who've already simplified their Excel work with FormulaGenie.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-              Start Free Trial
-              <ArrowRight className="ml-2 w-4 h-4" />
+            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90" asChild>
+              <Link to={user ? "/dashboard" : "/auth"}>
+                Start Free Trial
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white/20 text-primary-foreground hover:bg-white/10">
-              View Pricing
+            <Button size="lg" variant="outline" className="border-white/20 text-primary-foreground hover:bg-white/10" asChild>
+              <Link to="/pricing">View Pricing</Link>
             </Button>
           </div>
         </div>

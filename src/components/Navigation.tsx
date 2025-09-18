@@ -49,14 +49,24 @@ const Navigation = () => {
               Pricing
             </Link>
             {user && (
-              <Link 
-                to="/dashboard" 
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  location.pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground'
-                }`}
-              >
-                Dashboard
-              </Link>
+              <>
+                <Link 
+                  to="/dashboard" 
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    location.pathname === '/dashboard' ? 'text-primary' : 'text-muted-foreground'
+                  }`}
+                >
+                  Dashboard
+                </Link>
+                <Link 
+                  to="/account" 
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    location.pathname === '/account' ? 'text-primary' : 'text-muted-foreground'
+                  }`}
+                >
+                  Account
+                </Link>
+              </>
             )}
           </div>
 

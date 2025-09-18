@@ -2,8 +2,11 @@ import Navigation from "@/components/Navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Pricing = () => {
+  const { user } = useAuth();
   const plans = [
     {
       name: "Free",
@@ -162,9 +165,12 @@ const Pricing = () => {
                   className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant' : ''}`}
                   variant={plan.popular ? 'default' : 'outline'}
                   size="lg"
+                  asChild
                 >
-                  {plan.cta}
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                  <Link to={user ? "/dashboard" : "/auth"}>
+                    {plan.cta}
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
                 </Button>
               </Card>
             ))}
@@ -197,11 +203,11 @@ const Pricing = () => {
             Our team is here to help you choose the right plan for your needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-              Contact Sales
+            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90" asChild>
+              <Link to="/auth">Contact Sales</Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white/20 text-primary-foreground hover:bg-white/10">
-              Start Free Trial
+            <Button size="lg" variant="outline" className="border-white/20 text-primary-foreground hover:bg-white/10" asChild>
+              <Link to={user ? "/dashboard" : "/auth"}>Start Free Trial</Link>
             </Button>
           </div>
         </div>
