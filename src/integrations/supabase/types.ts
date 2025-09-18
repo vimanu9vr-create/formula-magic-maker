@@ -14,13 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          last_reset: string
+          plan: string
+          updated_at: string
+          usage_count: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          last_reset?: string
+          plan?: string
+          updated_at?: string
+          usage_count?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          last_reset?: string
+          plan?: string
+          updated_at?: string
+          usage_count?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      requests: {
+        Row: {
+          id: string
+          input: string
+          output: string
+          timestamp: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          input: string
+          output: string
+          timestamp?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          input?: string
+          output?: string
+          timestamp?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      reset_daily_usage: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
