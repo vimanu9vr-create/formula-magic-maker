@@ -175,166 +175,161 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-6">
+            <div className="space-y-6">
               {/* Main Converter */}
-              <div className="lg:col-span-2">
-                <Card className="p-6 shadow-soft">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-semibold text-foreground">Formula Converter</h2>
+              <Card className="p-6 shadow-soft">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-foreground">Formula Converter</h2>
+                  <Button
+                    variant="outline"
+                    onClick={handleModeSwitch}
+                    className="flex items-center space-x-2"
+                  >
+                    <ArrowLeftRight className="w-4 h-4" />
+                    <span>Switch Mode</span>
+                  </Button>
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Badge variant="secondary">
+                        {mode === "english-to-formula" ? "English → Formula" : "Formula → English"}
+                      </Badge>
+                    </div>
+                    <Textarea
+                      placeholder={
+                        mode === "english-to-formula" 
+                          ? "Describe what you want your formula to do... (e.g., 'Sum all values in column A where column B contains completed')"
+                          : "Paste your formula here... (e.g., '=SUMIF(B:B,\"completed\",A:A)')"
+                      }
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      className="min-h-[120px] resize-none"
+                    />
+                  </div>
+
+                  <div className="flex justify-center">
                     <Button
-                      variant="outline"
-                      onClick={handleModeSwitch}
-                      className="flex items-center space-x-2"
+                      onClick={handleProcess}
+                      disabled={!input.trim() || isProcessing || requestsRemaining === 0}
+                      className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant"
                     >
-                      <ArrowLeftRight className="w-4 h-4" />
-                      <span>Switch Mode</span>
+                      {isProcessing ? (
+                        <>
+                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          Generate {mode === "english-to-formula" ? "Formula" : "Explanation"}
+                        </>
+                      )}
                     </Button>
                   </div>
 
-                  <div className="space-y-6">
+                  {output && (
                     <div>
-                      <div className="flex items-center space-x-2 mb-2">
-                        <Badge variant="secondary">
-                          {mode === "english-to-formula" ? "English → Formula" : "Formula → English"}
-                        </Badge>
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="font-medium text-foreground">
+                          {mode === "english-to-formula" ? "Excel Formula" : "Plain English Explanation"}
+                        </label>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={copyToClipboard}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </Button>
                       </div>
-                      <Textarea
-                        placeholder={
-                          mode === "english-to-formula" 
-                            ? "Describe what you want your formula to do... (e.g., 'Sum all values in column A where column B contains completed')"
-                            : "Paste your formula here... (e.g., '=SUMIF(B:B,\"completed\",A:A)')"
-                        }
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        className="min-h-[120px] resize-none"
-                      />
-                    </div>
-
-                    <div className="flex justify-center">
-                      <Button
-                        onClick={handleProcess}
-                        disabled={!input.trim() || isProcessing || requestsRemaining === 0}
-                        className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant"
-                      >
-                        {isProcessing ? (
-                          <>
-                            <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                            Processing...
-                          </>
-                        ) : (
-                          <>
-                            Generate {mode === "english-to-formula" ? "Formula" : "Explanation"}
-                          </>
-                        )}
-                      </Button>
-                    </div>
-
-                    {output && (
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <label className="font-medium text-foreground">
-                            {mode === "english-to-formula" ? "Excel Formula" : "Plain English Explanation"}
-                          </label>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={copyToClipboard}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Copy className="w-4 h-4" />
-                          </Button>
-                        </div>
-                        <div className="bg-muted p-4 rounded-lg font-mono text-sm">
-                          {output}
-                        </div>
+                      <div className="bg-muted p-4 rounded-lg font-mono text-sm break-all">
+                        {output}
                       </div>
-                    )}
+                    </div>
+                  )}
+                </div>
+              </Card>
+
+              {requestsRemaining === 0 && (
+                <Card className="p-6 border-destructive/20 bg-destructive/5">
+                  <div className="text-center">
+                    <h3 className="font-semibold text-foreground mb-2">Daily Limit Reached</h3>
+                    <p className="text-muted-foreground mb-4">
+                      You've used all your free requests for today. Upgrade to Pro for unlimited access.
+                    </p>
+                    <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90">
+                      Upgrade to Pro
+                    </Button>
                   </div>
                 </Card>
+              )}
 
-                {requestsRemaining === 0 && (
-                  <Card className="p-6 mt-6 border-destructive/20 bg-destructive/5">
-                    <div className="text-center">
-                      <h3 className="font-semibold text-foreground mb-2">Daily Limit Reached</h3>
-                      <p className="text-muted-foreground mb-4">
-                        You've used all your free requests for today. Upgrade to Pro for unlimited access.
-                      </p>
-                      <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90">
-                        Upgrade to Pro
-                      </Button>
+              {/* Usage Stats */}
+              <Card className="p-6">
+                <h3 className="font-semibold text-foreground mb-4">Today's Usage</h3>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-muted-foreground">Requests Used</span>
+                      <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
                     </div>
-                  </Card>
-                )}
-              </div>
-
-              {/* Sidebar */}
-              <div className="space-y-6">
-                {/* Usage Stats */}
-                <Card className="p-6">
-                  <h3 className="font-semibold text-foreground mb-4">Today's Usage</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-muted-foreground">Requests Used</span>
-                        <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
-                      </div>
-                      <div className="w-full bg-secondary rounded-full h-2">
-                        <div 
-                          className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${(requestsUsed / requestsLimit) * 100}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                    
-                    <div className="pt-2 border-t">
-                      <p className="text-xs text-muted-foreground">
-                        Usage resets daily at midnight UTC
-                      </p>
+                    <div className="w-full bg-secondary rounded-full h-2">
+                      <div 
+                        className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${(requestsUsed / requestsLimit) * 100}%` }}
+                      ></div>
                     </div>
                   </div>
-                </Card>
+                  
+                  <div className="pt-2 border-t">
+                    <p className="text-xs text-muted-foreground">
+                      Usage resets daily at midnight UTC
+                    </p>
+                  </div>
+                </div>
+              </Card>
 
-                {/* Recent History */}
-                <Card className="p-6">
-                  <h3 className="font-semibold text-foreground mb-4">Recent History</h3>
-                  <div className="space-y-4 max-h-60 overflow-y-auto">
-                    {recentHistory.length > 0 ? (
-                      recentHistory.map((item, index) => (
-                        <div key={index} className="border-b pb-3 last:border-b-0">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <Badge variant="outline" className="text-xs">
-                              {item.type === "english-to-formula" ? "E→F" : "F→E"}
-                            </Badge>
-                            <div className="flex items-center text-xs text-muted-foreground">
-                              <Clock className="w-3 h-3 mr-1" />
-                              {formatTimestamp(item.timestamp)}
-                            </div>
+              {/* Recent History */}
+              <Card className="p-6">
+                <h3 className="font-semibold text-foreground mb-4">Recent History</h3>
+                <div className="space-y-4 max-h-60 overflow-y-auto">
+                  {recentHistory.length > 0 ? (
+                    recentHistory.map((item, index) => (
+                      <div key={index} className="border-b pb-3 last:border-b-0">
+                        <div className="flex items-center space-x-2 mb-1">
+                          <Badge variant="outline" className="text-xs">
+                            {item.type === "english-to-formula" ? "E→F" : "F→E"}
+                          </Badge>
+                          <div className="flex items-center text-xs text-muted-foreground">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {formatTimestamp(item.timestamp)}
                           </div>
-                          <p className="text-sm text-foreground truncate">{item.input}</p>
-                          <p className="text-xs text-muted-foreground mt-1 font-mono truncate">
-                            {item.output}
-                          </p>
                         </div>
-                      ))
-                    ) : (
-                      <p className="text-sm text-muted-foreground text-center py-4">
-                        No recent activity
-                      </p>
-                    )}
-                  </div>
-                </Card>
+                        <p className="text-sm text-foreground break-words">{item.input}</p>
+                        <p className="text-xs text-muted-foreground mt-1 font-mono break-all">
+                          {item.output}
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-4">
+                      No recent activity
+                    </p>
+                  )}
+                </div>
+              </Card>
 
-                {/* Upgrade CTA */}
-                <Card className="p-6 bg-gradient-hero text-primary-foreground">
-                  <h3 className="font-semibold mb-2">Unlock Unlimited Access</h3>
-                  <p className="text-sm text-primary-foreground/90 mb-4">
-                    Upgrade to Pro for unlimited conversions and advanced features.
-                  </p>
-                  <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">
-                    Upgrade Now
-                  </Button>
-                </Card>
-              </div>
+              {/* Upgrade CTA */}
+              <Card className="p-6 bg-gradient-hero text-primary-foreground">
+                <h3 className="font-semibold mb-2">Unlock Unlimited Access</h3>
+                <p className="text-sm text-primary-foreground/90 mb-4">
+                  Upgrade to Pro for unlimited conversions and advanced features.
+                </p>
+                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">
+                  Upgrade Now
+                </Button>
+              </Card>
             </div>
           </div>
         </div>
