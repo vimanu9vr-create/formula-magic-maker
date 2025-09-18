@@ -167,15 +167,14 @@ const Auth = () => {
           </div>
         </div>
 
-        <Button 
-          onClick={handleGoogleSignIn}
-          variant="outline" 
-          className="w-full"
-          disabled={loading}
-        >
-          Continue with Google
-          <span className="text-xs text-muted-foreground ml-2">(Setup Required)</span>
-        </Button>
+        <div className="text-center p-4 bg-muted/50 rounded-lg border-2 border-dashed border-muted-foreground/20">
+          <p className="text-sm text-muted-foreground mb-2">
+            <strong>Google Sign-In</strong> requires configuration
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Configure Google OAuth in Supabase to enable this feature
+          </p>
+        </div>
 
         <div className="text-center mt-6">
           <button
