@@ -143,6 +143,22 @@ serve(async (req) => {
         - Test the pattern with examples
         - Explain each part of the regex pattern`;
       userPrompt = `Create a regex pattern for this requirement: ${input}`;
+    } else if (type === 'python-generator') {
+      systemPrompt = `You are a Python programming expert. Generate clean, efficient Python code based on descriptions.
+        - Write production-ready Python code with proper imports
+        - Include comments explaining key parts
+        - Use best practices and proper error handling
+        - Provide complete, runnable code snippets
+        - Use appropriate libraries when needed`;
+      userPrompt = `Generate Python code for this task: ${input}`;
+    } else if (type === 'javascript-generator') {
+      systemPrompt = `You are a JavaScript programming expert. Generate clean, modern JavaScript code based on descriptions.
+        - Write ES6+ JavaScript with modern syntax
+        - Include comments explaining key parts
+        - Use best practices and proper error handling
+        - Provide complete, runnable code snippets
+        - Use appropriate APIs and methods`;
+      userPrompt = `Generate JavaScript code for this task: ${input}`;
     } else {
       systemPrompt = `You are an Excel/Google Sheets formula expert. Explain formulas in simple, clear English.
         - Break down what each part does

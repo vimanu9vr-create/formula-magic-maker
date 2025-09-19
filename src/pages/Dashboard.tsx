@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
-  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize" | "sql-generator" | "regex-generator">("english-to-formula");
+  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize" | "sql-generator" | "regex-generator" | "python-generator" | "javascript-generator">("english-to-formula");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -32,7 +32,9 @@ const Dashboard = () => {
     { key: "error-fix", label: "Fix Formula", icon: "🔧" },
     { key: "optimize", label: "Optimize Formula", icon: "⚡" },
     { key: "sql-generator", label: "SQL Generator", icon: "🗄️" },
-    { key: "regex-generator", label: "Regex Generator", icon: "🔍" }
+    { key: "regex-generator", label: "Regex Generator", icon: "🔍" },
+    { key: "python-generator", label: "Python Generator", icon: "🐍" },
+    { key: "javascript-generator", label: "JS Generator", icon: "⚡" }
   ];
 
   const currentModeIndex = modes.findIndex(m => m.key === mode);
@@ -64,6 +66,10 @@ const Dashboard = () => {
         return "Describe what data you want to query... (e.g., 'Get all customers who made orders in the last 30 days')";
       case "regex-generator":
         return "Describe the pattern you want to match... (e.g., 'Match email addresses' or 'Find phone numbers')";
+      case "python-generator":
+        return "Describe what you want the Python code to do... (e.g., 'Read CSV file and calculate average of column A')";
+      case "javascript-generator":
+        return "Describe what you want the JavaScript code to do... (e.g., 'Validate form input and show error messages')";
       default:
         return "Enter your input...";
     }
@@ -85,6 +91,10 @@ const Dashboard = () => {
         return "Generate SQL";
       case "regex-generator":
         return "Generate Regex";
+      case "python-generator":
+        return "Generate Python";
+      case "javascript-generator":
+        return "Generate JavaScript";
       default:
         return "Process";
     }
@@ -130,7 +140,9 @@ const Dashboard = () => {
         description: `${mode === "english-to-formula" ? "Formula" : 
                       mode === "explain-formula" ? "Formula explanation" : 
                       mode === "sql-generator" ? "SQL query" :
-                      mode === "regex-generator" ? "Regex pattern" : "Result"} generated successfully!`
+                      mode === "regex-generator" ? "Regex pattern" :
+                      mode === "python-generator" ? "Python code" :
+                      mode === "javascript-generator" ? "JavaScript code" : "Result"} generated successfully!`
       });
 
     } catch (error: any) {
@@ -225,7 +237,7 @@ const Dashboard = () => {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
               <div>
                 <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
-                <p className="text-muted-foreground">Generate formulas, SQL queries, and regex patterns instantly</p>
+                <p className="text-muted-foreground">Generate formulas, SQL, regex, and code snippets instantly</p>
               </div>
               
               <div className="flex items-center space-x-4 mt-4 sm:mt-0">
@@ -329,7 +341,9 @@ const Dashboard = () => {
                             mode === "explain-formula" ? "Step-by-Step Explanation" :
                             mode === "error-fix" ? "Fixed Formula" : 
                             mode === "optimize" ? "Optimized Formula" :
-                            mode === "sql-generator" ? "SQL Query" : "Regex Pattern"}
+                            mode === "sql-generator" ? "SQL Query" : 
+                            mode === "regex-generator" ? "Regex Pattern" :
+                            mode === "python-generator" ? "Python Code" : "JavaScript Code"}
                          </label>
                         <Button
                           size="sm"

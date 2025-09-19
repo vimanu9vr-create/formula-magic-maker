@@ -59,6 +59,14 @@ const Navigation = () => {
                   Dashboard
                 </Link>
                 <Link 
+                  to="/library" 
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    location.pathname === '/library' ? 'text-primary' : 'text-muted-foreground'
+                  }`}
+                >
+                  Library
+                </Link>
+                <Link 
                   to="/account" 
                   className={`text-sm font-medium transition-colors hover:text-primary ${
                     location.pathname === '/account' ? 'text-primary' : 'text-muted-foreground'

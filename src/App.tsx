@@ -9,6 +9,7 @@ import Pricing from "./pages/Pricing";
 import Dashboard from "./pages/Dashboard";
 import Account from "./pages/Account";
 import Auth from "./pages/Auth";
+import Library from "./pages/Library";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -33,6 +34,11 @@ const App = () => (
           <Route path="/account" element={
             <ProtectedRoute>
               <Account />
+            </ProtectedRoute>
+          } />
+          <Route path="/library" element={
+            <ProtectedRoute>
+              <Library />
             </ProtectedRoute>
           } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
