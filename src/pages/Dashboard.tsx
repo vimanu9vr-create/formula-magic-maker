@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
-  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize">("english-to-formula");
+  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize" | "sql-generator" | "regex-generator">("english-to-formula");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -30,7 +30,9 @@ const Dashboard = () => {
     { key: "formula-to-english", label: "Formula → English", icon: "←" },
     { key: "explain-formula", label: "Explain Formula", icon: "📚" },
     { key: "error-fix", label: "Fix Formula", icon: "🔧" },
-    { key: "optimize", label: "Optimize Formula", icon: "⚡" }
+    { key: "optimize", label: "Optimize Formula", icon: "⚡" },
+    { key: "sql-generator", label: "SQL Generator", icon: "🗄️" },
+    { key: "regex-generator", label: "Regex Generator", icon: "🔍" }
   ];
 
   const currentModeIndex = modes.findIndex(m => m.key === mode);
@@ -58,6 +60,10 @@ const Dashboard = () => {
         return "Paste your broken formula here and I'll fix it... (e.g., '=SUMIF(B:B,completed,A:A)')";
       case "optimize":
         return "Paste your formula here and I'll suggest optimizations... (e.g., '=IF(A1>0,IF(A1<100,\"Medium\",\"High\"),\"Low\")')";
+      case "sql-generator":
+        return "Describe what data you want to query... (e.g., 'Get all customers who made orders in the last 30 days')";
+      case "regex-generator":
+        return "Describe the pattern you want to match... (e.g., 'Match email addresses' or 'Find phone numbers')";
       default:
         return "Enter your input...";
     }
@@ -75,6 +81,10 @@ const Dashboard = () => {
         return "Fix Formula";
       case "optimize":
         return "Optimize Formula";
+      case "sql-generator":
+        return "Generate SQL";
+      case "regex-generator":
+        return "Generate Regex";
       default:
         return "Process";
     }
@@ -117,7 +127,10 @@ const Dashboard = () => {
       
       toast({
         title: "Success",
-        description: `${mode === "english-to-formula" ? "Formula" : mode === "explain-formula" ? "Formula explanation" : "Result"} generated successfully!`
+        description: `${mode === "english-to-formula" ? "Formula" : 
+                      mode === "explain-formula" ? "Formula explanation" : 
+                      mode === "sql-generator" ? "SQL query" :
+                      mode === "regex-generator" ? "Regex pattern" : "Result"} generated successfully!`
       });
 
     } catch (error: any) {
@@ -212,7 +225,7 @@ const Dashboard = () => {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
               <div>
                 <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
-                <p className="text-muted-foreground">Convert formulas and plain English instantly</p>
+                <p className="text-muted-foreground">Generate formulas, SQL queries, and regex patterns instantly</p>
               </div>
               
               <div className="flex items-center space-x-4 mt-4 sm:mt-0">
@@ -233,7 +246,7 @@ const Dashboard = () => {
               {/* Main Converter */}
               <Card className="p-6 shadow-soft">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-foreground">Formula Converter</h2>
+                  <h2 className="text-xl font-semibold text-foreground">AI Code Generator</h2>
                   <div className="flex items-center space-x-2">
                     <Button
                       variant="outline"
@@ -314,7 +327,9 @@ const Dashboard = () => {
                            {mode === "english-to-formula" ? "Excel Formula" : 
                             mode === "formula-to-english" ? "Plain English Explanation" :
                             mode === "explain-formula" ? "Step-by-Step Explanation" :
-                            mode === "error-fix" ? "Fixed Formula" : "Optimized Formula"}
+                            mode === "error-fix" ? "Fixed Formula" : 
+                            mode === "optimize" ? "Optimized Formula" :
+                            mode === "sql-generator" ? "SQL Query" : "Regex Pattern"}
                          </label>
                         <Button
                           size="sm"

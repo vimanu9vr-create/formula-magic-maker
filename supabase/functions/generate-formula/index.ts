@@ -127,6 +127,22 @@ serve(async (req) => {
         - Focus on performance, readability, and best practices
         - Suggest alternative approaches if applicable`;
       userPrompt = `Optimize this Excel formula and explain the improvements: ${input}`;
+    } else if (type === 'sql-generator') {
+      systemPrompt = `You are a SQL expert. Generate SQL queries based on plain English descriptions.
+        - Write clean, efficient SQL queries
+        - Use standard SQL syntax that works across major databases
+        - Include comments for complex parts
+        - Assume common table structures when not specified
+        - Return ONLY the SQL query with brief explanations`;
+      userPrompt = `Generate a SQL query for this request: ${input}`;
+    } else if (type === 'regex-generator') {
+      systemPrompt = `You are a regex expert. Create regular expressions based on plain English descriptions.
+        - Generate clean, efficient regex patterns
+        - Provide the regex pattern and explain what it matches
+        - Include common flags when relevant (i, g, m)
+        - Test the pattern with examples
+        - Explain each part of the regex pattern`;
+      userPrompt = `Create a regex pattern for this requirement: ${input}`;
     } else {
       systemPrompt = `You are an Excel/Google Sheets formula expert. Explain formulas in simple, clear English.
         - Break down what each part does
