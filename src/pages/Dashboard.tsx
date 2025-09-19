@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
-  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "error-fix" | "optimize">("english-to-formula");
+  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize">("english-to-formula");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -28,6 +28,7 @@ const Dashboard = () => {
   const modes = [
     { key: "english-to-formula", label: "English → Formula", icon: "→" },
     { key: "formula-to-english", label: "Formula → English", icon: "←" },
+    { key: "explain-formula", label: "Explain Formula", icon: "📚" },
     { key: "error-fix", label: "Fix Formula", icon: "🔧" },
     { key: "optimize", label: "Optimize Formula", icon: "⚡" }
   ];
@@ -51,6 +52,8 @@ const Dashboard = () => {
         return "Describe what you want your formula to do... (e.g., 'Sum all values in column A where column B contains completed')";
       case "formula-to-english":
         return "Paste your formula here... (e.g., '=SUMIF(B:B,\"completed\",A:A)')";
+      case "explain-formula":
+        return "Paste any formula to learn how it works step-by-step... (e.g., '=VLOOKUP(A2,Sheet2!A:B,2,FALSE)')";
       case "error-fix":
         return "Paste your broken formula here and I'll fix it... (e.g., '=SUMIF(B:B,completed,A:A)')";
       case "optimize":
@@ -66,6 +69,8 @@ const Dashboard = () => {
         return "Generate Formula";
       case "formula-to-english":
         return "Generate Explanation";
+      case "explain-formula":
+        return "Learn How It Works";
       case "error-fix":
         return "Fix Formula";
       case "optimize":
@@ -112,7 +117,7 @@ const Dashboard = () => {
       
       toast({
         title: "Success",
-        description: `${mode === "english-to-formula" ? "Formula" : "Explanation"} generated successfully!`
+        description: `${mode === "english-to-formula" ? "Formula" : mode === "explain-formula" ? "Formula explanation" : "Result"} generated successfully!`
       });
 
     } catch (error: any) {
@@ -305,11 +310,12 @@ const Dashboard = () => {
                   {output && (
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <label className="font-medium text-foreground">
-                          {mode === "english-to-formula" ? "Excel Formula" : 
-                           mode === "formula-to-english" ? "Plain English Explanation" :
-                           mode === "error-fix" ? "Fixed Formula" : "Optimized Formula"}
-                        </label>
+                         <label className="font-medium text-foreground">
+                           {mode === "english-to-formula" ? "Excel Formula" : 
+                            mode === "formula-to-english" ? "Plain English Explanation" :
+                            mode === "explain-formula" ? "Step-by-Step Explanation" :
+                            mode === "error-fix" ? "Fixed Formula" : "Optimized Formula"}
+                         </label>
                         <Button
                           size="sm"
                           variant="ghost"

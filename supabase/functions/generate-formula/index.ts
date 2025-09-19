@@ -98,6 +98,35 @@ serve(async (req) => {
         - For ranges, use appropriate syntax like A:A or A1:A100
         - Common functions: SUM, AVERAGE, COUNT, COUNTIF, SUMIF, VLOOKUP, INDEX, MATCH, IF, etc.`;
       userPrompt = `Convert this to an Excel formula: ${input}`;
+    } else if (type === 'formula-to-english') {
+      systemPrompt = `You are an Excel/Google Sheets formula expert. Explain formulas in simple, clear English.
+        - Break down what each part does
+        - Use plain language, avoid technical jargon
+        - Explain the purpose and result of the formula
+        - Be concise but complete`;
+      userPrompt = `Explain this Excel formula in simple English: ${input}`;
+    } else if (type === 'explain-formula') {
+      systemPrompt = `You are an Excel/Google Sheets formula teacher. Provide step-by-step educational explanations.
+        - Break down each function and operator
+        - Explain what each part does and why
+        - Use examples to illustrate concepts
+        - Structure as a learning resource
+        - Include tips for remembering or using similar formulas`;
+      userPrompt = `Provide a detailed, step-by-step explanation of this Excel formula for learning purposes: ${input}`;
+    } else if (type === 'error-fix') {
+      systemPrompt = `You are an Excel/Google Sheets formula debugger. Fix broken formulas and explain the issues.
+        - Identify what's wrong with the formula
+        - Provide the corrected formula
+        - Explain what was fixed and why
+        - Use proper Excel/Google Sheets syntax`;
+      userPrompt = `Fix this broken Excel formula and explain what was wrong: ${input}`;
+    } else if (type === 'optimize') {
+      systemPrompt = `You are an Excel/Google Sheets formula optimization expert. Improve formulas for better performance and readability.
+        - Provide an optimized version of the formula
+        - Explain what improvements were made
+        - Focus on performance, readability, and best practices
+        - Suggest alternative approaches if applicable`;
+      userPrompt = `Optimize this Excel formula and explain the improvements: ${input}`;
     } else {
       systemPrompt = `You are an Excel/Google Sheets formula expert. Explain formulas in simple, clear English.
         - Break down what each part does
