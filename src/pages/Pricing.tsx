@@ -9,6 +9,29 @@ const Pricing = () => {
   const { user } = useAuth();
   const plans = [
     {
+      name: "LTD Launch Special",
+      price: "$49",
+      period: "lifetime",
+      description: "Limited time launch offer - Pay once, use forever",
+      requests: "Unlimited requests forever",
+      features: [
+        "Everything in Pro plan",
+        "Unlimited conversions forever",
+        "Advanced formula support",
+        "Priority email support",
+        "Formula history & saved templates",
+        "Complex nested formulas",
+        "Array formulas support",
+        "No monthly fees ever",
+        "Future updates included"
+      ],
+      limitations: [],
+      cta: "Get Lifetime Access",
+      popular: true,
+      gumroadUrl: "https://your-username.gumroad.com/l/formulagenie-ltd", // Replace with your actual Gumroad URL
+      badge: "Launch Special",
+    },
+    {
       name: "Free",
       price: "$0",
       period: "forever",
@@ -29,7 +52,7 @@ const Pricing = () => {
     },
     {
       name: "Pro",
-      price: "$9",
+      price: "$19",
       period: "month",
       description: "For professionals who work with spreadsheets daily",
       requests: "Unlimited requests",
@@ -43,12 +66,13 @@ const Pricing = () => {
         "Array formulas support"
       ],
       limitations: [],
-      cta: "Start Pro Trial",
-      popular: true,
+      cta: "Subscribe Monthly",
+      popular: false,
+      gumroadUrl: "https://your-username.gumroad.com/l/formulagenie-pro", // Replace with your actual Gumroad URL
     },
     {
       name: "Team",
-      price: "$29", 
+      price: "$59", 
       period: "month",
       description: "For teams collaborating on spreadsheet projects",
       requests: "Unlimited requests for all members",
@@ -65,6 +89,7 @@ const Pricing = () => {
       limitations: [],
       cta: "Contact Sales",
       popular: false,
+      gumroadUrl: "https://your-username.gumroad.com/l/formulagenie-team", // Replace with your actual Gumroad URL
     },
   ];
 
@@ -119,8 +144,8 @@ const Pricing = () => {
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-gradient-primary text-primary-foreground px-6 py-2 rounded-full text-sm font-medium shadow-elegant">
-                      Most Popular
+                    <span className="bg-gradient-primary text-primary-foreground px-6 py-2 rounded-full text-sm font-medium shadow-orange-glow animate-pulse-glow">
+                      {plan.badge || "Most Popular"}
                     </span>
                   </div>
                 )}
@@ -161,17 +186,29 @@ const Pricing = () => {
                   )}
                 </div>
 
-                <Button 
-                  className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant' : ''}`}
-                  variant={plan.popular ? 'default' : 'outline'}
-                  size="lg"
-                  asChild
-                >
-                  <Link to={user ? "/dashboard" : "/auth"}>
+                {plan.gumroadUrl ? (
+                  <Button 
+                    className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-orange-glow hover:shadow-orange-intense transition-glow' : ''}`}
+                    variant={plan.popular ? 'default' : 'outline'}
+                    size="lg"
+                    onClick={() => window.open(plan.gumroadUrl, '_blank')}
+                  >
                     {plan.cta}
                     <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
-                </Button>
+                  </Button>
+                ) : (
+                  <Button 
+                    className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant' : ''}`}
+                    variant={plan.popular ? 'default' : 'outline'}
+                    size="lg"
+                    asChild
+                  >
+                    <Link to={user ? "/dashboard" : "/auth"}>
+                      {plan.cta}
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Link>
+                  </Button>
+                )}
               </Card>
             ))}
           </div>
