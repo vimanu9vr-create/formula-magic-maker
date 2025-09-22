@@ -43,7 +43,7 @@ serve(async (req) => {
 
     // Map product IDs to plans
     const planMapping: { [key: string]: string } = {
-      'formulagenie-ltd': 'ltd',
+      'vhizte': 'ltd',
       'formulagenie-pro': 'pro', 
       'formulagenie-team': 'team'
     };
