@@ -28,7 +28,7 @@ const Pricing = () => {
       limitations: [],
       cta: "Get Lifetime Access",
       popular: true,
-      gumroadUrl: "https://your-username.gumroad.com/l/formulagenie-ltd", // Replace with your actual Gumroad URL
+      gumroadUrl: "https://vimanu.gumroad.com/l/vhizte",
       badge: "Launch Special",
     },
     {
