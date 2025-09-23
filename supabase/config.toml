@@ -5,3 +5,6 @@ verify_jwt = true
 
 [functions.gumroad-webhook]
 verify_jwt = false
+
+[functions.check-expired-plans]
+verify_jwt = false

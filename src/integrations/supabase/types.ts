@@ -60,6 +60,8 @@ export type Database = {
           id: string
           last_reset: string
           plan: string
+          plan_expires_at: string | null
+          plan_status: string
           updated_at: string
           usage_count: number
           user_id: string
@@ -70,6 +72,8 @@ export type Database = {
           id?: string
           last_reset?: string
           plan?: string
+          plan_expires_at?: string | null
+          plan_status?: string
           updated_at?: string
           usage_count?: number
           user_id: string
@@ -80,6 +84,8 @@ export type Database = {
           id?: string
           last_reset?: string
           plan?: string
+          plan_expires_at?: string | null
+          plan_status?: string
           updated_at?: string
           usage_count?: number
           user_id?: string
@@ -161,6 +167,10 @@ export type Database = {
     }
     Functions: {
       reset_daily_usage: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      update_expired_plans: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

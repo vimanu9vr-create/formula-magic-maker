@@ -58,8 +58,9 @@ serve(async (req) => {
       });
     }
 
-    // Check if user has exceeded daily limit (free plan = 5 requests)
-    const dailyLimit = profile.plan === 'free' ? 5 : Infinity;
+    // Check if user has exceeded daily limit (free plan or expired plan = 5 requests)
+    const isLimited = profile.plan === 'free' || profile.plan_status === 'expired';
+    const dailyLimit = isLimited ? 5 : Infinity;
     
     // Reset usage if it's a new day
     const lastReset = new Date(profile.last_reset);
@@ -78,9 +79,13 @@ serve(async (req) => {
     }
 
     if (currentUsage >= dailyLimit) {
+      const message = profile.plan_status === 'expired' 
+        ? 'Your plan has expired. Please renew your subscription for unlimited access.'
+        : 'You have reached your daily request limit. Upgrade to Pro for unlimited access.';
+        
       return new Response(JSON.stringify({ 
         error: 'Daily limit exceeded',
-        message: 'You have reached your daily request limit. Upgrade to Pro for unlimited access.'
+        message
       }), {
         status: 429,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

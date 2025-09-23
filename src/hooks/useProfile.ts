@@ -7,6 +7,8 @@ interface Profile {
   user_id: string;
   email: string | null;
   plan: string;
+  plan_expires_at: string | null;
+  plan_status: string;
   usage_count: number;
   last_reset: string;
   created_at: string;

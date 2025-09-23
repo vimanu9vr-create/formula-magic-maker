@@ -21,7 +21,14 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    const body = await req.json();
+    // Gumroad sends form data, not JSON
+    const formData = await req.formData();
+    const body: { [key: string]: string } = {};
+    
+    for (const [key, value] of formData.entries()) {
+      body[key] = value.toString();
+    }
+    
     console.log('Webhook payload:', body);
 
     // Verify webhook authenticity (Gumroad sends specific fields)
@@ -71,11 +78,21 @@ serve(async (req) => {
       return new Response('User not found', { status: 404, headers: corsHeaders });
     }
 
+    // Calculate expiration date (30 days for monthly plans)
+    let planExpiresAt = null;
+    if (planType === 'pro' || planType === 'team') {
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 30);
+      planExpiresAt = expirationDate.toISOString();
+    }
+
     // Update user's plan
     const { error: updateError } = await supabaseClient
       .from('profiles')
       .update({ 
         plan: planType,
+        plan_expires_at: planExpiresAt,
+        plan_status: 'active',
         updated_at: new Date().toISOString()
       })
       .eq('email', purchaser_email);
