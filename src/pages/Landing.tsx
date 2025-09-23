@@ -11,7 +11,7 @@ const Landing = () => {
   const features = [
     {
       title: "English to Formula",
-      description: "Convert plain English descriptions into perfect Excel and Google Sheets formulas instantly.",
+      description: "Convert plain English descriptions into perfect Excel formulas instantly.",
     },
     {
       title: "SQL Query Generator",
@@ -30,12 +30,12 @@ const Landing = () => {
       description: "Create JavaScript code snippets, functions, and logic from simple descriptions.",
     },
     {
-      title: "Formula Explanation",
-      description: "Paste complex formulas and get clear, simple explanations of what they do.",
+      title: "Code Explanation",
+      description: "Paste complex code and get clear, simple explanations of what it does.",
     },
     {
-      title: "Code Optimization",
-      description: "Get suggestions to optimize and improve your generated code for better performance.",
+      title: "Multi-Language Support",
+      description: "Generate code in multiple programming languages from the same natural language input.",
     },
     {
       title: "Error Detection & Fixes",
