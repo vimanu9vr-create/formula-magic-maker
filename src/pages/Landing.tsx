@@ -22,8 +22,24 @@ const Landing = () => {
       description: "Works with Excel, Google Sheets, and other spreadsheet applications.",
     },
     {
-      title: "AI-Powered",
-      description: "Powered by advanced AI to ensure accuracy and handle complex requirements.",
+      title: "Advanced Functions",
+      description: "Support for VLOOKUP, INDEX MATCH, SUMIFS, conditional logic, and complex calculations.",
+    },
+    {
+      title: "Formula Library",
+      description: "Access to a comprehensive library of pre-built formulas for common tasks.",
+    },
+    {
+      title: "Error Detection",
+      description: "Automatically detect and suggest fixes for formula errors and syntax issues.",
+    },
+    {
+      title: "Data Analysis",
+      description: "Generate formulas for statistical analysis, data filtering, and pivot operations.",
+    },
+    {
+      title: "Formula Optimization",
+      description: "Get suggestions to optimize slow or inefficient formulas for better performance.",
     },
   ];
 
@@ -44,6 +60,15 @@ const Landing = () => {
       requests: "Unlimited requests",
       features: ["Everything in Free", "Unlimited conversions", "Priority support", "Advanced formulas"],
       cta: "Start Pro Trial",
+      popular: false,
+    },
+    {
+      name: "LTD Special",
+      price: "$39",
+      period: "lifetime",
+      requests: "Unlimited forever",
+      features: ["Everything in Pro", "Lifetime access", "Formula library", "Error detection", "Data analysis", "Formula optimization", "No recurring fees"],
+      cta: "Get Lifetime Deal",
       popular: true,
     },
     {
