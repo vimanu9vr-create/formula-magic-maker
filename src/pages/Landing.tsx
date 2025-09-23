@@ -14,32 +14,32 @@ const Landing = () => {
       description: "Convert plain English descriptions into perfect Excel and Google Sheets formulas instantly.",
     },
     {
+      title: "SQL Query Generator",
+      description: "Generate complex SQL queries from natural language descriptions for any database.",
+    },
+    {
+      title: "Regex Pattern Builder",
+      description: "Create and test regular expressions with plain English input and explanations.",
+    },
+    {
+      title: "Python Code Generator",
+      description: "Generate Python scripts and functions from natural language requirements.",
+    },
+    {
+      title: "JavaScript Generator",
+      description: "Create JavaScript code snippets, functions, and logic from simple descriptions.",
+    },
+    {
       title: "Formula Explanation",
       description: "Paste complex formulas and get clear, simple explanations of what they do.",
     },
     {
-      title: "Multiple Formats",
-      description: "Works with Excel, Google Sheets, and other spreadsheet applications.",
+      title: "Code Optimization",
+      description: "Get suggestions to optimize and improve your generated code for better performance.",
     },
     {
-      title: "Advanced Functions",
-      description: "Support for VLOOKUP, INDEX MATCH, SUMIFS, conditional logic, and complex calculations.",
-    },
-    {
-      title: "Formula Library",
-      description: "Access to a comprehensive library of pre-built formulas for common tasks.",
-    },
-    {
-      title: "Error Detection",
-      description: "Automatically detect and suggest fixes for formula errors and syntax issues.",
-    },
-    {
-      title: "Data Analysis",
-      description: "Generate formulas for statistical analysis, data filtering, and pivot operations.",
-    },
-    {
-      title: "Formula Optimization",
-      description: "Get suggestions to optimize slow or inefficient formulas for better performance.",
+      title: "Error Detection & Fixes",
+      description: "Automatically detect syntax errors and get intelligent suggestions for fixes.",
     },
   ];
 
