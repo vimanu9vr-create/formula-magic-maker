@@ -1,73 +1,82 @@
-# Welcome to your Lovable project
+# FormulaGenie - AI-Powered Formula Generator
 
-## Project info
+Transform plain English into perfect Excel formulas instantly. Built with React, TypeScript, and powered by OpenAI.
 
-**URL**: https://lovable.dev/projects/77e718a3-af1b-4ddc-aaa0-799b0000c512
+## 🚀 Features
 
-## How can I edit this code?
+- **English to Formula**: Convert natural language to Excel/Google Sheets formulas
+- **Formula Explanation**: Understand complex formulas in simple terms
+- **SQL Generator**: Create SQL queries from plain English
+- **Regex Builder**: Generate regular expressions with explanations
+- **Code Generation**: Python, JavaScript, and more
+- **Error Detection**: Find and fix formula errors automatically
+- **Usage Analytics**: Track your formula generation usage
+- **Multiple Plans**: Free tier with 5 requests/day, unlimited paid plans
 
-There are several ways of editing your application.
+## 🛠 Technology Stack
 
-**Use Lovable**
+- **Frontend**: React, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: Supabase (Database, Auth, Edge Functions)
+- **AI**: OpenAI GPT models for formula generation
+- **Payments**: Gumroad integration for subscriptions
+- **Build Tool**: Vite
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/77e718a3-af1b-4ddc-aaa0-799b0000c512) and start prompting.
+## 📊 Database Schema
 
-Changes made via Lovable will be committed automatically to this repo.
+- **profiles**: User profiles with plan information and usage tracking
+- **requests**: Formula generation history and analytics
+- **saved_formulas**: User's saved formulas library
+- **formula_examples**: Pre-built examples and templates
 
-**Use your preferred IDE**
+The project requires these secrets to be configured in Supabase:
+- `OPENAI_API_KEY`: For AI formula generation
+- `SUPABASE_SERVICE_ROLE_KEY`: For database operations
+- `SUPABASE_URL` and `SUPABASE_ANON_KEY`: For client connections
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Quick Start
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**Using Lovable (Recommended)**
 
-Follow these steps:
+Simply visit the [FormulaGenie Project](https://lovable.dev/projects/77e718a3-af1b-4ddc-aaa0-799b0000c512) and start prompting.
+
+**Local Development**
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone and install
 git clone <YOUR_GIT_URL>
+cd formulagenie
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 📈 Usage Limits
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **Free Plan**: 5 requests per day
+- **Pro Plan**: Unlimited requests ($9/month)
+- **Team Plan**: Unlimited + collaboration ($29/month)  
+- **Lifetime Deal**: Unlimited forever ($39 one-time)
 
-**Use GitHub Codespaces**
+## 🔐 Authentication & Security
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Row Level Security (RLS) enabled on all tables
+- User authentication via Supabase Auth
+- Plan expiration automated via cron jobs
+- Usage tracking and daily limit resets
 
-## What technologies are used for this project?
+## 📱 Deployment
 
-This project is built with:
+Deploy to production with one click using [Lovable](https://lovable.dev/projects/77e718a3-af1b-4ddc-aaa0-799b0000c512) → Share → Publish.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🌐 Custom Domain
 
-## How can I deploy this project?
+Connect your own domain in Project → Settings → Domains. [Learn more](https://docs.lovable.dev/features/custom-domain#custom-domain)
 
-Simply open [Lovable](https://lovable.dev/projects/77e718a3-af1b-4ddc-aaa0-799b0000c512) and click on Share -> Publish.
+## 🤝 Contributing
 
-## Can I connect a custom domain to my Lovable project?
+FormulaGenie is built on Lovable. Make changes by prompting the AI or clone locally for traditional development.
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**FormulaGenie** - Transform your spreadsheet workflow with AI-powered formula generation.
