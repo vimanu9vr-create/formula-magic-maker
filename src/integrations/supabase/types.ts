@@ -170,6 +170,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      trigger_plan_expiration_check: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       update_expired_plans: {
         Args: Record<PropertyKey, never>
         Returns: undefined
