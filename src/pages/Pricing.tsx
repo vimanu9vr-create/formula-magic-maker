@@ -68,7 +68,7 @@ const Pricing = () => {
       limitations: [],
       cta: "Subscribe Monthly",
       popular: false,
-      gumroadUrl: "https://aiformulagenie.gumroad.com/l/pxkfyo",
+      gumroadUrl: "https://aiformulagenie.gumroad.com/l/zzjoi",
     },
     {
       name: "Team",
