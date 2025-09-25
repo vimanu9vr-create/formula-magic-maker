@@ -434,20 +434,22 @@ const Dashboard = () => {
                 </div>
               </Card>
 
-              {/* Upgrade CTA */}
-              <Card className="p-6 bg-gradient-hero text-primary-foreground">
-                <h3 className="font-semibold mb-2">Unlock Unlimited Access</h3>
-                <p className="text-sm text-primary-foreground/90 mb-4">
-                  Upgrade to Pro for unlimited conversions and advanced features.
-                </p>
-                <Button 
-                  variant="secondary" 
-                  className="w-full bg-white text-primary hover:bg-white/90"
-                  onClick={() => window.open("https://aiformulagenie.gumroad.com/l/zzjoi", "_blank")}
-                >
-                  Upgrade Now
-                </Button>
-              </Card>
+              {/* Upgrade CTA - Only show for free plan users */}
+              {profile?.plan === 'free' && (
+                <Card className="p-6 bg-gradient-hero text-primary-foreground">
+                  <h3 className="font-semibold mb-2">Unlock Unlimited Access</h3>
+                  <p className="text-sm text-primary-foreground/90 mb-4">
+                    Upgrade to Pro for unlimited conversions and advanced features.
+                  </p>
+                  <Button 
+                    variant="secondary" 
+                    className="w-full bg-white text-primary hover:bg-white/90"
+                    onClick={() => window.open("https://aiformulagenie.gumroad.com/l/zzjoi", "_blank")}
+                  >
+                    Upgrade Now
+                  </Button>
+                </Card>
+              )}
             </div>
           </div>
         </div>
