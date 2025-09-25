@@ -70,27 +70,6 @@ const Pricing = () => {
       popular: false,
       gumroadUrl: "https://aiformulagenie.gumroad.com/l/zzjoi",
     },
-    {
-      name: "Team",
-      price: "$59", 
-      period: "month",
-      description: "For teams collaborating on spreadsheet projects",
-      requests: "Unlimited requests for all members",
-      features: [
-        "Everything in Pro",
-        "Shared formula library",
-        "Team collaboration tools",
-        "Admin dashboard",
-        "User management",
-        "Team analytics",
-        "Priority phone support",
-        "Custom integrations"
-      ],
-      limitations: [],
-      cta: "Contact Sales",
-      popular: false,
-      gumroadUrl: "https://your-username.gumroad.com/l/formulagenie-team", // Replace with your actual Gumroad URL
-    },
   ];
 
   const faqs = [
