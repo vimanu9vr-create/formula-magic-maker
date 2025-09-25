@@ -52,7 +52,7 @@ const Pricing = () => {
     },
     {
       name: "Pro",
-      price: "$19",
+      price: "$9",
       period: "month",
       description: "For professionals who work with spreadsheets daily",
       requests: "Unlimited requests",
