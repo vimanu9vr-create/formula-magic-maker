@@ -68,7 +68,7 @@ const Pricing = () => {
       limitations: [],
       cta: "Subscribe Monthly",
       popular: false,
-      gumroadUrl: "https://your-username.gumroad.com/l/formulagenie-pro", // Replace with your actual Gumroad URL
+      gumroadUrl: "https://aiformulagenie.gumroad.com/l/pxkfyo",
     },
     {
       name: "Team",
