@@ -369,7 +369,10 @@ const Dashboard = () => {
                     <p className="text-muted-foreground mb-4">
                       You've used all your free requests for today. Upgrade to Pro for unlimited access.
                     </p>
-                    <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90">
+                    <Button 
+                      className="bg-gradient-primary text-primary-foreground hover:opacity-90"
+                      onClick={() => window.open("https://aiformulagenie.gumroad.com/l/zzjoi", "_blank")}
+                    >
                       Upgrade to Pro
                     </Button>
                   </div>
@@ -437,7 +440,11 @@ const Dashboard = () => {
                 <p className="text-sm text-primary-foreground/90 mb-4">
                   Upgrade to Pro for unlimited conversions and advanced features.
                 </p>
-                <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">
+                <Button 
+                  variant="secondary" 
+                  className="w-full bg-white text-primary hover:bg-white/90"
+                  onClick={() => window.open("https://aiformulagenie.gumroad.com/l/zzjoi", "_blank")}
+                >
                   Upgrade Now
                 </Button>
               </Card>
