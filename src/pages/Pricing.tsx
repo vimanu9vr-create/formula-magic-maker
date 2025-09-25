@@ -28,7 +28,7 @@ const Pricing = () => {
       limitations: [],
       cta: "Get Lifetime Access",
       popular: true,
-      gumroadUrl: "https://vimanu.gumroad.com/l/vhizte",
+      gumroadUrl: "https://aiformulagenie.gumroad.com/l/pxkfyo",
       badge: "Launch Special",
     },
     {
