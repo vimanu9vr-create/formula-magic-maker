@@ -372,20 +372,22 @@ const Library = () => {
 
             {/* Formula Grid */}
             {filteredFormulas.length === 0 ? (
-              <Card className="p-8 text-center">
-                <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No formulas found</h3>
-                <p className="text-muted-foreground mb-4">
-                  {savedFormulas.length === 0 
-                    ? "Start building your formula library by adding your first formula."
-                    : "Try adjusting your search or filter criteria."
-                  }
-                </p>
-                <Button onClick={() => setShowAddDialog(true)}>
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Your First Formula
-                </Button>
-              </Card>
+              <div className="flex justify-center">
+                <Card className="p-8 text-center max-w-md">
+                  <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">No formulas found</h3>
+                  <p className="text-muted-foreground mb-4">
+                    {savedFormulas.length === 0 
+                      ? "Start building your formula library by adding your first formula."
+                      : "Try adjusting your search or filter criteria."
+                    }
+                  </p>
+                  <Button onClick={() => setShowAddDialog(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Your First Formula
+                  </Button>
+                </Card>
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredFormulas.map((formula) => (

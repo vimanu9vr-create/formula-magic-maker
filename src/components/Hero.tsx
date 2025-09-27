@@ -26,15 +26,12 @@ const Hero = () => {
             into perfect formulas and explains existing formulas in simple terms.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex justify-center mb-12">
             <Button size="lg" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant" asChild>
               <Link to="/auth">
                 Start Free Trial
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
-            </Button>
-            <Button size="lg" variant="outline" className="border-primary/20 hover:bg-primary/5">
-              Watch Demo
             </Button>
           </div>
         </div>

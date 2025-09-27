@@ -12,6 +12,7 @@ const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { user, signUp, signIn, signInWithGoogle } = useAuth();
   const { toast } = useToast();
@@ -25,7 +26,7 @@ const Auth = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!email || !password || (isSignUp && !confirmPassword)) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -38,6 +39,15 @@ const Auth = () => {
       toast({
         title: "Error",
         description: "Password must be at least 6 characters",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (isSignUp && password !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
         variant: "destructive"
       });
       return;
@@ -57,10 +67,14 @@ const Auth = () => {
         });
       } else if (isSignUp) {
         toast({
-          title: "Success",
-          description: "Account created successfully! Please check your email to confirm your account.",
+          title: "Account Created!",
+          description: "Please check your email to confirm your account before signing in.",
         });
-        setIsSignUp(false); // Switch to sign in mode
+        // Clear form and switch to sign in mode
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setIsSignUp(false);
       } else {
         toast({
           title: "Success",
@@ -150,6 +164,20 @@ const Auth = () => {
               required
             />
           </div>
+
+          {isSignUp && (
+            <div>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm your password"
+                required
+              />
+            </div>
+          )}
 
           <Button 
             type="submit" 

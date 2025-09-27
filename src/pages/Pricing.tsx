@@ -101,18 +101,9 @@ const Pricing = () => {
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
               Choose your plan
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Start free and upgrade when you need more power. All plans include our core formula conversion features.
             </p>
-            
-            <div className="inline-flex items-center p-1 bg-secondary rounded-lg">
-              <button className="px-4 py-2 text-sm font-medium bg-background text-foreground rounded-md shadow-sm">
-                Monthly
-              </button>
-              <button className="px-4 py-2 text-sm font-medium text-muted-foreground">
-                Annual (Save 20%)
-              </button>
-            </div>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
