@@ -224,9 +224,10 @@ User request: ${input}`;
 
   } catch (error) {
     console.error('Error in generate-formula function:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
     return new Response(JSON.stringify({ 
       error: 'Internal server error',
-      message: error.message 
+      message: errorMessage 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
