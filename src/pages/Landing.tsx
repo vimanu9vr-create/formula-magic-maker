@@ -64,21 +64,12 @@ const Landing = () => {
     },
     {
       name: "LTD Special",
-      price: "$39",
+      price: "$49",
       period: "lifetime",
       requests: "Unlimited forever",
       features: ["Everything in Pro", "Lifetime access", "Formula library", "Error detection", "Data analysis", "Formula optimization", "No recurring fees"],
       cta: "Get Lifetime Deal",
       popular: true,
-    },
-    {
-      name: "Team",
-      price: "$29",
-      period: "month",
-      requests: "Unlimited requests",
-      features: ["Everything in Pro", "Shared formula library", "Team collaboration", "Admin dashboard"],
-      cta: "Contact Sales",
-      popular: false,
     },
   ];
 
