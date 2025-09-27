@@ -240,7 +240,7 @@ const Library = () => {
     return (
       <div className="h-screen bg-background flex flex-col">
         <Navigation />
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center pt-16">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
             <p className="text-muted-foreground">Loading your library...</p>
@@ -255,7 +255,7 @@ const Library = () => {
       <Navigation />
       
       <div className="flex-1 overflow-hidden">
-        <div className="h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="h-full overflow-y-auto pt-16 px-4 sm:px-6 lg:px-8 py-6">
           <div className="container max-w-6xl mx-auto">
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
