@@ -120,37 +120,47 @@ serve(async (req) => {
       userPrompt = `Provide a detailed, step-by-step explanation of this Excel formula for learning purposes: ${input}`;
     } else if (type === 'error-fix') {
       systemPrompt = `You are a coding assistant that fixes errors. 
-        ONLY return the corrected code inside one code block. 
-        Do not add explanations or comments. 
+        ONLY return the corrected code inside one code block with proper formatting and indentation. 
+        Do not add explanations, comments, or any text outside the code block.
+        Format the code with proper line breaks and indentation for readability.
         Input code may contain syntax or logic errors. 
-        Fix and return clean working code.`;
-      userPrompt = `Buggy code:\n${input}`;
+        Fix and return clean, well-formatted working code.`;
+      userPrompt = `Fix this code:\n${input}`;
     } else if (type === 'optimize') {
-      systemPrompt = `You are an Excel/Google Sheets formula optimization expert. Improve formulas for better performance and readability.
-        - Provide an optimized version of the formula
-        - Explain what improvements were made
-        - Focus on performance, readability, and best practices
-        - Suggest alternative approaches if applicable`;
-      userPrompt = `Optimize this Excel formula and explain the improvements: ${input}`;
+      systemPrompt = `You are an Excel/Google Sheets formula optimization expert. 
+        Return the optimized version of the formula inside a code block with proper formatting.
+        After the code block, provide a brief explanation of the improvements made.
+        Focus on performance, readability, and best practices.
+        Use proper line breaks for complex formulas.`;
+      userPrompt = `Optimize this Excel formula: ${input}`;
     } else if (type === 'sql-generator') {
       systemPrompt = `You are a SQL generator. 
-        ONLY return valid SQL code inside one code block, no explanation or text.`;
+        ONLY return valid SQL code inside one code block with proper formatting and indentation.
+        Use proper line breaks for readability.
+        Do not add explanations or any text outside the code block.`;
       userPrompt = `User request: ${input}`;
     } else if (type === 'regex-generator') {
       systemPrompt = `You are a Regex generator. 
-        ONLY return the regex pattern inside one code block, no explanation or text.`;
+        ONLY return the regex pattern inside one code block.
+        Do not add explanations or any text outside the code block.`;
       userPrompt = `User request: ${input}`;
     } else if (type === 'python-generator') {
       systemPrompt = `You are a Python code generator. 
-        ONLY return valid Python code inside one code block, no explanation or text.`;
+        ONLY return valid Python code inside one code block with proper formatting and indentation.
+        Use proper line breaks and Python indentation for readability.
+        Do not add explanations or any text outside the code block.`;
       userPrompt = `User request: ${input}`;
     } else if (type === 'javascript-generator') {
       systemPrompt = `You are a JavaScript code generator. 
-        ONLY return valid JavaScript code inside one code block, no explanation or text.`;
+        ONLY return valid JavaScript code inside one code block with proper formatting and indentation.
+        Use proper line breaks and indentation for readability.
+        Do not add explanations or any text outside the code block.`;
       userPrompt = `User request: ${input}`;
     } else if (type === 'java-generator') {
       systemPrompt = `You are a Java code generator. 
-        ONLY return valid Java code inside one code block, no explanation or text.`;
+        ONLY return valid Java code inside one code block with proper formatting and indentation.
+        Use proper line breaks and Java indentation for readability.
+        Do not add explanations or any text outside the code block.`;
       userPrompt = `User request: ${input}`;
     } else {
       systemPrompt = `You are an Excel/Google Sheets formula expert. Explain formulas in simple, clear English.
