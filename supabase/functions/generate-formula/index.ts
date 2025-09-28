@@ -119,12 +119,12 @@ serve(async (req) => {
         - Include tips for remembering or using similar formulas`;
       userPrompt = `Provide a detailed, step-by-step explanation of this Excel formula for learning purposes: ${input}`;
     } else if (type === 'error-fix') {
-      systemPrompt = `You are an Excel/Google Sheets formula debugger. Fix broken formulas and explain the issues.
-        - Identify what's wrong with the formula
-        - Provide the corrected formula
-        - Explain what was fixed and why
-        - Use proper Excel/Google Sheets syntax`;
-      userPrompt = `Fix this broken Excel formula and explain what was wrong: ${input}`;
+      systemPrompt = `You are a coding assistant that fixes errors. 
+        ONLY return the corrected code inside one code block. 
+        Do not add explanations or comments. 
+        Input code may contain syntax or logic errors. 
+        Fix and return clean working code.`;
+      userPrompt = `Buggy code:\n${input}`;
     } else if (type === 'optimize') {
       systemPrompt = `You are an Excel/Google Sheets formula optimization expert. Improve formulas for better performance and readability.
         - Provide an optimized version of the formula
@@ -133,72 +133,25 @@ serve(async (req) => {
         - Suggest alternative approaches if applicable`;
       userPrompt = `Optimize this Excel formula and explain the improvements: ${input}`;
     } else if (type === 'sql-generator') {
-      systemPrompt = `You are a SQL expert. Generate SQL queries based on plain English descriptions.
-        - Write clean, efficient SQL queries
-        - Use standard SQL syntax that works across major databases
-        - Include comments for complex parts
-        - Assume common table structures when not specified
-        - Return ONLY the SQL query with brief explanations`;
-      userPrompt = `Generate a SQL query for this request: ${input}`;
+      systemPrompt = `You are a SQL generator. 
+        ONLY return valid SQL code inside one code block, no explanation or text.`;
+      userPrompt = `User request: ${input}`;
     } else if (type === 'regex-generator') {
-      systemPrompt = `You are a regex expert. Create regular expressions based on plain English descriptions.
-        - Generate clean, efficient regex patterns
-        - Provide the regex pattern and explain what it matches
-        - Include common flags when relevant (i, g, m)
-        - Test the pattern with examples
-        - Explain each part of the regex pattern`;
-      userPrompt = `Create a regex pattern for this requirement: ${input}`;
+      systemPrompt = `You are a Regex generator. 
+        ONLY return the regex pattern inside one code block, no explanation or text.`;
+      userPrompt = `User request: ${input}`;
     } else if (type === 'python-generator') {
-      systemPrompt = `You are a Python programming expert. Generate clean, efficient Python code based on descriptions.
-        - Write production-ready Python code with proper imports
-        - Include comments explaining key parts
-        - Use best practices and proper error handling
-        - Provide complete, runnable code snippets
-        - Use appropriate libraries when needed`;
-      userPrompt = `Generate Python code for this task: ${input}`;
+      systemPrompt = `You are a Python code generator. 
+        ONLY return valid Python code inside one code block, no explanation or text.`;
+      userPrompt = `User request: ${input}`;
     } else if (type === 'javascript-generator') {
-      systemPrompt = `You are a JavaScript programming expert. Generate clean, modern JavaScript code based on descriptions.
-        - Write ES6+ JavaScript with modern syntax
-        - Include comments explaining key parts
-        - Use best practices and proper error handling
-        - Provide complete, runnable code snippets
-        - Use appropriate APIs and methods`;
-      userPrompt = `Generate JavaScript code for this task: ${input}`;
-    } else if (type === 'python-error-fix') {
-      systemPrompt = `You are a Python coding assistant that fixes errors. 
-        ONLY return the corrected code inside one code block. 
-        Do not add explanations or comments. 
-        Input code may contain syntax or logic errors. 
-        Fix and return clean working code.`;
-      userPrompt = `Buggy code:\n${input}`;
-    } else if (type === 'regex-error-fix') {
-      systemPrompt = `You are a regex assistant that fixes errors. 
-        ONLY return the corrected regex pattern inside one code block. 
-        Do not add explanations or comments. 
-        Input regex may contain syntax errors. 
-        Fix and return clean working regex pattern.`;
-      userPrompt = `Buggy regex:\n${input}`;
-    } else if (type === 'sql-error-fix') {
-      systemPrompt = `You are an SQL assistant that fixes errors. 
-        ONLY return the corrected SQL code inside one code block. 
-        Do not add explanations or comments. 
-        Input SQL may contain syntax or logic errors. 
-        Fix and return clean working SQL code.`;
-      userPrompt = `Buggy SQL:\n${input}`;
+      systemPrompt = `You are a JavaScript code generator. 
+        ONLY return valid JavaScript code inside one code block, no explanation or text.`;
+      userPrompt = `User request: ${input}`;
     } else if (type === 'java-generator') {
-      systemPrompt = `You are a Java programming expert. Generate clean, efficient Java code based on descriptions.
-        - Write production-ready Java code with proper imports
-        - Use best practices and proper error handling
-        - Provide complete, runnable code snippets
-        - Use appropriate Java libraries when needed`;
-      userPrompt = `Generate Java code for this task: ${input}`;
-    } else if (type === 'java-error-fix') {
-      systemPrompt = `You are a Java coding assistant that fixes errors. 
-        ONLY return the corrected code inside one code block. 
-        Do not add explanations or comments. 
-        Input code may contain syntax or logic errors. 
-        Fix and return clean working Java code.`;
-      userPrompt = `Buggy code:\n${input}`;
+      systemPrompt = `You are a Java code generator. 
+        ONLY return valid Java code inside one code block, no explanation or text.`;
+      userPrompt = `User request: ${input}`;
     } else {
       systemPrompt = `You are an Excel/Google Sheets formula expert. Explain formulas in simple, clear English.
         - Break down what each part does
