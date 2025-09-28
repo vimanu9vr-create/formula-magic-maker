@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
-  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize" | "sql-generator" | "regex-generator" | "python-generator" | "javascript-generator">("english-to-formula");
+  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize" | "sql-generator" | "regex-generator" | "python-generator" | "javascript-generator" | "python-error-fix" | "regex-error-fix" | "sql-error-fix" | "java-generator" | "java-error-fix">("english-to-formula");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -34,7 +34,12 @@ const Dashboard = () => {
     { key: "sql-generator", label: "SQL Generator", icon: "🗄️" },
     { key: "regex-generator", label: "Regex Generator", icon: "🔍" },
     { key: "python-generator", label: "Python Generator", icon: "🐍" },
-    { key: "javascript-generator", label: "JS Generator", icon: "⚡" }
+    { key: "javascript-generator", label: "JS Generator", icon: "⚡" },
+    { key: "java-generator", label: "Java Generator", icon: "☕" },
+    { key: "python-error-fix", label: "Fix Python", icon: "🔧🐍" },
+    { key: "regex-error-fix", label: "Fix Regex", icon: "🔧🔍" },
+    { key: "sql-error-fix", label: "Fix SQL", icon: "🔧🗄️" },
+    { key: "java-error-fix", label: "Fix Java", icon: "🔧☕" }
   ];
 
   const currentModeIndex = modes.findIndex(m => m.key === mode);
@@ -70,6 +75,16 @@ const Dashboard = () => {
         return "Describe what you want the Python code to do... (e.g., 'Read CSV file and calculate average of column A')";
       case "javascript-generator":
         return "Describe what you want the JavaScript code to do... (e.g., 'Validate form input and show error messages')";
+      case "java-generator":
+        return "Describe what you want the Java code to do... (e.g., 'Create a class to handle file operations')";
+      case "python-error-fix":
+        return "Paste your buggy Python code here and I'll fix it... (e.g., 'def add_numbers(a, b):\\nprint(a+b)')";
+      case "regex-error-fix":
+        return "Paste your broken regex pattern here and I'll fix it... (e.g., '[a-z+@[a-z]+\\.[a-z]{2,}')";
+      case "sql-error-fix":
+        return "Paste your broken SQL query here and I'll fix it... (e.g., 'SELECT * FROM users WHERE date >= 2023-01-01')";
+      case "java-error-fix":
+        return "Paste your buggy Java code here and I'll fix it... (e.g., 'public class Test { String name }')";
       default:
         return "Enter your input...";
     }
@@ -95,6 +110,16 @@ const Dashboard = () => {
         return "Generate Python";
       case "javascript-generator":
         return "Generate JavaScript";
+      case "java-generator":
+        return "Generate Java";
+      case "python-error-fix":
+        return "Fix Python Code";
+      case "regex-error-fix":
+        return "Fix Regex";
+      case "sql-error-fix":
+        return "Fix SQL";
+      case "java-error-fix":
+        return "Fix Java Code";
       default:
         return "Process";
     }
@@ -142,7 +167,12 @@ const Dashboard = () => {
                       mode === "sql-generator" ? "SQL query" :
                       mode === "regex-generator" ? "Regex pattern" :
                       mode === "python-generator" ? "Python code" :
-                      mode === "javascript-generator" ? "JavaScript code" : "Result"} generated successfully!`
+                      mode === "javascript-generator" ? "JavaScript code" :
+                      mode === "java-generator" ? "Java code" :
+                      mode === "python-error-fix" ? "Fixed Python code" :
+                      mode === "regex-error-fix" ? "Fixed regex" :
+                      mode === "sql-error-fix" ? "Fixed SQL query" :
+                      mode === "java-error-fix" ? "Fixed Java code" : "Result"} generated successfully!`
       });
 
     } catch (error: any) {
@@ -341,9 +371,15 @@ const Dashboard = () => {
                             mode === "explain-formula" ? "Step-by-Step Explanation" :
                             mode === "error-fix" ? "Fixed Formula" : 
                             mode === "optimize" ? "Optimized Formula" :
-                            mode === "sql-generator" ? "SQL Query" : 
-                            mode === "regex-generator" ? "Regex Pattern" :
-                            mode === "python-generator" ? "Python Code" : "JavaScript Code"}
+                             mode === "sql-generator" ? "SQL Query" : 
+                             mode === "regex-generator" ? "Regex Pattern" :
+                             mode === "python-generator" ? "Python Code" : 
+                             mode === "javascript-generator" ? "JavaScript Code" :
+                             mode === "java-generator" ? "Java Code" :
+                             mode === "python-error-fix" ? "Fixed Python Code" :
+                             mode === "regex-error-fix" ? "Fixed Regex" :
+                             mode === "sql-error-fix" ? "Fixed SQL Query" :
+                             mode === "java-error-fix" ? "Fixed Java Code" : "Result"}
                          </label>
                         <Button
                           size="sm"

@@ -164,6 +164,41 @@ serve(async (req) => {
         - Provide complete, runnable code snippets
         - Use appropriate APIs and methods`;
       userPrompt = `Generate JavaScript code for this task: ${input}`;
+    } else if (type === 'python-error-fix') {
+      systemPrompt = `You are a Python coding assistant that fixes errors. 
+        ONLY return the corrected code inside one code block. 
+        Do not add explanations or comments. 
+        Input code may contain syntax or logic errors. 
+        Fix and return clean working code.`;
+      userPrompt = `Buggy code:\n${input}`;
+    } else if (type === 'regex-error-fix') {
+      systemPrompt = `You are a regex assistant that fixes errors. 
+        ONLY return the corrected regex pattern inside one code block. 
+        Do not add explanations or comments. 
+        Input regex may contain syntax errors. 
+        Fix and return clean working regex pattern.`;
+      userPrompt = `Buggy regex:\n${input}`;
+    } else if (type === 'sql-error-fix') {
+      systemPrompt = `You are an SQL assistant that fixes errors. 
+        ONLY return the corrected SQL code inside one code block. 
+        Do not add explanations or comments. 
+        Input SQL may contain syntax or logic errors. 
+        Fix and return clean working SQL code.`;
+      userPrompt = `Buggy SQL:\n${input}`;
+    } else if (type === 'java-generator') {
+      systemPrompt = `You are a Java programming expert. Generate clean, efficient Java code based on descriptions.
+        - Write production-ready Java code with proper imports
+        - Use best practices and proper error handling
+        - Provide complete, runnable code snippets
+        - Use appropriate Java libraries when needed`;
+      userPrompt = `Generate Java code for this task: ${input}`;
+    } else if (type === 'java-error-fix') {
+      systemPrompt = `You are a Java coding assistant that fixes errors. 
+        ONLY return the corrected code inside one code block. 
+        Do not add explanations or comments. 
+        Input code may contain syntax or logic errors. 
+        Fix and return clean working Java code.`;
+      userPrompt = `Buggy code:\n${input}`;
     } else {
       systemPrompt = `You are an Excel/Google Sheets formula expert. Explain formulas in simple, clear English.
         - Break down what each part does
@@ -230,7 +265,7 @@ serve(async (req) => {
     console.error('Error in generate-formula function:', error);
     return new Response(JSON.stringify({ 
       error: 'Internal server error',
-      message: error.message 
+      message: error instanceof Error ? error.message : 'Unknown error'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

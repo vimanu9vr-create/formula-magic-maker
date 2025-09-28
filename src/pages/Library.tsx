@@ -51,7 +51,12 @@ const Library = () => {
     { key: "sql-generator", label: "SQL Queries" },
     { key: "regex-generator", label: "Regex Patterns" },
     { key: "python-generator", label: "Python Code" },
-    { key: "javascript-generator", label: "JavaScript Code" }
+    { key: "javascript-generator", label: "JavaScript Code" },
+    { key: "java-generator", label: "Java Code" },
+    { key: "python-error-fix", label: "Fixed Python" },
+    { key: "regex-error-fix", label: "Fixed Regex" },
+    { key: "sql-error-fix", label: "Fixed SQL" },
+    { key: "java-error-fix", label: "Fixed Java" }
   ];
 
   useEffect(() => {

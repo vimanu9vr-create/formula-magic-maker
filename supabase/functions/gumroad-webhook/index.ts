@@ -51,8 +51,7 @@ serve(async (req) => {
     // Map product IDs to plans
     const planMapping: { [key: string]: string } = {
       'vhizte': 'ltd',
-      'formulagenie-pro': 'pro', 
-      'formulagenie-team': 'team'
+      'formulagenie-pro': 'pro'
     };
 
     // Extract plan from product_id or product_name
@@ -80,7 +79,7 @@ serve(async (req) => {
 
     // Calculate expiration date (30 days for monthly plans)
     let planExpiresAt = null;
-    if (planType === 'pro' || planType === 'team') {
+    if (planType === 'pro') {
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 30);
       planExpiresAt = expirationDate.toISOString();
@@ -113,7 +112,10 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error processing Gumroad webhook:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ 
+      error: 'Internal server error',
+      message: error instanceof Error ? error.message : 'Unknown error'
+    }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
