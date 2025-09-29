@@ -122,12 +122,13 @@ serve(async (req) => {
         - Include tips for remembering or using similar formulas`;
       userPrompt = `Provide a detailed, step-by-step explanation of this Excel formula for learning purposes: ${input}`;
     } else if (type === 'error-fix' || type === 'fix python' || type === 'fix regex' || type === 'fix sql' || type === 'fix java') {
-      systemPrompt = `You are a coding assistant that fixes errors. 
-        ONLY return the corrected code inside one code block. 
-        Do not add explanations or comments. 
-        Input code may contain syntax or logic errors. 
-        Fix and return clean working code.`;
-      userPrompt = `Buggy code:\n${input}`;
+      systemPrompt = `You are a coding assistant that fixes errors. You MUST follow these rules:
+        1. ONLY return the corrected code wrapped in a code block
+        2. NO explanations, NO comments, NO additional text whatsoever
+        3. Fix syntax errors, logic errors, and return clean working code
+        4. Response format: \`\`\`[language]\n[corrected_code]\n\`\`\`
+        5. NEVER provide explanations or descriptions outside the code block`;
+      userPrompt = `Fix this code:\n${input}`;
     } else if (type === 'optimize') {
       systemPrompt = `You are an Excel/Google Sheets formula optimization expert. 
         Return the optimized version of the formula inside a code block with proper formatting.
