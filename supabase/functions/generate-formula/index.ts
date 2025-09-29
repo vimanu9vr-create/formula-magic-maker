@@ -62,20 +62,24 @@ serve(async (req) => {
     const isLimited = profile.plan === 'free' || profile.plan_status === 'expired';
     const dailyLimit = isLimited ? 5 : Infinity;
     
-    // Reset usage if 24 hours have passed
-    const lastReset = new Date(profile.last_reset);
+    // Calculate usage in the last 24 hours from the requests table (robust rolling window)
     const now = new Date();
-    const hoursSinceReset = (now.getTime() - lastReset.getTime()) / (1000 * 60 * 60);
-    const shouldReset = hoursSinceReset >= 24;
+    const cutoffISO = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
+    const { count: recentCount, error: countError } = await supabase
+      .from('requests')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .gte('timestamp', cutoffISO);
 
-    let currentUsage = profile.usage_count;
-    if (shouldReset) {
-      currentUsage = 0;
-      await supabase
-        .from('profiles')
-        .update({ usage_count: 0, last_reset: now.toISOString() })
-        .eq('user_id', user.id);
+    if (countError) {
+      console.error('Usage count error:', countError);
+      return new Response(JSON.stringify({ error: 'Failed to check usage' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
+
+    let currentUsage = recentCount ?? 0;
 
     if (currentUsage >= dailyLimit) {
       const message = profile.plan_status === 'expired' 
@@ -117,7 +121,7 @@ serve(async (req) => {
         - Structure as a learning resource
         - Include tips for remembering or using similar formulas`;
       userPrompt = `Provide a detailed, step-by-step explanation of this Excel formula for learning purposes: ${input}`;
-    } else if (type === 'error-fix') {
+    } else if (type === 'error-fix' || type === 'fix python' || type === 'fix regex' || type === 'fix sql' || type === 'fix java') {
       systemPrompt = `You are a coding assistant that fixes errors. 
         ONLY return the corrected code inside one code block. 
         Do not add explanations or comments. 
