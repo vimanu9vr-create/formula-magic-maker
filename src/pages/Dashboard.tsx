@@ -7,6 +7,7 @@ import { Copy, RefreshCw, ArrowLeftRight, Zap, Clock, RotateCcw } from "lucide-r
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { useUsageCount } from "@/hooks/useUsageCount";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -19,10 +20,12 @@ const Dashboard = () => {
   
   const { user, session } = useAuth();
   const { profile, loading: profileLoading, refreshProfile } = useProfile();
+  const { usageCount, refreshUsageCount } = useUsageCount();
   const { toast } = useToast();
   
-  const requestsLimit = profile?.plan === 'free' ? 5 : Infinity;
-  const requestsUsed = profile?.usage_count || 0;
+  const isLimited = profile?.plan === 'free' || profile?.plan_status === 'expired';
+  const requestsLimit = isLimited ? 5 : Infinity;
+  const requestsUsed = usageCount;
   const requestsRemaining = Math.max(0, requestsLimit - requestsUsed);
 
   const modes = [
@@ -158,6 +161,7 @@ const Dashboard = () => {
 
       setOutput(data.output);
       refreshProfile();
+      refreshUsageCount();
       fetchRecentHistory();
       
       toast({
@@ -401,9 +405,9 @@ const Dashboard = () => {
               {requestsRemaining === 0 && (
                 <Card className="p-6 border-destructive/20 bg-destructive/5">
                   <div className="text-center">
-                    <h3 className="font-semibold text-foreground mb-2">Daily Limit Reached</h3>
+                    <h3 className="font-semibold text-foreground mb-2">24-Hour Limit Reached</h3>
                     <p className="text-muted-foreground mb-4">
-                      You've used all your free requests for today. Upgrade to Pro for unlimited access.
+                      You've used all your requests in the last 24 hours. Upgrade to Pro for unlimited access.
                     </p>
                     <Button 
                       className="bg-gradient-primary text-primary-foreground hover:opacity-90"
@@ -417,13 +421,13 @@ const Dashboard = () => {
 
               {/* Usage Stats */}
               <Card className="p-6">
-                <h3 className="font-semibold text-foreground mb-4">Today's Usage</h3>
+                <h3 className="font-semibold text-foreground mb-4">24-Hour Usage</h3>
                 <div className="space-y-4">
                   <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-muted-foreground">Requests Used</span>
-                      <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
-                    </div>
+                     <div className="flex justify-between text-sm mb-1">
+                       <span className="text-muted-foreground">Requests Used (24h)</span>
+                       <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
+                     </div>
                     <div className="w-full bg-secondary rounded-full h-2">
                       <div 
                         className="bg-gradient-primary h-2 rounded-full transition-all duration-300"

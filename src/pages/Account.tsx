@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { useUsageCount } from "@/hooks/useUsageCount";
 import { supabase } from "@/integrations/supabase/client";
 import { User, Settings, CreditCard, History, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -14,6 +15,7 @@ import { useToast } from "@/hooks/use-toast";
 const Account = () => {
   const { user, signOut } = useAuth();
   const { profile, loading: profileLoading, refreshProfile } = useProfile();
+  const { usageCount } = useUsageCount();
   const { toast } = useToast();
   const [recentRequests, setRecentRequests] = useState<any[]>([]);
   const [loadingRequests, setLoadingRequests] = useState(true);
@@ -100,7 +102,7 @@ const Account = () => {
     const isLimited = profile.plan === 'free' || profile.plan_status === 'expired';
     const limit = isLimited ? 5 : Infinity;
     if (limit === Infinity) return 0;
-    return Math.min((profile.usage_count / limit) * 100, 100);
+    return Math.min((usageCount / limit) * 100, 100);
   };
 
   const handleSignOut = async () => {
@@ -230,17 +232,17 @@ const Account = () => {
                 {(profile?.plan === 'free' || isExpired) && (
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-foreground">Daily Usage</h3>
+                      <h3 className="font-medium text-foreground">24-Hour Usage</h3>
                       <span className="text-sm text-muted-foreground">
-                        {profile?.usage_count || 0} of 5 requests
+                        {usageCount} of 5 requests
                       </span>
                     </div>
                     <Progress value={getUsagePercentage()} className="mb-2" />
                     <p className="text-xs text-muted-foreground">
-                      Resets daily at midnight UTC
+                      Rolling 24-hour window from your first request
                     </p>
                     
-                    {profile?.usage_count >= 5 && (
+                    {usageCount >= 5 && (
                       <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
                         <div className="flex items-start">
                           <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 mr-2 mt-0.5" />
