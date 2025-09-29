@@ -62,15 +62,14 @@ serve(async (req) => {
     const isLimited = profile.plan === 'free' || profile.plan_status === 'expired';
     const dailyLimit = isLimited ? 5 : Infinity;
     
-    // Reset usage if it's a new day
+    // Reset usage if 24 hours have passed
     const lastReset = new Date(profile.last_reset);
     const now = new Date();
-    const isNewDay = now.getDate() !== lastReset.getDate() || 
-                     now.getMonth() !== lastReset.getMonth() || 
-                     now.getFullYear() !== lastReset.getFullYear();
+    const hoursSinceReset = (now.getTime() - lastReset.getTime()) / (1000 * 60 * 60);
+    const shouldReset = hoursSinceReset >= 24;
 
     let currentUsage = profile.usage_count;
-    if (isNewDay) {
+    if (shouldReset) {
       currentUsage = 0;
       await supabase
         .from('profiles')
@@ -120,12 +119,11 @@ serve(async (req) => {
       userPrompt = `Provide a detailed, step-by-step explanation of this Excel formula for learning purposes: ${input}`;
     } else if (type === 'error-fix') {
       systemPrompt = `You are a coding assistant that fixes errors. 
-        ONLY return the corrected code inside one code block with proper formatting and indentation. 
-        Do not add explanations, comments, or any text outside the code block.
-        Format the code with proper line breaks and indentation for readability.
+        ONLY return the corrected code inside one code block. 
+        Do not add explanations or comments. 
         Input code may contain syntax or logic errors. 
-        Fix and return clean, well-formatted working code.`;
-      userPrompt = `Fix this code:\n${input}`;
+        Fix and return clean working code.`;
+      userPrompt = `Buggy code:\n${input}`;
     } else if (type === 'optimize') {
       systemPrompt = `You are an Excel/Google Sheets formula optimization expert. 
         Return the optimized version of the formula inside a code block with proper formatting.
