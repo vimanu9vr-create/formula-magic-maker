@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
-  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize" | "sql-generator" | "regex-generator" | "python-generator" | "javascript-generator" | "java-generator">("english-to-formula");
+  const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize" | "sql-generator" | "regex-generator" | "python-generator" | "javascript-generator">("english-to-formula");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -37,8 +37,7 @@ const Dashboard = () => {
     { key: "sql-generator", label: "SQL Generator", icon: "🗄️" },
     { key: "regex-generator", label: "Regex Generator", icon: "🔍" },
     { key: "python-generator", label: "Python Generator", icon: "🐍" },
-    { key: "javascript-generator", label: "JS Generator", icon: "⚡" },
-    { key: "java-generator", label: "Java Generator", icon: "☕" }
+    { key: "javascript-generator", label: "JS Generator", icon: "⚡" }
   ];
 
   const currentModeIndex = modes.findIndex(m => m.key === mode);
@@ -74,8 +73,6 @@ const Dashboard = () => {
         return "Describe what you want the Python code to do... (e.g., 'Read CSV file and calculate average of column A')";
       case "javascript-generator":
         return "Describe what you want the JavaScript code to do... (e.g., 'Validate form input and show error messages')";
-      case "java-generator":
-        return "Describe what you want the Java code to do... (e.g., 'Create a class to handle file operations')";
       default:
         return "Enter your input...";
     }
