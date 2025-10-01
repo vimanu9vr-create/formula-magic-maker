@@ -23,7 +23,8 @@ const Dashboard = () => {
   const { usageCount, refreshUsageCount } = useUsageCount();
   const { toast } = useToast();
   
-  const isLimited = profile?.plan === 'free' || profile?.plan_status === 'expired';
+  const planLower = (profile?.plan || 'free').toLowerCase();
+  const isLimited = planLower === 'free' || profile?.plan_status === 'expired';
   const requestsLimit = isLimited ? 5 : Infinity;
   const requestsUsed = usageCount;
   const requestsRemaining = isLimited ? Math.max(0, requestsLimit - requestsUsed) : Infinity;
