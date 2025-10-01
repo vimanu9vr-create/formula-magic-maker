@@ -129,34 +129,6 @@ serve(async (req) => {
         4. Response format: \`\`\`[language]\n[corrected_code]\n\`\`\`
         5. NEVER provide explanations or descriptions outside the code block`;
       userPrompt = `Fix this code:\n${input}`;
-    } else if (type === 'fix python') {
-      systemPrompt = `You are a Python code error fixer. Rules:
-        1. ONLY return corrected Python code in a code block
-        2. NO explanations, NO comments, NO text outside the code block
-        3. Fix Python syntax errors, indentation, and logic errors
-        4. Format: \`\`\`python\n[corrected_code]\n\`\`\``;
-      userPrompt = `Fix this Python code:\n${input}`;
-    } else if (type === 'fix regex') {
-      systemPrompt = `You are a regex pattern fixer. Rules:
-        1. ONLY return the corrected regex pattern in a code block
-        2. NO explanations, NO comments, NO text outside the code block
-        3. Fix regex syntax errors and improve pattern matching
-        4. Format: \`\`\`regex\n[corrected_pattern]\n\`\`\``;
-      userPrompt = `Fix this regex pattern:\n${input}`;
-    } else if (type === 'fix sql') {
-      systemPrompt = `You are a SQL query fixer. Rules:
-        1. ONLY return corrected SQL query in a code block
-        2. NO explanations, NO comments, NO text outside the code block
-        3. Fix SQL syntax errors, formatting, and logic errors
-        4. Format: \`\`\`sql\n[corrected_query]\n\`\`\``;
-      userPrompt = `Fix this SQL query:\n${input}`;
-    } else if (type === 'fix java') {
-      systemPrompt = `You are a Java code error fixer. Rules:
-        1. ONLY return corrected Java code in a code block
-        2. NO explanations, NO comments, NO text outside the code block
-        3. Fix Java syntax errors, missing semicolons, and logic errors
-        4. Format: \`\`\`java\n[corrected_code]\n\`\`\``;
-      userPrompt = `Fix this Java code:\n${input}`;
     } else if (type === 'optimize') {
       systemPrompt = `You are an Excel/Google Sheets formula optimization expert. 
         Return the optimized version of the formula inside a code block with proper formatting.
