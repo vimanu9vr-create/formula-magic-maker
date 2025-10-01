@@ -26,7 +26,7 @@ const Dashboard = () => {
   const isLimited = profile?.plan === 'free' || profile?.plan_status === 'expired';
   const requestsLimit = isLimited ? 5 : Infinity;
   const requestsUsed = usageCount;
-  const requestsRemaining = Math.max(0, requestsLimit - requestsUsed);
+  const requestsRemaining = isLimited ? Math.max(0, requestsLimit - requestsUsed) : Infinity;
 
   const modes = [
     { key: "english-to-formula", label: "English → Formula", icon: "→" },
@@ -98,8 +98,6 @@ const Dashboard = () => {
         return "Generate Python";
       case "javascript-generator":
         return "Generate JavaScript";
-      case "java-generator":
-        return "Generate Java";
       default:
         return "Process";
     }
@@ -148,8 +146,7 @@ const Dashboard = () => {
                       mode === "sql-generator" ? "SQL query" :
                       mode === "regex-generator" ? "Regex pattern" :
                       mode === "python-generator" ? "Python code" :
-                      mode === "javascript-generator" ? "JavaScript code" :
-                      mode === "java-generator" ? "Java code" : "Result"} generated successfully!`
+                      mode === "javascript-generator" ? "JavaScript code" : "Result"} generated successfully!`
       });
 
     } catch (error: any) {
@@ -253,10 +250,14 @@ const Dashboard = () => {
                   <span>{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
                 </Badge>
                 <Badge 
-                  variant={requestsRemaining > 1 ? "default" : "destructive"} 
+                  variant={requestsRemaining > 1 || requestsRemaining === Infinity ? "default" : "destructive"} 
                   className="flex items-center space-x-2"
                 >
-                  <span>{requestsRemaining} of {requestsLimit} requests left</span>
+                  <span>
+                    {requestsRemaining === Infinity 
+                      ? "Unlimited requests" 
+                      : `${requestsRemaining} of ${requestsLimit} requests left`}
+                  </span>
                 </Badge>
               </div>
             </div>
@@ -351,8 +352,7 @@ const Dashboard = () => {
                              mode === "sql-generator" ? "SQL Query" : 
                              mode === "regex-generator" ? "Regex Pattern" :
                              mode === "python-generator" ? "Python Code" : 
-                             mode === "javascript-generator" ? "JavaScript Code" :
-                             mode === "java-generator" ? "Java Code" : "Result"}
+                             mode === "javascript-generator" ? "JavaScript Code" : "Result"}
                          </label>
                         <Button
                           size="sm"
@@ -388,30 +388,32 @@ const Dashboard = () => {
                 </Card>
               )}
 
-              {/* Usage Stats */}
-              <Card className="p-6">
-                <h3 className="font-semibold text-foreground mb-4">24-Hour Usage</h3>
-                <div className="space-y-4">
-                  <div>
-                     <div className="flex justify-between text-sm mb-1">
-                       <span className="text-muted-foreground">Requests Used (24h)</span>
-                       <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
-                     </div>
-                    <div className="w-full bg-secondary rounded-full h-2">
-                      <div 
-                        className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${(requestsUsed / requestsLimit) * 100}%` }}
-                      ></div>
+              {/* Usage Stats - Only show for limited users */}
+              {isLimited && (
+                <Card className="p-6">
+                  <h3 className="font-semibold text-foreground mb-4">24-Hour Usage</h3>
+                  <div className="space-y-4">
+                    <div>
+                       <div className="flex justify-between text-sm mb-1">
+                         <span className="text-muted-foreground">Requests Used (last 24h)</span>
+                         <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
+                       </div>
+                      <div className="w-full bg-secondary rounded-full h-2">
+                        <div 
+                          className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${Math.min((requestsUsed / requestsLimit) * 100, 100)}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    
+                    <div className="pt-2 border-t">
+                      <p className="text-xs text-muted-foreground">
+                        Rolling 24-hour window - older requests expire automatically
+                      </p>
                     </div>
                   </div>
-                  
-                  <div className="pt-2 border-t">
-                    <p className="text-xs text-muted-foreground">
-                      Usage resets daily at midnight UTC
-                    </p>
-                  </div>
-                </div>
-              </Card>
+                </Card>
+              )}
 
               {/* Recent History */}
               <Card className="p-6">
