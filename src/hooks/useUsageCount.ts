@@ -21,7 +21,7 @@ export const useUsageCount = () => {
       
       const { count, error } = await supabase
         .from('requests')
-        .select('id', { count: 'exact', head: true })
+        .select('*', { count: 'exact' })
         .eq('user_id', user.id)
         .gte('timestamp', cutoffISO);
 
