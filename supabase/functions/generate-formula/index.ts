@@ -201,7 +201,7 @@ serve(async (req) => {
     const output = openAIData.choices[0].message.content.trim();
 
     // Save the request to database
-    const allowedTypes = ['english-to-formula','formula-to-english','explain-formula','error-fix','optimize'];
+    const allowedTypes = ['english-to-formula','formula-to-english','explain-formula','error-fix','optimize','sql-generator','regex-generator','python-generator','javascript-generator'];
     const recordType = allowedTypes.includes(type) ? type : 'explain-formula';
     await supabase
       .from('requests')

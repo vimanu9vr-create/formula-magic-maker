@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { FeedbackDialog } from "./FeedbackDialog";
 
 const Navigation = () => {
   const location = useLocation();
@@ -79,6 +80,7 @@ const Navigation = () => {
           </div>
 
           <div className="flex items-center space-x-4">
+            <FeedbackDialog />
             {user ? (
               <>
                 <span className="text-sm text-muted-foreground hidden sm:block">
