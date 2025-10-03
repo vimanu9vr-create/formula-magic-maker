@@ -40,7 +40,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to support
     const emailResponse = await resend.emails.send({
-      from: "FormulaGenie Feedback <onboarding@resend.dev>",
+      from: "FormulaGenie Feedback <noreply@aifinovaedge.com>",
       to: ["support@aifinovaedge.com"],
       replyTo: email,
       subject: `New Feedback from ${name}`,
