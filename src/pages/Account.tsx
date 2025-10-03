@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from "@/components/Navigation";
+import { FeedbackDialog } from "@/components/FeedbackDialog";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useUsageCount } from "@/hooks/useUsageCount";
 import { supabase } from "@/integrations/supabase/client";
-import { User, Settings, CreditCard, History, AlertCircle } from "lucide-react";
+import { User, Settings, CreditCard, History, AlertCircle, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Account = () => {
@@ -274,16 +275,18 @@ const Account = () => {
                   </div>
                 ) : null}
 
-                <div className="flex gap-3">
-                  <Button variant="outline" className="flex-1" asChild>
-                    <Link to="/pricing">View Pricing</Link>
-                  </Button>
-                  {(profile?.plan === 'free' || isExpired) && (
-                    <Button className="flex-1" asChild>
-                      <Link to="/pricing">Upgrade to Pro</Link>
+                {profile?.plan !== 'ltd' && (
+                  <div className="flex gap-3">
+                    <Button variant="outline" className="flex-1" asChild>
+                      <Link to="/pricing">View Pricing</Link>
                     </Button>
-                  )}
-                </div>
+                    {(profile?.plan === 'free' || isExpired) && (
+                      <Button className="flex-1" asChild>
+                        <Link to="/pricing">Upgrade to Pro</Link>
+                      </Button>
+                    )}
+                  </div>
+                )}
               </div>
             </Card>
 
@@ -331,6 +334,39 @@ const Account = () => {
                   )}
                 </div>
               )}
+            </Card>
+
+            {/* Support & Feedback */}
+            <Card className="p-6">
+              <div className="flex items-center mb-6">
+                <Mail className="w-5 h-5 text-primary mr-2" />
+                <h2 className="text-xl font-semibold text-foreground">Support & Feedback</h2>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-medium text-foreground">Send Feedback</h3>
+                    <p className="text-sm text-muted-foreground">Share your thoughts or get help</p>
+                  </div>
+                  <FeedbackDialog />
+                </div>
+                
+                <div className="pt-4 border-t">
+                  <div>
+                    <h3 className="font-medium text-foreground mb-2">Contact Us</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Need help? Email us at{' '}
+                      <a 
+                        href="mailto:support@aifinovaedge.com" 
+                        className="text-primary hover:underline"
+                      >
+                        support@aifinovaedge.com
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </Card>
 
             {/* Account Actions */}
