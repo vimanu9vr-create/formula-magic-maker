@@ -372,10 +372,10 @@ const Dashboard = () => {
                 </div>
               </Card>
 
-              {requestsRemaining === 0 && (
+              {requestsRemaining === 0 && isLimited && (
                 <Card className="p-6 border-destructive/20 bg-destructive/5">
                   <div className="text-center">
-                    <h3 className="font-semibold text-foreground mb-2">24-Hour Limit Reached</h3>
+                    <h3 className="font-semibold text-foreground mb-2">Daily Limit Reached</h3>
                     <p className="text-muted-foreground mb-4">
                       You've used all your daily requests. Upgrade to Pro for unlimited access.
                     </p>

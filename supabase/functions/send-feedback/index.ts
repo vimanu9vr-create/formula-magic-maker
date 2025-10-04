@@ -38,18 +38,19 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Send email to support
+    // Send email to support using Resend's verified test domain
     const emailResponse = await resend.emails.send({
-      from: "FormulaGenie Feedback <noreply@aifinovaedge.com>",
-      to: ["support@aifinovaedge.com"],
-      replyTo: email,
-      subject: `New Feedback from ${name}`,
+      from: "FormulaGenie Feedback <onboarding@resend.dev>",
+      to: [email], // Send confirmation to the user
+      subject: `We received your feedback!`,
       html: `
-        <h2>New Feedback Received</h2>
-        <p><strong>From:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
+        <h2>Thank you for your feedback, ${name}!</h2>
+        <p>We've received your message and will get back to you soon.</p>
+        <hr style="margin: 20px 0;">
+        <p><strong>Your message:</strong></p>
         <p>${message.replace(/\n/g, '<br>')}</p>
+        <hr style="margin: 20px 0;">
+        <p style="color: #666; font-size: 12px;">This is an automated confirmation. Our team will review your feedback and respond to ${email} shortly.</p>
       `,
     });
 
