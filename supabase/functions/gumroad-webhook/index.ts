@@ -32,15 +32,16 @@ serve(async (req) => {
     console.log('Webhook payload:', body);
 
     // Verify webhook authenticity (Gumroad sends specific fields)
-    if (!body.seller_id || !body.product_id || !body.purchaser_email) {
+    const purchaserEmail = body.purchaser_email || body.email;
+    if (!body.seller_id || !body.product_id || !purchaserEmail) {
       console.error('Invalid webhook payload structure');
       return new Response('Invalid webhook', { status: 400, headers: corsHeaders });
     }
 
     const {
       seller_id,
-      product_id, 
-      purchaser_email,
+      product_id,
+      short_product_id,
       sale_id,
       sale_timestamp,
       product_name,
@@ -48,28 +49,39 @@ serve(async (req) => {
       currency
     } = body;
 
-    // Map product IDs to plans
-    const planMapping: { [key: string]: string } = {
-      'vhizte': 'ltd',
-      'formulagenie-pro': 'pro'
+    // Map product identifiers to plans (supports product_id, short_product_id, name)
+    const planMapping: { [key: string]: 'ltd' | 'pro' } = {
+      // Known Gumroad short product IDs
+      'pxkfyo': 'ltd', // Life Time Deal
+      'zzjoi': 'pro',  // Pro Plan (monthly)
+      // Fallbacks based on product names/permalinks
+      'life time deal': 'ltd',
+      'lifetime': 'ltd',
+      'ltd': 'ltd',
+      'pro plan': 'pro',
+      'pro': 'pro'
     };
 
-    // Extract plan from product_id or product_name
-    let planType = 'free';
+    // Extract plan from any of the known fields
+    let planType: 'free' | 'ltd' | 'pro' = 'free';
+    const nameLower = (product_name || '').toLowerCase();
+    const pid = (product_id || '').toLowerCase();
+    const spid = (short_product_id || '').toLowerCase();
+
     for (const [key, value] of Object.entries(planMapping)) {
-      if (product_id.includes(key) || product_name?.toLowerCase().includes(key)) {
+      if (pid.includes(key) || spid.includes(key) || nameLower.includes(key)) {
         planType = value;
         break;
       }
     }
 
-    console.log(`Processing purchase: ${purchaser_email} -> ${planType} plan`);
+    console.log(`Processing purchase: ${purchaserEmail} -> ${planType} plan`);
 
     // Find user by email and update their plan
     const { data: profile, error: profileError } = await supabaseClient
       .from('profiles')
       .select('*')
-      .eq('email', purchaser_email)
+      .eq('email', purchaserEmail)
       .single();
 
     if (profileError) {
@@ -94,17 +106,17 @@ serve(async (req) => {
         plan_status: 'active',
         updated_at: new Date().toISOString()
       })
-      .eq('email', purchaser_email);
+      .eq('email', purchaserEmail);
 
     if (updateError) {
       console.error('Error updating user plan:', updateError);
       return new Response('Failed to update plan', { status: 500, headers: corsHeaders });
     }
 
-    console.log(`Successfully updated ${purchaser_email} to ${planType} plan`);
+    console.log(`Successfully updated ${purchaserEmail} to ${planType} plan`);
 
     // Log the successful purchase
-    console.log(`Purchase processed: Sale ID: ${sale_id}, Email: ${purchaser_email}, Plan: ${planType}, Price: ${price} ${currency}`);
+    console.log(`Purchase processed: Sale ID: ${sale_id}, Email: ${purchaserEmail}, Plan: ${planType}, Price: ${price} ${currency}`);
 
     return new Response('Webhook processed successfully', {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

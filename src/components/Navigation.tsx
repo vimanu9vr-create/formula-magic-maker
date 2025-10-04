@@ -2,12 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useProfile } from "@/hooks/useProfile";
 
 const Navigation = () => {
   const location = useLocation();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { profile } = useProfile();
 
   const handleSignOut = async () => {
     const { error } = await signOut();
@@ -40,14 +42,16 @@ const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/pricing" 
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === '/pricing' ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              Pricing
-            </Link>
+            {(!user || profile?.plan === 'free' || profile?.plan_status === 'expired') && (
+              <Link 
+                to="/pricing" 
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  location.pathname === '/pricing' ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              >
+                Pricing
+              </Link>
+            )}
             {user && (
               <>
                 <Link 

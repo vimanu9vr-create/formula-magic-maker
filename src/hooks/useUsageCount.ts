@@ -15,15 +15,20 @@ export const useUsageCount = () => {
     }
 
     try {
-      // Calculate usage in the last 24 hours from the requests table
+      // Calculate today's usage since 00:00 UTC from the requests table
       const now = new Date();
-      const cutoffISO = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
+      const utcMidnight = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0, 0, 0, 0
+      )).toISOString();
       
       const { count, error } = await supabase
         .from('requests')
         .select('*', { count: 'exact' })
         .eq('user_id', user.id)
-        .gte('timestamp', cutoffISO);
+        .gte('timestamp', utcMidnight);
 
       if (error) {
         console.error('Error fetching usage count:', error);

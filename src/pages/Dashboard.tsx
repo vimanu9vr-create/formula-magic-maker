@@ -377,7 +377,7 @@ const Dashboard = () => {
                   <div className="text-center">
                     <h3 className="font-semibold text-foreground mb-2">24-Hour Limit Reached</h3>
                     <p className="text-muted-foreground mb-4">
-                      You've used all your requests in the last 24 hours. Upgrade to Pro for unlimited access.
+                      You've used all your daily requests. Upgrade to Pro for unlimited access.
                     </p>
                     <Button 
                       className="bg-gradient-primary text-primary-foreground hover:opacity-90"
@@ -392,11 +392,12 @@ const Dashboard = () => {
               {/* Usage Stats - Only show for limited users */}
               {isLimited && (
                 <Card className="p-6">
-                  <h3 className="font-semibold text-foreground mb-4">24-Hour Usage</h3>
+                  <h3 className="font-semibold text-foreground mb-4">Today's Usage</h3>
                   <div className="space-y-4">
                     <div>
                        <div className="flex justify-between text-sm mb-1">
-                         <span className="text-muted-foreground">Requests Used (last 24h)</span>
+                         <span className="text-muted-foreground">Requests Used Today</span>
+                          <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
                          <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
                        </div>
                       <div className="w-full bg-secondary rounded-full h-2">
@@ -409,7 +410,7 @@ const Dashboard = () => {
                     
                     <div className="pt-2 border-t">
                       <p className="text-xs text-muted-foreground">
-                        Rolling 24-hour window - older requests expire automatically
+                        Resets at midnight (UTC)
                       </p>
                     </div>
                   </div>
