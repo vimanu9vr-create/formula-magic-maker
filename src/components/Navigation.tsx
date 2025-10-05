@@ -37,7 +37,7 @@ const Navigation = () => {
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-lg">F</span>
               </div>
-              <span className="font-bold text-xl text-foreground">FormulaGenie</span>
+              <span className="font-bold text-base sm:text-xl text-foreground">FormulaGenie</span>
             </Link>
           </div>
 
@@ -82,22 +82,22 @@ const Navigation = () => {
             )}
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             {user ? (
               <>
-                <span className="text-sm text-muted-foreground hidden sm:block">
+                <span className="text-xs sm:text-sm text-muted-foreground hidden lg:block truncate max-w-[150px]">
                   {user.email}
                 </span>
-                <Button variant="ghost" className="text-sm font-medium" onClick={handleSignOut}>
+                <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-medium" onClick={handleSignOut}>
                   Sign Out
                 </Button>
               </>
             ) : (
               <>
-                <Button variant="ghost" className="text-sm font-medium" asChild>
+                <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-medium hidden sm:inline-flex" asChild>
                   <Link to="/auth">Sign In</Link>
                 </Button>
-                <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant" asChild>
+                <Button size="sm" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant text-xs sm:text-sm" asChild>
                   <Link to="/auth">Get Started</Link>
                 </Button>
               </>

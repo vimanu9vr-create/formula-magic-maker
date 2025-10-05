@@ -31,13 +31,13 @@ export const FeedbackDialog = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke('send-feedback', {
-        body: {
+      const { error } = await supabase
+        .from('feedback')
+        .insert({
           name: name.trim(),
           email: email.trim(),
           message: message.trim()
-        }
-      });
+        });
 
       if (error) throw error;
 

@@ -239,25 +239,25 @@ const Dashboard = () => {
         <div className="h-full overflow-y-auto pt-16 px-4 sm:px-6 lg:px-8 py-6">
           <div className="container max-w-6xl mx-auto">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
               <div>
-                <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
-                <p className="text-muted-foreground">Generate formulas, SQL, regex, and code snippets instantly</p>
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Dashboard</h1>
+                <p className="text-sm sm:text-base text-muted-foreground">Generate formulas, SQL, regex, and code snippets instantly</p>
               </div>
               
-              <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline" className="flex items-center space-x-2">
                   <Zap className="w-4 h-4" />
-                  <span>{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
+                  <span className="text-xs sm:text-sm">{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
                 </Badge>
                 <Badge 
                   variant={requestsRemaining > 1 || requestsRemaining === Infinity ? "default" : "destructive"} 
                   className="flex items-center space-x-2"
                 >
-                  <span>
+                  <span className="text-xs sm:text-sm">
                     {requestsRemaining === Infinity 
-                      ? "Unlimited requests" 
-                      : `${requestsRemaining} of ${requestsLimit} requests left`}
+                      ? "Unlimited" 
+                      : `${requestsRemaining}/${requestsLimit} left`}
                   </span>
                 </Badge>
               </div>
@@ -275,12 +275,12 @@ const Dashboard = () => {
                       className="flex items-center space-x-2"
                     >
                       <RotateCcw className="w-4 h-4" />
-                      <span>Reset</span>
+                      <span className="hidden sm:inline">Reset</span>
                     </Button>
                     <Button
                       variant="outline"
                       onClick={handleModeSwitch}
-                      className="flex items-center space-x-2"
+                      className="hidden md:flex items-center space-x-2"
                     >
                       <ArrowLeftRight className="w-4 h-4" />
                       <span>Switch Mode</span>
