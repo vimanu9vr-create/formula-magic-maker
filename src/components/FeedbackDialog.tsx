@@ -7,6 +7,22 @@ import { Label } from "@/components/ui/label";
 import { MessageSquare, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const feedbackSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(1, "Name is required")
+    .max(100, "Name must be less than 100 characters"),
+  email: z.string()
+    .trim()
+    .email("Invalid email address")
+    .max(255, "Email must be less than 255 characters"),
+  message: z.string()
+    .trim()
+    .min(10, "Message must be at least 10 characters")
+    .max(5000, "Message must be less than 5000 characters")
+});
 
 export const FeedbackDialog = () => {
   const [open, setOpen] = useState(false);
@@ -14,15 +30,26 @@ export const FeedbackDialog = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+
+    // Validate input
+    const validation = feedbackSchema.safeParse({ name, email, message });
     
-    if (!name.trim() || !email.trim() || !message.trim()) {
+    if (!validation.success) {
+      const fieldErrors: { name?: string; email?: string; message?: string } = {};
+      validation.error.errors.forEach((err) => {
+        const field = err.path[0] as 'name' | 'email' | 'message';
+        fieldErrors[field] = err.message;
+      });
+      setErrors(fieldErrors);
       toast({
-        title: "Missing Information",
-        description: "Please fill in all fields",
+        title: "Validation Error",
+        description: "Please fix the errors in the form",
         variant: "destructive"
       });
       return;
@@ -34,9 +61,9 @@ export const FeedbackDialog = () => {
       const { error } = await supabase
         .from('feedback')
         .insert({
-          name: name.trim(),
-          email: email.trim(),
-          message: message.trim()
+          name: validation.data.name,
+          email: validation.data.email,
+          message: validation.data.message
         });
 
       if (error) throw error;
@@ -87,7 +114,9 @@ export const FeedbackDialog = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={isSubmitting}
+              maxLength={100}
             />
+            {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -98,7 +127,9 @@ export const FeedbackDialog = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isSubmitting}
+              maxLength={255}
             />
+            {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="message">Message</Label>
@@ -109,7 +140,9 @@ export const FeedbackDialog = () => {
               onChange={(e) => setMessage(e.target.value)}
               className="min-h-[120px]"
               disabled={isSubmitting}
+              maxLength={5000}
             />
+            {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
           </div>
           <Button 
             type="submit" 

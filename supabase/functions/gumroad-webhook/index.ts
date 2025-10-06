@@ -16,6 +16,16 @@ serve(async (req) => {
   try {
     console.log('Gumroad webhook received');
     
+    // SECURITY: Verify webhook secret
+    const url = new URL(req.url);
+    const providedSecret = url.searchParams.get('secret');
+    const expectedSecret = Deno.env.get('GUMROAD_WEBHOOK_SECRET');
+    
+    if (!expectedSecret || providedSecret !== expectedSecret) {
+      console.error('Webhook authentication failed');
+      return new Response('Unauthorized', { status: 401, headers: corsHeaders });
+    }
+    
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -29,7 +39,17 @@ serve(async (req) => {
       body[key] = value.toString();
     }
     
-    console.log('Webhook payload:', body);
+    // Log payload without sensitive data
+    console.log('Webhook payload received:', {
+      seller_id: body.seller_id ? '[REDACTED]' : undefined,
+      product_id: body.product_id,
+      short_product_id: body.short_product_id,
+      sale_id: body.sale_id ? '[REDACTED]' : undefined,
+      product_name: body.product_name,
+      price: body.price,
+      currency: body.currency,
+      email: body.purchaser_email || body.email ? '[REDACTED]' : undefined
+    });
 
     // Verify webhook authenticity (Gumroad sends specific fields)
     const purchaserEmail = body.purchaser_email || body.email;
@@ -75,7 +95,7 @@ serve(async (req) => {
       }
     }
 
-    console.log(`Processing purchase: ${purchaserEmail} -> ${planType} plan`);
+    console.log(`Processing purchase for plan: ${planType}`);
 
     // Find user by email and update their plan
     const { data: profile, error: profileError } = await supabaseClient
@@ -113,10 +133,10 @@ serve(async (req) => {
       return new Response('Failed to update plan', { status: 500, headers: corsHeaders });
     }
 
-    console.log(`Successfully updated ${purchaserEmail} to ${planType} plan`);
+    console.log(`Successfully updated user to ${planType} plan`);
 
-    // Log the successful purchase
-    console.log(`Purchase processed: Sale ID: ${sale_id}, Email: ${purchaserEmail}, Plan: ${planType}, Price: ${price} ${currency}`);
+    // Log the successful purchase without sensitive data
+    console.log(`Purchase processed: Plan: ${planType}, Price: ${price} ${currency}`);
 
     return new Response('Webhook processed successfully', {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

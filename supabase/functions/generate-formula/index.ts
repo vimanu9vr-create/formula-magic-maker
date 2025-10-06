@@ -42,6 +42,8 @@ serve(async (req) => {
     }
 
     const { input, type } = await req.json();
+    
+    console.log('Request received:', { type });
 
     // Check user's usage limits
     const { data: profile, error: profileError } = await supabase
@@ -51,12 +53,14 @@ serve(async (req) => {
       .single();
 
     if (profileError) {
-      console.error('Profile fetch error:', profileError);
+      console.error('Profile fetch error');
       return new Response(JSON.stringify({ error: 'User profile not found' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+    
+    console.log('User plan and usage retrieved');
 
     // Check if user has exceeded daily limit (free plan or expired plan = 5 requests)
     const isLimited = profile.plan === 'free' || profile.plan_status === 'expired';

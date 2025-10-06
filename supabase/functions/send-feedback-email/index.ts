@@ -20,6 +20,18 @@ interface WebhookPayload {
   schema: string;
 }
 
+// Escape HTML to prevent injection
+function escapeHtml(text: string): string {
+  const map: { [key: string]: string } = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+}
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -55,13 +67,13 @@ const handler = async (req: Request): Promise<Response> => {
       subject: `New Feedback from ${name}`,
       html: `
         <h2>New Feedback Received</h2>
-        <p><strong>From:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>From:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <hr style="margin: 20px 0;">
         <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
+        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
         <hr style="margin: 20px 0;">
-        <p style="color: #666; font-size: 12px;">Reply directly to this email to respond to ${email}</p>
+        <p style="color: #666; font-size: 12px;">Reply directly to this email to respond to ${escapeHtml(email)}</p>
       `,
     });
 
@@ -73,13 +85,13 @@ const handler = async (req: Request): Promise<Response> => {
       to: [email],
       subject: "We received your feedback!",
       html: `
-        <h2>Thank you for your feedback, ${name}!</h2>
+        <h2>Thank you for your feedback, ${escapeHtml(name)}!</h2>
         <p>We've received your message and will get back to you soon.</p>
         <hr style="margin: 20px 0;">
         <p><strong>Your message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
+        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
         <hr style="margin: 20px 0;">
-        <p style="color: #666; font-size: 12px;">This is an automated confirmation. Our team will review your feedback and respond to ${email} shortly.</p>
+        <p style="color: #666; font-size: 12px;">This is an automated confirmation. Our team will review your feedback and respond to ${escapeHtml(email)} shortly.</p>
       `,
     });
 
