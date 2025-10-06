@@ -3,6 +3,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { useProfile } from "@/hooks/useProfile";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import { useState } from "react";
 
 const Navigation = () => {
   const location = useLocation();
@@ -10,6 +13,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { profile } = useProfile();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSignOut = async () => {
     const { error } = await signOut();
@@ -88,7 +92,7 @@ const Navigation = () => {
                 <span className="text-xs sm:text-sm text-muted-foreground hidden lg:block truncate max-w-[150px]">
                   {user.email}
                 </span>
-                <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-medium" onClick={handleSignOut}>
+                <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-medium hidden md:inline-flex" onClick={handleSignOut}>
                   Sign Out
                 </Button>
               </>
@@ -97,11 +101,86 @@ const Navigation = () => {
                 <Button variant="ghost" size="sm" className="text-xs sm:text-sm font-medium hidden sm:inline-flex" asChild>
                   <Link to="/auth">Sign In</Link>
                 </Button>
-                <Button size="sm" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant text-xs sm:text-sm" asChild>
+                <Button size="sm" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant text-xs sm:text-sm hidden md:inline-flex" asChild>
                   <Link to="/auth">Get Started</Link>
                 </Button>
               </>
             )}
+            
+            {/* Mobile Menu */}
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="sm" className="md:hidden">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[280px] sm:w-[350px]">
+                <nav className="flex flex-col space-y-4 mt-8">
+                  {(!user || profile?.plan === 'free' || profile?.plan_status === 'expired') && (
+                    <Link 
+                      to="/pricing" 
+                      className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Pricing
+                    </Link>
+                  )}
+                  {user ? (
+                    <>
+                      <Link 
+                        to="/dashboard" 
+                        className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Dashboard
+                      </Link>
+                      <Link 
+                        to="/library" 
+                        className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Library
+                      </Link>
+                      <Link 
+                        to="/account" 
+                        className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Account
+                      </Link>
+                      <div className="pt-4 border-t border-border">
+                        <Button 
+                          variant="outline" 
+                          className="w-full" 
+                          onClick={() => {
+                            handleSignOut();
+                            setIsOpen(false);
+                          }}
+                        >
+                          Sign Out
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <Link 
+                        to="/auth" 
+                        className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        Sign In
+                      </Link>
+                      <Button 
+                        className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant w-full" 
+                        asChild
+                      >
+                        <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
+                      </Button>
+                    </>
+                  )}
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
