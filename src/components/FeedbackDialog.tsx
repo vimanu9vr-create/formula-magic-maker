@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { MessageSquare, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
 
 const feedbackSchema = z.object({
@@ -32,10 +33,21 @@ export const FeedbackDialog = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+
+    // Check authentication
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to submit feedback",
+        variant: "destructive"
+      });
+      return;
+    }
 
     // Validate input
     const validation = feedbackSchema.safeParse({ name, email, message });
@@ -61,6 +73,7 @@ export const FeedbackDialog = () => {
       const { error } = await supabase
         .from('feedback')
         .insert({
+          user_id: user.id,
           name: validation.data.name,
           email: validation.data.email,
           message: validation.data.message
@@ -102,10 +115,20 @@ export const FeedbackDialog = () => {
         <DialogHeader>
           <DialogTitle>Send Feedback</DialogTitle>
           <DialogDescription>
-            Have suggestions, questions, or need support? We'd love to hear from you!
+            {user 
+              ? "Have suggestions, questions, or need support? We'd love to hear from you!"
+              : "Please log in to submit feedback and help us improve!"}
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {!user ? (
+          <div className="text-center py-4">
+            <p className="text-muted-foreground mb-4">You need to be logged in to submit feedback.</p>
+            <Button onClick={() => window.location.href = '/auth'}>
+              Go to Login
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -159,6 +182,7 @@ export const FeedbackDialog = () => {
             )}
           </Button>
         </form>
+        )}
       </DialogContent>
     </Dialog>
   );
