@@ -62,18 +62,34 @@ serve(async (req) => {
     
     console.log('User plan and usage retrieved');
 
-    // Check if user has exceeded daily limit (free plan or expired plan = 5 requests)
-    const isLimited = profile.plan === 'free' || profile.plan_status === 'expired';
-    const dailyLimit = isLimited ? 5 : Infinity;
+    // Determine daily limit based on plan
+    const planLower = (profile.plan || 'free').toLowerCase();
+    const isExpired = profile.plan_status === 'expired';
     
-    // Calculate usage in the last 24 hours from the requests table (robust rolling window)
+    let dailyLimit: number;
+    if (planLower === 'free' || isExpired) {
+      dailyLimit = 5;
+    } else if (planLower === 'ltd') {
+      dailyLimit = 25;
+    } else if (planLower === 'pro') {
+      dailyLimit = Infinity;
+    } else {
+      dailyLimit = 5; // Default to free tier
+    }
+    
+    // Calculate usage since UTC midnight (matches frontend display)
     const now = new Date();
-    const cutoffISO = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
+    const utcMidnight = new Date(Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate(),
+      0, 0, 0, 0
+    )).toISOString();
     const { count: recentCount, error: countError } = await supabase
       .from('requests')
       .select('id', { count: 'exact', head: true })
       .eq('user_id', user.id)
-      .gte('timestamp', cutoffISO);
+      .gte('timestamp', utcMidnight);
 
     if (countError) {
       console.error('Usage count error:', countError);
