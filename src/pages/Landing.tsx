@@ -48,7 +48,7 @@ const Landing = () => {
       name: "Free",
       price: "$0",
       period: "forever",
-      requests: "5 requests/day",
+      requests: "25 conversions/day",
       features: ["English to Formula", "Formula Explanation", "Basic Support"],
       cta: "Get Started",
       popular: false,
