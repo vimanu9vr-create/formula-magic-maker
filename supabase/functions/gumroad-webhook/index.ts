@@ -16,11 +16,25 @@ serve(async (req) => {
   try {
     console.log('Gumroad webhook received');
     
-    // SECURITY: Verify webhook secret
+    // SECURITY: Verify webhook secret (URL, header, or form field)
     const url = new URL(req.url);
-    const providedSecret = url.searchParams.get('secret');
     const expectedSecret = Deno.env.get('GUMROAD_WEBHOOK_SECRET');
-    
+
+    // Parse form data once (Gumroad sends multipart/form-data)
+    const formData = await req.formData();
+    const body: { [key: string]: string } = {};
+    for (const [key, value] of formData.entries()) {
+      body[key] = value.toString();
+    }
+
+    let providedSecret =
+      url.searchParams.get('secret') ||
+      req.headers.get('x-webhook-secret') ||
+      body['secret'] ||
+      body['webhook_secret'] ||
+      body['token'] ||
+      null;
+
     if (!expectedSecret || providedSecret !== expectedSecret) {
       console.error('Webhook authentication failed');
       return new Response('Unauthorized', { status: 401, headers: corsHeaders });
@@ -30,14 +44,6 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
-
-    // Gumroad sends form data, not JSON
-    const formData = await req.formData();
-    const body: { [key: string]: string } = {};
-    
-    for (const [key, value] of formData.entries()) {
-      body[key] = value.toString();
-    }
     
     // Log payload without sensitive data
     console.log('Webhook payload received:', {
@@ -102,11 +108,16 @@ serve(async (req) => {
       .from('profiles')
       .select('*')
       .eq('email', purchaserEmail)
-      .single();
+      .maybeSingle();
 
     if (profileError) {
       console.error('Error finding user profile:', profileError);
-      return new Response('User not found', { status: 404, headers: corsHeaders });
+      return new Response('User lookup error', { status: 500, headers: corsHeaders });
+    }
+
+    if (!profile) {
+      console.warn('No matching profile for purchaser email:', purchaserEmail);
+      return new Response('No matching user profile; ignoring', { status: 202, headers: corsHeaders });
     }
 
     // Calculate expiration date (30 days for monthly plans)
