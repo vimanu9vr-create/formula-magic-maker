@@ -11,18 +11,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
 const feedbackSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
   message: z.string().trim().min(10, "Message must be at least 10 characters").max(5000, "Message must be less than 5000 characters")
 });
 export const FeedbackDialog = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{
     name?: string;
-    email?: string;
     message?: string;
   }>({});
   const {
@@ -48,17 +45,15 @@ export const FeedbackDialog = () => {
     // Validate input
     const validation = feedbackSchema.safeParse({
       name,
-      email,
       message
     });
     if (!validation.success) {
       const fieldErrors: {
         name?: string;
-        email?: string;
         message?: string;
       } = {};
       validation.error.errors.forEach(err => {
-        const field = err.path[0] as 'name' | 'email' | 'message';
+        const field = err.path[0] as 'name' | 'message';
         fieldErrors[field] = err.message;
       });
       setErrors(fieldErrors);
@@ -76,7 +71,6 @@ export const FeedbackDialog = () => {
       } = await supabase.from('feedback').insert({
         user_id: user.id,
         name: validation.data.name,
-        email: validation.data.email,
         message: validation.data.message
       });
       if (error) throw error;
@@ -87,7 +81,6 @@ export const FeedbackDialog = () => {
 
       // Reset form
       setName("");
-      setEmail("");
       setMessage("");
       setOpen(false);
     } catch (error: any) {

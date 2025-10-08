@@ -204,16 +204,13 @@ const Pricing = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-hero">
         <div className="container max-w-4xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-6">
-            Still have questions?
+            Ready to get started?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8">
-            Our team is here to help you choose the right plan for your needs.
+            Start converting your ideas into formulas in seconds.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90" asChild>
-              <Link to="/auth">Contact Sales</Link>
-            </Button>
-            <Button size="lg" variant="outline" className="border-white/20 text-primary-foreground hover:bg-white/10" asChild>
               <Link to={user ? "/dashboard" : "/auth"}>Start Free Trial</Link>
             </Button>
           </div>
