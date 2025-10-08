@@ -18,7 +18,7 @@ serve(async (req) => {
     
     // SECURITY: Verify webhook secret (URL, header, or form field)
     const url = new URL(req.url);
-    const expectedSecret = Deno.env.get('GUMROAD_WEBHOOK_SECRET');
+    const expectedSecret = (Deno.env.get('GUMROAD_WEBHOOK_SECRET') ?? '').trim();
 
     // Parse form data once (Gumroad sends multipart/form-data)
     const formData = await req.formData();
@@ -27,13 +27,26 @@ serve(async (req) => {
       body[key] = value.toString();
     }
 
-    let providedSecret =
+    const providedSecretRaw =
       url.searchParams.get('secret') ||
       req.headers.get('x-webhook-secret') ||
       body['secret'] ||
       body['webhook_secret'] ||
       body['token'] ||
-      null;
+      '';
+    const providedSecret = providedSecretRaw.trim();
+
+    // Minimal auth diagnostics (no secret leakage)
+    console.log('Webhook auth debug', {
+      hasExpected: Boolean(expectedSecret),
+      urlHasSecret: Boolean(url.searchParams.get('secret')),
+      headerHasSecret: Boolean(req.headers.get('x-webhook-secret')),
+      formHasSecret: Boolean(body['secret'] || body['webhook_secret'] || body['token']),
+      expectedLen: expectedSecret.length,
+      providedLen: providedSecret.length,
+      expectedFp: expectedSecret ? `${expectedSecret.slice(0,3)}...${expectedSecret.slice(-3)}` : null,
+      providedFp: providedSecret ? `${providedSecret.slice(0,3)}...${providedSecret.slice(-3)}` : null,
+    });
 
     if (!expectedSecret || providedSecret !== expectedSecret) {
       console.error('Webhook authentication failed');
