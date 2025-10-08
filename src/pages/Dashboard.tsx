@@ -24,8 +24,21 @@ const Dashboard = () => {
   const { toast } = useToast();
   
   const planLower = (profile?.plan || 'free').toLowerCase();
-  const isLimited = planLower === 'free' || profile?.plan_status === 'expired';
-  const requestsLimit = isLimited ? 5 : Infinity;
+  const isExpired = profile?.plan_status === 'expired';
+  
+  // Determine request limits based on plan
+  let requestsLimit: number;
+  if (planLower === 'free' || isExpired) {
+    requestsLimit = 5;
+  } else if (planLower === 'ltd') {
+    requestsLimit = 25;
+  } else if (planLower === 'pro') {
+    requestsLimit = Infinity;
+  } else {
+    requestsLimit = 5; // Default to free tier
+  }
+  
+  const isLimited = requestsLimit !== Infinity;
   const requestsUsed = usageCount;
   const requestsRemaining = isLimited ? Math.max(0, requestsLimit - requestsUsed) : Infinity;
 
