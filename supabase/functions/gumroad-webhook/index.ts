@@ -27,29 +27,11 @@ serve(async (req) => {
       body[key] = value.toString();
     }
 
-    const providedSecretRaw =
-      url.searchParams.get('secret') ||
-      req.headers.get('x-webhook-secret') ||
-      body['secret'] ||
-      body['webhook_secret'] ||
-      body['token'] ||
-      '';
-    const providedSecret = providedSecretRaw.trim();
+    // SECURITY: Only accept webhook secret from HTTP header
+    const providedSecret = (req.headers.get('x-webhook-secret') || '').trim();
 
-    // Minimal auth diagnostics (no secret leakage)
-    console.log('Webhook auth debug', {
-      hasExpected: Boolean(expectedSecret),
-      urlHasSecret: Boolean(url.searchParams.get('secret')),
-      headerHasSecret: Boolean(req.headers.get('x-webhook-secret')),
-      formHasSecret: Boolean(body['secret'] || body['webhook_secret'] || body['token']),
-      expectedLen: expectedSecret.length,
-      providedLen: providedSecret.length,
-      expectedFp: expectedSecret ? `${expectedSecret.slice(0,3)}...${expectedSecret.slice(-3)}` : null,
-      providedFp: providedSecret ? `${providedSecret.slice(0,3)}...${providedSecret.slice(-3)}` : null,
-    });
-
-    if (!expectedSecret || providedSecret !== expectedSecret) {
-      console.error('Webhook authentication failed');
+    if (!expectedSecret || !providedSecret || providedSecret !== expectedSecret) {
+      console.error('Webhook authentication failed - missing or invalid secret in x-webhook-secret header');
       return new Response('Unauthorized', { status: 401, headers: corsHeaders });
     }
     
@@ -125,7 +107,7 @@ serve(async (req) => {
 
     if (profileError) {
       console.error('Error finding user profile:', profileError);
-      return new Response('User lookup error', { status: 500, headers: corsHeaders });
+      return new Response('Webhook processing failed', { status: 500, headers: corsHeaders });
     }
 
     if (!profile) {
@@ -154,7 +136,7 @@ serve(async (req) => {
 
     if (updateError) {
       console.error('Error updating user plan:', updateError);
-      return new Response('Failed to update plan', { status: 500, headers: corsHeaders });
+      return new Response('Webhook processing failed', { status: 500, headers: corsHeaders });
     }
 
     console.log(`Successfully updated user to ${planType} plan`);
@@ -168,12 +150,9 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error processing Gumroad webhook:', error);
-    return new Response(JSON.stringify({ 
-      error: 'Internal server error',
-      message: error instanceof Error ? error.message : 'Unknown error'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    return new Response('Webhook processing failed', { 
+      status: 500, 
+      headers: corsHeaders 
     });
   }
 });

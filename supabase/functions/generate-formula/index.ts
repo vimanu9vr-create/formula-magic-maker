@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -41,7 +42,38 @@ serve(async (req) => {
       });
     }
 
-    const { input, type } = await req.json();
+    // Input validation schema
+    const requestSchema = z.object({
+      input: z.string().trim().min(1, 'Input cannot be empty').max(5000, 'Input exceeds maximum length of 5000 characters'),
+      type: z.enum([
+        'english-to-formula', 
+        'formula-to-english', 
+        'explain-formula', 
+        'error-fix', 
+        'optimize', 
+        'sql-generator', 
+        'regex-generator', 
+        'python-generator', 
+        'javascript-generator',
+        'java-generator'
+      ])
+    });
+
+    const requestBody = await req.json();
+    const validation = requestSchema.safeParse(requestBody);
+    
+    if (!validation.success) {
+      console.log('Input validation failed:', validation.error.errors);
+      return new Response(JSON.stringify({ 
+        error: 'Invalid input',
+        message: 'Please check your input and try again'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
+    const { input, type } = validation.data;
     
     console.log('Request received:', { type });
 
@@ -53,9 +85,9 @@ serve(async (req) => {
       .single();
 
     if (profileError) {
-      console.error('Profile fetch error');
-      return new Response(JSON.stringify({ error: 'User profile not found' }), {
-        status: 404,
+      console.error('Profile fetch error:', profileError);
+      return new Response(JSON.stringify({ error: 'Unable to process your request. Please try again.' }), {
+        status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -93,7 +125,7 @@ serve(async (req) => {
 
     if (countError) {
       console.error('Usage count error:', countError);
-      return new Response(JSON.stringify({ error: 'Failed to check usage' }), {
+      return new Response(JSON.stringify({ error: 'Unable to process your request. Please try again.' }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -215,7 +247,12 @@ serve(async (req) => {
     
     if (!response.ok) {
       console.error('OpenAI API error:', openAIData);
-      throw new Error('Failed to generate response');
+      return new Response(JSON.stringify({ 
+        error: 'Unable to generate response. Please try again.'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const output = openAIData.choices[0].message.content.trim();
@@ -252,8 +289,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in generate-formula function:', error);
     return new Response(JSON.stringify({ 
-      error: 'Internal server error',
-      message: error instanceof Error ? error.message : 'Unknown error'
+      error: 'Unable to process your request. Please try again later.'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
