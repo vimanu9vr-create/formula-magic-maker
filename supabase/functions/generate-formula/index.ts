@@ -258,9 +258,10 @@ serve(async (req) => {
     const output = openAIData.choices[0].message.content.trim();
 
     // Save the request to database
-    const allowedTypes = ['english-to-formula','formula-to-english','explain-formula','error-fix','optimize','sql-generator','regex-generator','python-generator','javascript-generator'];
+    const allowedTypes = ['english-to-formula','formula-to-english','explain-formula','error-fix','optimize','sql-generator','regex-generator','python-generator','javascript-generator','java-generator'];
     const recordType = allowedTypes.includes(type) ? type : 'explain-formula';
-    await supabase
+    
+    const { error: insertError } = await supabase
       .from('requests')
       .insert({
         user_id: user.id,
@@ -269,11 +270,19 @@ serve(async (req) => {
         output
       });
 
+    if (insertError) {
+      console.error('Error saving request to database:', insertError);
+    }
+
     // Update usage count
-    await supabase
+    const { error: updateError } = await supabase
       .from('profiles')
       .update({ usage_count: currentUsage + 1 })
       .eq('user_id', user.id);
+
+    if (updateError) {
+      console.error('Error updating usage count:', updateError);
+    }
 
     return new Response(JSON.stringify({ 
       output,
