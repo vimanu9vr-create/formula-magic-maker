@@ -198,6 +198,11 @@ const Landing = () => {
               </div>
               <span className="font-bold text-xl text-foreground">FormulaGenie</span>
             </div>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 sm:mb-0">
+              <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms</Link>
+              <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy</Link>
+              <Link to="/refund" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Refund Policy</Link>
+            </div>
             <p className="text-sm text-muted-foreground">
               © 2024 FormulaGenie. All rights reserved.
             </p>

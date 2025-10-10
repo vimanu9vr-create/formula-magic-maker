@@ -216,6 +216,28 @@ const Pricing = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-secondary/30">
+        <div className="container max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <div className="flex items-center space-x-2 mb-4 sm:mb-0">
+              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-lg">F</span>
+              </div>
+              <span className="font-bold text-xl text-foreground">FormulaGenie</span>
+            </div>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 sm:mb-0">
+              <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms</Link>
+              <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy</Link>
+              <Link to="/refund" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Refund Policy</Link>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              © 2024 FormulaGenie. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
