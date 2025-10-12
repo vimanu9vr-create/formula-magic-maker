@@ -27,13 +27,28 @@ serve(async (req) => {
       body[key] = value.toString();
     }
 
-    // SECURITY: Only accept webhook secret from HTTP header
-    const providedSecret = (req.headers.get('x-webhook-secret') || '').trim();
+    // SECURITY: Check webhook secret from multiple sources (Gumroad can send it in different ways)
+    const providedSecret = (
+      req.headers.get('x-webhook-secret') ||
+      url.searchParams.get('secret') ||
+      body.secret ||
+      ''
+    ).trim();
 
     if (!expectedSecret || !providedSecret || providedSecret !== expectedSecret) {
-      console.error('Webhook authentication failed - missing or invalid secret in x-webhook-secret header');
+      console.error('Webhook authentication failed', {
+        hasExpectedSecret: !!expectedSecret,
+        hasProvidedSecret: !!providedSecret,
+        checkedLocations: {
+          header: !!req.headers.get('x-webhook-secret'),
+          urlParam: !!url.searchParams.get('secret'),
+          formField: !!body.secret
+        }
+      });
       return new Response('Unauthorized', { status: 401, headers: corsHeaders });
     }
+    
+    console.log('Webhook authentication successful');
     
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
