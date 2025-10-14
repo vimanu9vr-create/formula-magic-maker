@@ -191,7 +191,7 @@ const Landing = () => {
       {/* Footer */}
       <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-secondary/30">
         <div className="container max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
             <div className="flex items-center space-x-2 mb-4 sm:mb-0">
               <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-lg">F</span>
@@ -206,6 +206,12 @@ const Landing = () => {
             <p className="text-sm text-muted-foreground">
               © 2024 FormulaGenie. All rights reserved.
             </p>
+          </div>
+          
+          <div className="flex justify-center pt-6 border-t border-border/50">
+            <a href="https://www.producthunt.com/products/formulagenie?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-formulagenie" target="_blank" rel="noopener noreferrer">
+              <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1026261&theme=light&t=1760405059440" alt="FormulaGenie - Turn plain english into excel formulas instantly | Product Hunt" style={{ width: '250px', height: '54px' }} width="250" height="54" />
+            </a>
           </div>
         </div>
       </footer>
