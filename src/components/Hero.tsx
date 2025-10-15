@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Copy, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/dashboard-screenshot.png";
 
 const Hero = () => {
   const [inputText, setInputText] = useState("Find the average of values in column A where column B contains 'completed'");
@@ -86,7 +86,7 @@ const Hero = () => {
           <div className="relative">
             <img
               src={heroImage}
-              alt="FormulaGenie Interface"
+              alt="FormulaGenie AI Code Generator Dashboard showing Excel formula generation"
               className="rounded-2xl shadow-elegant w-full h-auto"
             />
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-2xl"></div>
