@@ -84,10 +84,10 @@ const Landing = () => {
         <div className="container max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Everything you need to master Excel formulas
+              Everything you need for Excel, SQL, Python, JavaScript & more
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Powerful features designed to make spreadsheet work effortless and efficient.
+              Powerful AI features designed to make coding and data work effortless and efficient.
             </p>
           </div>
 

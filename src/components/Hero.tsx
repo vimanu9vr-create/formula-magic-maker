@@ -17,13 +17,13 @@ const Hero = () => {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
             Turn plain English into{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Excel formulas
+              Excel, SQL, Python & more
             </span>{" "}
             instantly
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Stop struggling with complex Excel formulas. FormulaGenie converts your plain English descriptions 
-            into perfect formulas and explains existing formulas in simple terms.
+            Stop struggling with complex formulas and code. FormulaGenie converts your plain English descriptions 
+            into perfect Excel formulas, SQL queries, Python scripts, JavaScript code, and more.
           </p>
           
           <div className="flex justify-center mb-12">
