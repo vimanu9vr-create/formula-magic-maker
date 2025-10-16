@@ -14,7 +14,7 @@ const TermsOfService = () => {
             <section>
               <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
               <p className="text-muted-foreground mb-4">
-                By accessing and using FormulaGenie ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use the Service.
+                By accessing and using FormulaGenie ("the Service"), a product operated by AI Finova Edge ("Company", "we", "our"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use the Service.
               </p>
             </section>
 
@@ -56,14 +56,14 @@ const TermsOfService = () => {
             <section>
               <h2 className="text-2xl font-semibold mb-4">6. Intellectual Property</h2>
               <p className="text-muted-foreground mb-4">
-                The Service and its original content, features, and functionality are owned by FormulaGenie and are protected by international copyright, trademark, and other intellectual property laws. You retain ownership of any formulas or code you create using the Service.
+                The Service and its original content, features, and functionality are owned by AI Finova Edge and are protected by international copyright, trademark, and other intellectual property laws. You retain ownership of any formulas or code you create using the Service.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">7. Limitation of Liability</h2>
               <p className="text-muted-foreground mb-4">
-                The Service is provided "as is" without warranties of any kind. FormulaGenie shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service.
+                The Service is provided "as is" without warranties of any kind. AI Finova Edge shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service.
               </p>
             </section>
 
@@ -116,7 +116,7 @@ const TermsOfService = () => {
               <Link to="/refund" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Refund Policy</Link>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 FormulaGenie. All rights reserved.
+              © 2024 AI Finova Edge. All rights reserved.
             </p>
           </div>
         </div>

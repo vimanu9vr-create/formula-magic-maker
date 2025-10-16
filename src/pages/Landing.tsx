@@ -204,7 +204,7 @@ const Landing = () => {
               <Link to="/refund" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Refund Policy</Link>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 FormulaGenie. All rights reserved.
+              © 2024 AI Finova Edge. All rights reserved.
             </p>
           </div>
           

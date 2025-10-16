@@ -11,6 +11,10 @@ const PrivacyPolicy = () => {
           <h1 className="text-4xl font-bold text-foreground mb-8">Privacy Policy</h1>
           
           <div className="prose prose-slate dark:prose-invert max-w-none space-y-6 text-foreground">
+            <p className="text-muted-foreground mb-6">
+              This Privacy Policy describes how AI Finova Edge ("Company", "we", "our") collects, uses, and protects your information when you use FormulaGenie ("the Service").
+            </p>
+
             <section>
               <h2 className="text-2xl font-semibold mb-4">1. Information We Collect</h2>
               <p className="text-muted-foreground mb-4">
@@ -143,7 +147,7 @@ const PrivacyPolicy = () => {
               <Link to="/refund" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Refund Policy</Link>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 FormulaGenie. All rights reserved.
+              © 2024 AI Finova Edge. All rights reserved.
             </p>
           </div>
         </div>

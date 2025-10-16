@@ -11,10 +11,14 @@ const RefundPolicy = () => {
           <h1 className="text-4xl font-bold text-foreground mb-8">Refund Policy</h1>
           
           <div className="prose prose-slate dark:prose-invert max-w-none space-y-6 text-foreground">
+            <p className="text-muted-foreground mb-6">
+              This Refund Policy is provided by AI Finova Edge ("Company", "we", "our"), the operator of FormulaGenie ("the Service").
+            </p>
+
             <section>
-              <h2 className="text-2xl font-semibold mb-4">30-Day Money-Back Guarantee</h2>
+              <h2 className="text-2xl font-semibold mb-4">14-Day Money-Back Guarantee</h2>
               <p className="text-muted-foreground mb-4">
-                We stand behind the quality of FormulaGenie. If you're not completely satisfied with your purchase, we offer a 30-day money-back guarantee for all paid plans.
+                We stand behind the quality of FormulaGenie. If you're not completely satisfied with your purchase, we offer a 14-day money-back guarantee for all paid plans, in compliance with our payment processor's requirements.
               </p>
             </section>
 
@@ -24,7 +28,7 @@ const RefundPolicy = () => {
                 You are eligible for a full refund if:
               </p>
               <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                <li>You request a refund within 30 days of your purchase date</li>
+                <li>You request a refund within 14 days of your purchase date</li>
                 <li>You have a valid reason for requesting a refund</li>
                 <li>You purchased a Pro monthly subscription or Lifetime Deal (LTD)</li>
               </ul>
@@ -36,7 +40,7 @@ const RefundPolicy = () => {
                 Refunds will not be provided in the following cases:
               </p>
               <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                <li>Requests made after 30 days from the purchase date</li>
+                <li>Requests made after 14 days from the purchase date</li>
                 <li>Violation of our Terms of Service</li>
                 <li>Abuse of the refund policy</li>
                 <li>After significant usage that indicates full acceptance of the service</li>
@@ -72,14 +76,14 @@ const RefundPolicy = () => {
                 <li>You can cancel your subscription at any time from your account settings</li>
                 <li>Cancellations take effect at the end of the current billing period</li>
                 <li>You will retain access to Pro features until the end of your paid period</li>
-                <li>No partial refunds are provided for unused portions of the billing cycle after the 30-day guarantee period</li>
+                <li>No partial refunds are provided for unused portions of the billing cycle after the 14-day guarantee period</li>
               </ul>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">Lifetime Deal (LTD) Refunds</h2>
               <p className="text-muted-foreground mb-4">
-                Lifetime Deal purchases are eligible for refunds within 30 days of purchase. After this period, all LTD sales are final due to the nature of the one-time payment structure.
+                Lifetime Deal purchases are eligible for refunds within 14 days of purchase. After this period, all LTD sales are final due to the nature of the one-time payment structure.
               </p>
             </section>
 
@@ -139,7 +143,7 @@ const RefundPolicy = () => {
               <Link to="/refund" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Refund Policy</Link>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 FormulaGenie. All rights reserved.
+              © 2024 AI Finova Edge. All rights reserved.
             </p>
           </div>
         </div>
