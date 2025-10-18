@@ -207,12 +207,6 @@ const Landing = () => {
               © 2024 AI Finova Edge. All rights reserved.
             </p>
           </div>
-          
-          <div className="flex justify-center pt-6 border-t border-border/50">
-            <a href="https://www.producthunt.com/products/formulagenie?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-formulagenie" target="_blank" rel="noopener noreferrer">
-              <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1026261&theme=light&t=1760405059440" alt="FormulaGenie - Turn plain english into excel formulas instantly | Product Hunt" style={{ width: '250px', height: '54px' }} width="250" height="54" />
-            </a>
-          </div>
         </div>
       </footer>
     </div>
