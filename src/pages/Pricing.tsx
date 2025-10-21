@@ -29,6 +29,7 @@ const Pricing = () => {
       cta: "Get Lifetime Access",
       popular: true,
       badge: "Launch Special",
+      lemonSqueezyUrl: "YOUR_LTD_PRODUCT_URL", // Replace with your Lemon Squeezy product URL
     },
     {
       name: "Free",
@@ -67,6 +68,7 @@ const Pricing = () => {
       limitations: [],
       cta: "Subscribe Monthly",
       popular: false,
+      lemonSqueezyUrl: "YOUR_PRO_PRODUCT_URL", // Replace with your Lemon Squeezy product URL
     },
   ];
 
@@ -154,17 +156,29 @@ const Pricing = () => {
                   )}
                 </div>
 
-                <Button 
-                  className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-orange-glow hover:shadow-orange-intense transition-glow' : ''}`}
-                  variant={plan.popular ? 'default' : 'outline'}
-                  size="lg"
-                  asChild
-                >
-                  <Link to={user ? "/dashboard" : "/auth"}>
+                {plan.lemonSqueezyUrl && plan.lemonSqueezyUrl !== 'YOUR_LTD_PRODUCT_URL' && plan.lemonSqueezyUrl !== 'YOUR_PRO_PRODUCT_URL' ? (
+                  <Button 
+                    className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-orange-glow hover:shadow-orange-intense transition-glow' : ''}`}
+                    variant={plan.popular ? 'default' : 'outline'}
+                    size="lg"
+                    onClick={() => window.open(plan.lemonSqueezyUrl, '_blank')}
+                  >
                     {plan.cta}
                     <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
-                </Button>
+                  </Button>
+                ) : (
+                  <Button 
+                    className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-orange-glow hover:shadow-orange-intense transition-glow' : ''}`}
+                    variant={plan.popular ? 'default' : 'outline'}
+                    size="lg"
+                    asChild
+                  >
+                    <Link to={user ? "/dashboard" : "/auth"}>
+                      {plan.cta}
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Link>
+                  </Button>
+                )}
               </Card>
             ))}
           </div>
