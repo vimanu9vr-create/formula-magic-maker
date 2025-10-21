@@ -54,12 +54,31 @@ serve(async (req) => {
     
     if (eventName === 'order_created' || eventName === 'subscription_created') {
       const data = body.data;
-      const attributes = data.attributes;
-      const userEmail = attributes.user_email;
-      const productId = data.id || '';
-      const variantId = attributes.variant_id || '';
-      const productName = attributes.product_name?.toLowerCase() || '';
-      const variantName = attributes.variant_name?.toLowerCase() || '';
+      const attributes: any = data?.attributes || {};
+      const userEmail = attributes.user_email || attributes.email;
+      const included: any[] = Array.isArray(body.included) ? body.included : [];
+
+      // Try to extract product/variant IDs and names from multiple possible locations
+      let productId: string | number | null = null;
+      let variantId: string | number | null = null;
+      let productName: string = (attributes.product_name || '').toLowerCase();
+      let variantName: string = (attributes.variant_name || '').toLowerCase();
+
+      const rel: any = (data as any)?.relationships || {};
+      try { productId = rel.product?.data?.id ?? productId; } catch (_) {}
+      try { variantId = rel.variant?.data?.id ?? variantId; } catch (_) {}
+
+      // Scan included resources (order-items, subscription-items, etc.)
+      for (const item of included) {
+        const type = (item?.type || '').toString().toLowerCase();
+        const attrs = item?.attributes || {};
+        if (type.includes('order-item') || type.includes('order_item') || type.includes('subscription-item')) {
+          if (!variantId && attrs.variant_id != null) variantId = attrs.variant_id;
+          if (!productId && attrs.product_id != null) productId = attrs.product_id;
+          if (!productName && attrs.product_name) productName = String(attrs.product_name).toLowerCase();
+          if (!variantName && attrs.variant_name) variantName = String(attrs.variant_name).toLowerCase();
+        }
+      }
       
       if (!userEmail) {
         console.error('No user email in webhook payload');
@@ -70,22 +89,30 @@ serve(async (req) => {
       console.log('Product ID:', productId, 'Variant ID:', variantId);
       console.log('Product name:', productName, 'Variant name:', variantName);
       
-      // Determine plan type based on product ID (most reliable) or product/variant name
+      // Determine plan type based on configurable IDs or product/variant name
       let planType: 'free' | 'ltd' | 'pro' = 'free';
       
-      // LTD product URL: https://xcel.lemonsqueezy.com/buy/a169b4c4-c7c8-4bed-a3e6-ead8aaf6ed8c
-      // Pro product URL: https://xcel.lemonsqueezy.com/buy/f0d43528-f380-4b5a-9aea-02b471a0104d
-      const ltdVariantId = 'a169b4c4-c7c8-4bed-a3e6-ead8aaf6ed8c';
-      const proVariantId = 'f0d43528-f380-4b5a-9aea-02b471a0104d';
-      
-      if (variantId === ltdVariantId || productId === ltdVariantId ||
-          productName.includes('lifetime') || productName.includes('ltd') || 
-          variantName.includes('lifetime') || variantName.includes('ltd')) {
+      const ltdIdsEnv = (Deno.env.get('LEMONSQUEEZY_LTD_IDS') || '')
+        .split(',').map(s => s.trim()).filter(Boolean);
+      const proIdsEnv = (Deno.env.get('LEMONSQUEEZY_PRO_IDS') || '')
+        .split(',').map(s => s.trim()).filter(Boolean);
+
+      const prodIdStr = productId != null ? String(productId) : '';
+      const varIdStr = variantId != null ? String(variantId) : '';
+
+      if (ltdIdsEnv.includes(prodIdStr) || ltdIdsEnv.includes(varIdStr)) {
         planType = 'ltd';
-      } else if (variantId === proVariantId || productId === proVariantId ||
-                 productName.includes('pro') || variantName.includes('pro') ||
-                 eventName === 'subscription_created') {
+      } else if (proIdsEnv.includes(prodIdStr) || proIdsEnv.includes(varIdStr)) {
         planType = 'pro';
+      } else {
+        // Fallback to name-based heuristics
+        if (productName.includes('lifetime') || productName.includes('ltd') || 
+            variantName.includes('lifetime') || variantName.includes('ltd')) {
+          planType = 'ltd';
+        } else if (productName.includes('pro') || variantName.includes('pro') ||
+                   eventName === 'subscription_created') {
+          planType = 'pro';
+        }
       }
       
       console.log(`Determined plan type: ${planType}`);
