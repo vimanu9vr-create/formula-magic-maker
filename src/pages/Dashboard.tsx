@@ -44,7 +44,7 @@ const Dashboard = () => {
   const requestsRemaining = isLimited ? Math.max(0, requestsLimit - requestsUsed) : Infinity;
 
   const modes = [
-    { key: "english-to-formula", label: "English → Formula", icon: "→" },
+    { key: "english-to-formula", label: "English to Excel Formula", icon: "→" },
     { key: "formula-to-english", label: "Formula → English", icon: "←" },
     { key: "explain-formula", label: "Explain Formula", icon: "📚" },
     { key: "error-fix", label: "Fix Formula", icon: "🔧" },
