@@ -70,6 +70,7 @@ const Landing = () => {
       features: ["Everything in Pro", "Lifetime access", "Formula library", "Error detection", "Data analysis", "Formula optimization", "No recurring fees"],
       cta: "Get Lifetime Deal",
       popular: true,
+      lemonSqueezyUrl: "https://xcel.lemonsqueezy.com/buy/a169b4c4-c7c8-4bed-a3e6-ead8aaf6ed8c?discount=0",
     },
   ];
 
@@ -149,16 +150,27 @@ const Landing = () => {
                   ))}
                 </ul>
 
-                <Button 
-                  className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant' : ''}`}
-                  variant={plan.popular ? 'default' : 'outline'}
-                  asChild
-                >
-                  <Link to={user ? "/dashboard" : "/auth"}>
+                {(plan as any).lemonSqueezyUrl ? (
+                  <Button 
+                    className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant' : ''}`}
+                    variant={plan.popular ? 'default' : 'outline'}
+                    onClick={() => window.open((plan as any).lemonSqueezyUrl, '_blank')}
+                  >
                     {plan.cta}
                     <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
-                </Button>
+                  </Button>
+                ) : (
+                  <Button 
+                    className={`w-full ${plan.popular ? 'bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant' : ''}`}
+                    variant={plan.popular ? 'default' : 'outline'}
+                    asChild
+                  >
+                    <Link to={user ? "/dashboard" : "/auth"}>
+                      {plan.cta}
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Link>
+                  </Button>
+                )}
               </Card>
             ))}
           </div>

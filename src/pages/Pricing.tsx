@@ -29,7 +29,7 @@ const Pricing = () => {
       cta: "Get Lifetime Access",
       popular: true,
       badge: "Launch Special",
-      lemonSqueezyUrl: "YOUR_LTD_PRODUCT_URL", // Replace with your Lemon Squeezy product URL
+      lemonSqueezyUrl: "https://xcel.lemonsqueezy.com/buy/a169b4c4-c7c8-4bed-a3e6-ead8aaf6ed8c?discount=0",
     },
     {
       name: "Free",
