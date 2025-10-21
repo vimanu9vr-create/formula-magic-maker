@@ -10,6 +10,7 @@ import { useProfile } from "@/hooks/useProfile";
 import { useUsageCount } from "@/hooks/useUsageCount";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [mode, setMode] = useState<"english-to-formula" | "formula-to-english" | "explain-formula" | "error-fix" | "optimize" | "sql-generator" | "regex-generator" | "python-generator" | "javascript-generator">("english-to-formula");
@@ -394,9 +395,9 @@ const Dashboard = () => {
                     </p>
                     <Button 
                       className="bg-gradient-primary text-primary-foreground hover:opacity-90"
-                      onClick={() => window.open("https://aiformulagenie.gumroad.com/l/zzjoi", "_blank")}
+                      asChild
                     >
-                      Upgrade to Pro
+                      <Link to="/pricing">Upgrade to Pro</Link>
                     </Button>
                   </div>
                 </Card>
@@ -470,9 +471,9 @@ const Dashboard = () => {
                   <Button 
                     variant="secondary" 
                     className="w-full bg-white text-primary hover:bg-white/90"
-                    onClick={() => window.open("https://aiformulagenie.gumroad.com/l/zzjoi", "_blank")}
+                    asChild
                   >
-                    Upgrade Now
+                    <Link to="/pricing">Upgrade Now</Link>
                   </Button>
                 </Card>
               )}
