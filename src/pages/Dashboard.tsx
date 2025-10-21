@@ -45,9 +45,9 @@ const Dashboard = () => {
 
   const modes = [
     { key: "english-to-formula", label: "English to Excel Formula", icon: "→" },
-    { key: "formula-to-english", label: "Formula → English", icon: "←" },
+    { key: "formula-to-english", label: "Excel Formula to English", icon: "←" },
     { key: "explain-formula", label: "Explain Formula", icon: "📚" },
-    { key: "error-fix", label: "Fix Formula", icon: "🔧" },
+    { key: "error-fix", label: "Fix Excel Formula", icon: "🔧" },
     { key: "optimize", label: "Optimize Formula", icon: "⚡" },
     { key: "sql-generator", label: "SQL Generator", icon: "🗄️" },
     { key: "regex-generator", label: "Regex Generator", icon: "🔍" },
