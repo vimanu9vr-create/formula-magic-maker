@@ -61,6 +61,7 @@ const Landing = () => {
       features: ["Everything in Free", "Unlimited conversions", "Priority support", "Advanced formulas"],
       cta: "Start Pro Trial",
       popular: false,
+      lemonSqueezyUrl: "https://xcel.lemonsqueezy.com/buy/f0d43528-f380-4b5a-9aea-02b471a0104d",
     },
     {
       name: "LTD Special",

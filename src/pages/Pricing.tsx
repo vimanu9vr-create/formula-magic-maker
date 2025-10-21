@@ -68,7 +68,7 @@ const Pricing = () => {
       limitations: [],
       cta: "Subscribe Monthly",
       popular: false,
-      lemonSqueezyUrl: "YOUR_PRO_PRODUCT_URL", // Replace with your Lemon Squeezy product URL
+      lemonSqueezyUrl: "https://xcel.lemonsqueezy.com/buy/f0d43528-f380-4b5a-9aea-02b471a0104d",
     },
   ];
 
