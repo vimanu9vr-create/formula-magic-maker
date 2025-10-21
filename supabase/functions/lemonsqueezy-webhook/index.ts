@@ -56,6 +56,8 @@ serve(async (req) => {
       const data = body.data;
       const attributes = data.attributes;
       const userEmail = attributes.user_email;
+      const productId = data.id || '';
+      const variantId = attributes.variant_id || '';
       const productName = attributes.product_name?.toLowerCase() || '';
       const variantName = attributes.variant_name?.toLowerCase() || '';
       
@@ -65,14 +67,23 @@ serve(async (req) => {
       }
       
       console.log('Processing purchase for:', userEmail);
+      console.log('Product ID:', productId, 'Variant ID:', variantId);
+      console.log('Product name:', productName, 'Variant name:', variantName);
       
-      // Determine plan type based on product/variant name
+      // Determine plan type based on product ID (most reliable) or product/variant name
       let planType: 'free' | 'ltd' | 'pro' = 'free';
       
-      if (productName.includes('lifetime') || productName.includes('ltd') || 
+      // LTD product URL: https://xcel.lemonsqueezy.com/buy/a169b4c4-c7c8-4bed-a3e6-ead8aaf6ed8c
+      // Pro product URL: https://xcel.lemonsqueezy.com/buy/f0d43528-f380-4b5a-9aea-02b471a0104d
+      const ltdVariantId = 'a169b4c4-c7c8-4bed-a3e6-ead8aaf6ed8c';
+      const proVariantId = 'f0d43528-f380-4b5a-9aea-02b471a0104d';
+      
+      if (variantId === ltdVariantId || productId === ltdVariantId ||
+          productName.includes('lifetime') || productName.includes('ltd') || 
           variantName.includes('lifetime') || variantName.includes('ltd')) {
         planType = 'ltd';
-      } else if (productName.includes('pro') || variantName.includes('pro') ||
+      } else if (variantId === proVariantId || productId === proVariantId ||
+                 productName.includes('pro') || variantName.includes('pro') ||
                  eventName === 'subscription_created') {
         planType = 'pro';
       }
