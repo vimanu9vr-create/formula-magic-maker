@@ -52,7 +52,7 @@ serve(async (req) => {
     // Handle different event types
     const eventName = body.meta?.event_name;
     
-    if (eventName === 'order_created' || eventName === 'subscription_created') {
+    if (eventName === 'order_created' || eventName === 'subscription_created' || eventName === 'subscription_payment_success' || eventName === 'license_key_created') {
       const data = body.data;
       const attributes: any = data?.attributes || {};
       const userEmail = attributes.user_email || attributes.email;
@@ -95,6 +95,12 @@ serve(async (req) => {
       const amount = total || subtotal;
       
       console.log('Payment amount:', amount, '(cents)');
+      
+      // Skip zero-amount events (e.g., subscription_created without payment) to avoid downgrades
+      if (!amount || amount <= 0) {
+        console.log('Zero-amount event; skipping plan update');
+        return new Response('No billing amount; skipping', { status: 202, headers: corsHeaders });
+      }
       
       // Determine plan type based on payment amount
       let planType: 'free' | 'ltd' | 'pro' = 'free';
