@@ -43,7 +43,7 @@ const Hero = () => {
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-semibold text-foreground">Plain English Input</h3>
                   <div className="text-xs bg-secondary px-2 py-1 rounded text-secondary-foreground">
-                    English → Formula
+                    English to Excel Formula
                   </div>
                 </div>
                 <Textarea
