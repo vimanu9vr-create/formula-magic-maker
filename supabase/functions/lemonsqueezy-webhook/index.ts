@@ -89,30 +89,22 @@ serve(async (req) => {
       console.log('Product ID:', productId, 'Variant ID:', variantId);
       console.log('Product name:', productName, 'Variant name:', variantName);
       
-      // Determine plan type based on configurable IDs or product/variant name
+      // Get payment amount (in cents)
+      const total = attributes.total || 0;
+      const subtotal = attributes.subtotal || 0;
+      const amount = total || subtotal;
+      
+      console.log('Payment amount:', amount, '(cents)');
+      
+      // Determine plan type based on payment amount
       let planType: 'free' | 'ltd' | 'pro' = 'free';
       
-      const ltdIdsEnv = (Deno.env.get('LEMONSQUEEZY_LTD_IDS') || '')
-        .split(',').map(s => s.trim()).filter(Boolean);
-      const proIdsEnv = (Deno.env.get('LEMONSQUEEZY_PRO_IDS') || '')
-        .split(',').map(s => s.trim()).filter(Boolean);
-
-      const prodIdStr = productId != null ? String(productId) : '';
-      const varIdStr = variantId != null ? String(variantId) : '';
-
-      if (ltdIdsEnv.includes(prodIdStr) || ltdIdsEnv.includes(varIdStr)) {
+      // $49 = 4900 cents → LTD
+      // $9 = 900 cents → Pro monthly
+      if (amount >= 4900) {
         planType = 'ltd';
-      } else if (proIdsEnv.includes(prodIdStr) || proIdsEnv.includes(varIdStr)) {
+      } else if (amount >= 900) {
         planType = 'pro';
-      } else {
-        // Fallback to name-based heuristics
-        if (productName.includes('lifetime') || productName.includes('ltd') || 
-            variantName.includes('lifetime') || variantName.includes('ltd')) {
-          planType = 'ltd';
-        } else if (productName.includes('pro') || variantName.includes('pro') ||
-                   eventName === 'subscription_created') {
-          planType = 'pro';
-        }
       }
       
       console.log(`Determined plan type: ${planType}`);
