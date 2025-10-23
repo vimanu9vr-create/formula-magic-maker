@@ -81,6 +81,30 @@ const Landing = () => {
       
       <Hero />
 
+      {/* SEO Content Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
+        <div className="container max-w-6xl mx-auto">
+          <div className="prose prose-lg max-w-none">
+            <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
+              AI Excel Formula Generator - Free Online Tool
+            </h2>
+            <div className="text-muted-foreground space-y-4 text-center max-w-4xl mx-auto">
+              <p className="text-lg leading-relaxed">
+                Transform the way you work with Excel using our powerful <strong>AI Excel Formula Generator</strong>. 
+                Whether you need to create complex formulas, analyze data, or generate charts, our free tool makes it simple. 
+                Just describe what you want in plain English, and our Excel AI instantly converts your text instructions into 
+                accurate formulas.
+              </p>
+              <p className="text-lg leading-relaxed">
+                Our <strong>Excel AI tool</strong> supports formula generation, explanation, optimization, and error detection. 
+                Beyond Excel, generate SQL queries, Python scripts, JavaScript code, and regular expressions - all from natural language. 
+                Perfect for beginners and professionals looking to boost productivity and eliminate formula errors.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
         <div className="container max-w-7xl mx-auto">

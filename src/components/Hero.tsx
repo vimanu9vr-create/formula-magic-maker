@@ -15,15 +15,14 @@ const Hero = () => {
       <div className="container max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Turn plain English into{" "}
+            Excel AI - Generate Formulas, Charts & Analysis{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Excel, SQL, Python & more
-            </span>{" "}
-            instantly
+              For Free
+            </span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Stop struggling with complex formulas and code. FormulaGenie converts your plain English descriptions 
-            into perfect Excel formulas, SQL queries, Python scripts, JavaScript code, and more.
+            AI Excel Formula Generator: Convert your text instructions into formulas or input a formula to have it explained. 
+            Our Excel AI tool helps you generate Excel formulas, SQL queries, Python scripts, JavaScript code, and more instantly.
           </p>
           
           <div className="flex justify-center mb-12">
