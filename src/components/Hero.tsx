@@ -37,11 +37,11 @@ const Hero = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <Card className="p-6 shadow-soft">
+            <Card className="p-6 shadow-elegant border-2">
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-semibold text-foreground">Plain English Input</h3>
-                  <div className="text-xs bg-secondary px-2 py-1 rounded text-secondary-foreground">
+                  <div className="text-xs bg-primary/10 px-3 py-1 rounded-full text-primary font-medium border border-primary/20">
                     English to Excel Formula
                   </div>
                 </div>
@@ -49,18 +49,18 @@ const Hero = () => {
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder="Describe what you want your formula to do..."
-                  className="min-h-[100px] resize-none"
+                  className="min-h-[100px] resize-none border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-background"
                 />
               </div>
               
-              <div className="border-t pt-4">
+              <div className="border-t-2 border-primary/10 pt-4">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-semibold text-foreground">Excel Formula Output</h3>
-                  <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                  <Button size="sm" variant="ghost" className="h-8 w-8 p-0 hover:bg-primary/10 hover:text-primary">
                     <Copy className="w-4 h-4" />
                   </Button>
                 </div>
-                <div className="bg-muted p-3 rounded-md font-mono text-sm">
+                <div className="bg-primary/5 p-4 rounded-lg font-mono text-sm border-2 border-primary/20 text-foreground">
                   {outputFormula}
                 </div>
               </div>
