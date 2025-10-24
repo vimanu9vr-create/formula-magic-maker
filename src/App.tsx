@@ -27,6 +27,7 @@ import ExcelDateFormulas from "./pages/ExcelDateFormulas";
 import ExcelTipsAndTricks from "./pages/ExcelTipsAndTricks";
 import CommonExcelFormulas from "./pages/CommonExcelFormulas";
 import ConditionalFormattingGuide from "./pages/ConditionalFormattingGuide";
+import Install from "./pages/Install";
 
 const queryClient = new QueryClient();
 
@@ -76,6 +77,7 @@ const App = () => (
           <Route path="/excel-tips-tricks" element={<ExcelTipsAndTricks />} />
           <Route path="/common-excel-formulas" element={<CommonExcelFormulas />} />
           <Route path="/conditional-formatting-guide" element={<ConditionalFormattingGuide />} />
+          <Route path="/install" element={<Install />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
