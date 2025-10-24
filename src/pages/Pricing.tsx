@@ -87,7 +87,7 @@ const Pricing = () => {
     },
     {
       question: "Is there a refund policy?",
-      answer: "We offer a 30-day money-back guarantee on all paid plans. If you're not satisfied, we'll refund your payment."
+      answer: "We offer a 14-day money-back guarantee on all paid plans. If you're not satisfied, we'll refund your payment."
     }
   ];
 

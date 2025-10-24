@@ -218,7 +218,7 @@ const Landing = () => {
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white/20 text-primary-foreground hover:bg-white/10" asChild>
+            <Button size="lg" variant="secondary" className="bg-white/10 text-white border-2 border-white hover:bg-white hover:text-primary backdrop-blur-sm" asChild>
               <Link to="/pricing">View Pricing</Link>
             </Button>
           </div>
