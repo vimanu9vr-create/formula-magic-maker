@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Landing = () => {
   const { user } = useAuth();
@@ -388,61 +394,73 @@ const Landing = () => {
             </p>
           </div>
 
-          <div className="space-y-4">
-            <Card className="p-6 hover:shadow-soft transition-shadow">
-              <h3 className="font-semibold text-lg text-foreground mb-2">
-                How does FormulaGenie work?
-              </h3>
-              <p className="text-muted-foreground">
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            <AccordionItem value="item-1" className="border border-border bg-card rounded-lg px-6">
+              <AccordionTrigger className="text-left hover:no-underline">
+                <span className="font-semibold text-lg text-foreground">
+                  How does FormulaGenie work?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-4">
                 Simply describe what you want in plain English, and our AI instantly converts it into the correct Excel formula, SQL query, or code. You can also paste existing formulas to get clear explanations.
-              </p>
-            </Card>
+              </AccordionContent>
+            </AccordionItem>
 
-            <Card className="p-6 hover:shadow-soft transition-shadow">
-              <h3 className="font-semibold text-lg text-foreground mb-2">
-                Do I need to know Excel formulas to use this?
-              </h3>
-              <p className="text-muted-foreground">
+            <AccordionItem value="item-2" className="border border-border bg-card rounded-lg px-6">
+              <AccordionTrigger className="text-left hover:no-underline">
+                <span className="font-semibold text-lg text-foreground">
+                  Do I need to know Excel formulas to use this?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-4">
                 Not at all! That's the beauty of FormulaGenie. You just describe what you want in simple terms, and we handle the complex formula syntax. It's perfect for beginners and experts alike.
-              </p>
-            </Card>
+              </AccordionContent>
+            </AccordionItem>
 
-            <Card className="p-6 hover:shadow-soft transition-shadow">
-              <h3 className="font-semibold text-lg text-foreground mb-2">
-                What's included in the free plan?
-              </h3>
-              <p className="text-muted-foreground">
+            <AccordionItem value="item-3" className="border border-border bg-card rounded-lg px-6">
+              <AccordionTrigger className="text-left hover:no-underline">
+                <span className="font-semibold text-lg text-foreground">
+                  What's included in the free plan?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-4">
                 The free plan includes 5 formula conversions per day, formula explanations, and basic support. It's perfect for trying out FormulaGenie and occasional use.
-              </p>
-            </Card>
+              </AccordionContent>
+            </AccordionItem>
 
-            <Card className="p-6 hover:shadow-soft transition-shadow">
-              <h3 className="font-semibold text-lg text-foreground mb-2">
-                Can I use this with Google Sheets?
-              </h3>
-              <p className="text-muted-foreground">
+            <AccordionItem value="item-4" className="border border-border bg-card rounded-lg px-6">
+              <AccordionTrigger className="text-left hover:no-underline">
+                <span className="font-semibold text-lg text-foreground">
+                  Can I use this with Google Sheets?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-4">
                 Yes! FormulaGenie works with both Excel and Google Sheets. Most formulas are compatible between the two platforms, and our AI understands the context.
-              </p>
-            </Card>
+              </AccordionContent>
+            </AccordionItem>
 
-            <Card className="p-6 hover:shadow-soft transition-shadow">
-              <h3 className="font-semibold text-lg text-foreground mb-2">
-                What if I'm not satisfied with my purchase?
-              </h3>
-              <p className="text-muted-foreground">
+            <AccordionItem value="item-5" className="border border-border bg-card rounded-lg px-6">
+              <AccordionTrigger className="text-left hover:no-underline">
+                <span className="font-semibold text-lg text-foreground">
+                  What if I'm not satisfied with my purchase?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-4">
                 We offer a 14-day money-back guarantee on all paid plans. If you're not completely satisfied, just contact us for a full refund—no questions asked.
-              </p>
-            </Card>
+              </AccordionContent>
+            </AccordionItem>
 
-            <Card className="p-6 hover:shadow-soft transition-shadow">
-              <h3 className="font-semibold text-lg text-foreground mb-2">
-                Does FormulaGenie support other programming languages?
-              </h3>
-              <p className="text-muted-foreground">
+            <AccordionItem value="item-6" className="border border-border bg-card rounded-lg px-6">
+              <AccordionTrigger className="text-left hover:no-underline">
+                <span className="font-semibold text-lg text-foreground">
+                  Does FormulaGenie support other programming languages?
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-4">
                 Absolutely! In addition to Excel formulas, FormulaGenie can generate SQL queries, Python scripts, JavaScript code, and regular expressions—all from natural language descriptions.
-              </p>
-            </Card>
-          </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </section>
 
