@@ -253,22 +253,22 @@ const Dashboard = () => {
         <div className="h-full overflow-y-auto pt-16 px-4 sm:px-6 lg:px-8 py-6">
           <div className="container max-w-6xl mx-auto">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Dashboard</h1>
+                <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">Dashboard</h1>
                 <p className="text-sm sm:text-base text-muted-foreground">Generate formulas, SQL, regex, and code snippets instantly</p>
               </div>
               
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="outline" className="flex items-center space-x-2">
-                  <Zap className="w-4 h-4" />
-                  <span className="text-xs sm:text-sm">{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge variant="outline" className="flex items-center gap-2 px-3 py-2 bg-primary/5 border-primary/20 hover:bg-primary/10 transition-colors">
+                  <Zap className="w-4 h-4 text-primary" />
+                  <span className="text-xs sm:text-sm font-medium text-primary">{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
                 </Badge>
                 <Badge 
                   variant={requestsRemaining > 1 || requestsRemaining === Infinity ? "default" : "destructive"} 
-                  className="flex items-center space-x-2"
+                  className="flex items-center gap-2 px-3 py-2 bg-gradient-primary text-primary-foreground shadow-sm"
                 >
-                  <span className="text-xs sm:text-sm">
+                  <span className="text-xs sm:text-sm font-medium">
                     {requestsRemaining === Infinity 
                       ? "Unlimited" 
                       : `${requestsRemaining}/${requestsLimit} left`}
@@ -279,14 +279,19 @@ const Dashboard = () => {
 
             <div className="space-y-6">
               {/* Main Converter */}
-              <Card className="p-6 shadow-soft">
+              <Card className="p-6 sm:p-8 shadow-elegant border-2 border-primary/10 hover:border-primary/20 transition-colors">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-foreground">AI Code Generator</h2>
-                  <div className="flex items-center space-x-2">
+                  <h2 className="text-xl sm:text-2xl font-bold text-foreground flex items-center gap-2">
+                    <span className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+                      <span className="text-primary-foreground text-sm">AI</span>
+                    </span>
+                    AI Code Generator
+                  </h2>
+                  <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
                       onClick={handleReset}
-                      className="flex items-center space-x-2"
+                      className="flex items-center gap-2 hover:bg-primary/5 hover:text-primary hover:border-primary/30 transition-all"
                     >
                       <RotateCcw className="w-4 h-4" />
                       <span className="hidden sm:inline">Reset</span>
@@ -294,7 +299,7 @@ const Dashboard = () => {
                     <Button
                       variant="outline"
                       onClick={handleModeSwitch}
-                      className="hidden md:flex items-center space-x-2"
+                      className="hidden md:flex items-center gap-2 hover:bg-primary/5 hover:text-primary hover:border-primary/30 transition-all"
                     >
                       <ArrowLeftRight className="w-4 h-4" />
                       <span>Switch Mode</span>
@@ -303,7 +308,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Mode Selector */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-8">
                   {modes.map((modeOption) => (
                     <Button
                       key={modeOption.key}
@@ -313,7 +318,11 @@ const Dashboard = () => {
                         setInput("");
                         setOutput("");
                       }}
-                      className="flex items-center space-x-2"
+                      className={`flex items-center gap-2 transition-all hover:scale-105 ${
+                        mode === modeOption.key 
+                          ? "bg-gradient-primary text-primary-foreground shadow-md" 
+                          : "hover:bg-primary/5 hover:text-primary hover:border-primary/30"
+                      }`}
                     >
                       <span>{modeOption.icon}</span>
                       <span>{modeOption.label}</span>
@@ -323,8 +332,8 @@ const Dashboard = () => {
 
                 <div className="space-y-6">
                   <div>
-                    <div className="flex items-center space-x-2 mb-2">
-                      <Badge variant="secondary">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 px-3 py-1">
                         {getModeDisplay()}
                       </Badge>
                     </div>
@@ -332,7 +341,7 @@ const Dashboard = () => {
                       placeholder={getPlaceholder()}
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      className="min-h-[120px] resize-none"
+                      className="min-h-[140px] resize-none border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-background transition-all"
                     />
                   </div>
 
@@ -340,15 +349,16 @@ const Dashboard = () => {
                     <Button
                       onClick={handleProcess}
                       disabled={!input.trim() || isProcessing || requestsRemaining === 0}
-                      className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant"
+                      className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant px-8 py-6 text-base hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100"
                     >
                       {isProcessing ? (
                         <>
-                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                          <RefreshCw className="w-5 h-5 mr-2 animate-spin" />
                           Processing...
                         </>
                       ) : (
                         <>
+                          <Zap className="w-5 h-5 mr-2" />
                           {getButtonText()}
                         </>
                       )}
@@ -356,9 +366,10 @@ const Dashboard = () => {
                   </div>
 
                   {output && (
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                         <label className="font-medium text-foreground">
+                    <div className="animate-fade-in">
+                      <div className="flex items-center justify-between mb-3">
+                         <label className="font-semibold text-foreground flex items-center gap-2">
+                           <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                            {mode === "english-to-formula" ? "Excel Formula" : 
                             mode === "formula-to-english" ? "Plain English Explanation" :
                             mode === "explain-formula" ? "Step-by-Step Explanation" :
@@ -373,12 +384,12 @@ const Dashboard = () => {
                           size="sm"
                           variant="ghost"
                           onClick={copyToClipboard}
-                          className="h-8 w-8 p-0"
+                          className="h-9 w-9 p-0 hover:bg-primary/10 hover:text-primary transition-all"
                         >
                           <Copy className="w-4 h-4" />
                         </Button>
                       </div>
-                      <div className="bg-muted p-4 rounded-lg font-mono text-sm break-all">
+                      <div className="bg-primary/5 p-5 rounded-lg font-mono text-sm break-all border-2 border-primary/20 hover:border-primary/30 transition-colors">
                         {output}
                       </div>
                     </div>
@@ -387,17 +398,23 @@ const Dashboard = () => {
               </Card>
 
               {requestsRemaining === 0 && isLimited && (
-                <Card className="p-6 border-destructive/20 bg-destructive/5">
+                <Card className="p-8 border-2 border-destructive/30 bg-destructive/5 shadow-lg animate-fade-in">
                   <div className="text-center">
-                    <h3 className="font-semibold text-foreground mb-2">Daily Limit Reached</h3>
-                    <p className="text-muted-foreground mb-4">
+                    <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Clock className="w-8 h-8 text-destructive" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">Daily Limit Reached</h3>
+                    <p className="text-muted-foreground mb-6">
                       You've used all your daily requests. Upgrade to Pro for unlimited access.
                     </p>
                     <Button 
-                      className="bg-gradient-primary text-primary-foreground hover:opacity-90"
+                      className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant px-6 py-5 hover:scale-105 transition-all"
                       asChild
                     >
-                      <Link to="/pricing">Upgrade to Pro</Link>
+                      <Link to="/pricing">
+                        <Zap className="w-4 h-4 mr-2" />
+                        Upgrade to Pro
+                      </Link>
                     </Button>
                   </div>
                 </Card>
@@ -405,25 +422,28 @@ const Dashboard = () => {
 
               {/* Usage Stats - Only show for limited users */}
               {isLimited && (
-                <Card className="p-6">
-                  <h3 className="font-semibold text-foreground mb-4">Today's Usage</h3>
+                <Card className="p-6 border-2 border-primary/10 hover:border-primary/20 transition-colors shadow-soft">
+                  <h3 className="font-bold text-lg text-foreground mb-4 flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-primary" />
+                    Today's Usage
+                  </h3>
                   <div className="space-y-4">
                     <div>
-                       <div className="flex justify-between text-sm mb-1">
-                         <span className="text-muted-foreground">Requests Used Today</span>
-                          <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
-                         <span className="font-medium">{requestsUsed}/{requestsLimit}</span>
+                       <div className="flex justify-between text-sm mb-2">
+                         <span className="text-muted-foreground font-medium">Requests Used Today</span>
+                         <span className="font-bold text-foreground">{requestsUsed}/{requestsLimit}</span>
                        </div>
-                      <div className="w-full bg-secondary rounded-full h-2">
+                      <div className="w-full bg-secondary rounded-full h-3 overflow-hidden">
                         <div 
-                          className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
+                          className="bg-gradient-primary h-3 rounded-full transition-all duration-500 shadow-sm"
                           style={{ width: `${Math.min((requestsUsed / requestsLimit) * 100, 100)}%` }}
                         ></div>
                       </div>
                     </div>
                     
-                    <div className="pt-2 border-t">
-                      <p className="text-xs text-muted-foreground">
+                    <div className="pt-2 border-t border-primary/10">
+                      <p className="text-xs text-muted-foreground flex items-center gap-2">
+                        <RefreshCw className="w-3 h-3" />
                         Resets at midnight (UTC)
                       </p>
                     </div>
