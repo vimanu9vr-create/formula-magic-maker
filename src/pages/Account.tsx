@@ -275,16 +275,14 @@ const Account = () => {
                   </div>
                 ) : null}
 
-                {profile?.plan !== 'ltd' && (
+                {(profile?.plan === 'free' || isExpired) && (
                   <div className="flex gap-3">
                     <Button variant="outline" className="flex-1" asChild>
                       <Link to="/pricing">View Pricing</Link>
                     </Button>
-                    {(profile?.plan === 'free' || isExpired) && (
-                      <Button className="flex-1" asChild>
-                        <Link to="/pricing">Upgrade to Pro</Link>
-                      </Button>
-                    )}
+                    <Button className="flex-1" asChild>
+                      <Link to="/pricing">Upgrade to Pro</Link>
+                    </Button>
                   </div>
                 )}
               </div>
