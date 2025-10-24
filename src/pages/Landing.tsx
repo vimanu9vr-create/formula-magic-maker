@@ -288,6 +288,164 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
+        <div className="container max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              What Our Users Say
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Join thousands of professionals who've simplified their Excel work
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="p-6 hover:shadow-elegant transition-shadow animate-fade-in">
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-500 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-muted-foreground mb-4">
+                "FormulaGenie saved me hours every week! No more struggling with complex Excel formulas. Just describe what I need and it generates perfect formulas instantly."
+              </p>
+              <div className="flex items-center">
+                <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold">
+                  SM
+                </div>
+                <div className="ml-3">
+                  <p className="font-semibold text-foreground">Sarah Mitchell</p>
+                  <p className="text-sm text-muted-foreground">Financial Analyst</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:shadow-elegant transition-shadow animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-500 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-muted-foreground mb-4">
+                "As a data analyst, I work with complex formulas daily. FormulaGenie is like having an Excel expert on my team 24/7. The SQL and Python generators are game changers!"
+              </p>
+              <div className="flex items-center">
+                <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold">
+                  JC
+                </div>
+                <div className="ml-3">
+                  <p className="font-semibold text-foreground">James Chen</p>
+                  <p className="text-sm text-muted-foreground">Data Analyst</p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:shadow-elegant transition-shadow animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <div className="flex items-center mb-4">
+                <div className="flex text-yellow-500 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                </div>
+              </div>
+              <p className="text-muted-foreground mb-4">
+                "I'm not an Excel expert, but FormulaGenie makes me feel like one! The formula explanations help me learn while I work. Absolutely worth the investment."
+              </p>
+              <div className="flex items-center">
+                <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold">
+                  EP
+                </div>
+                <div className="ml-3">
+                  <p className="font-semibold text-foreground">Emily Parker</p>
+                  <p className="text-sm text-muted-foreground">Small Business Owner</p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
+        <div className="container max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Everything you need to know about FormulaGenie
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <Card className="p-6 hover:shadow-soft transition-shadow">
+              <h3 className="font-semibold text-lg text-foreground mb-2">
+                How does FormulaGenie work?
+              </h3>
+              <p className="text-muted-foreground">
+                Simply describe what you want in plain English, and our AI instantly converts it into the correct Excel formula, SQL query, or code. You can also paste existing formulas to get clear explanations.
+              </p>
+            </Card>
+
+            <Card className="p-6 hover:shadow-soft transition-shadow">
+              <h3 className="font-semibold text-lg text-foreground mb-2">
+                Do I need to know Excel formulas to use this?
+              </h3>
+              <p className="text-muted-foreground">
+                Not at all! That's the beauty of FormulaGenie. You just describe what you want in simple terms, and we handle the complex formula syntax. It's perfect for beginners and experts alike.
+              </p>
+            </Card>
+
+            <Card className="p-6 hover:shadow-soft transition-shadow">
+              <h3 className="font-semibold text-lg text-foreground mb-2">
+                What's included in the free plan?
+              </h3>
+              <p className="text-muted-foreground">
+                The free plan includes 5 formula conversions per day, formula explanations, and basic support. It's perfect for trying out FormulaGenie and occasional use.
+              </p>
+            </Card>
+
+            <Card className="p-6 hover:shadow-soft transition-shadow">
+              <h3 className="font-semibold text-lg text-foreground mb-2">
+                Can I use this with Google Sheets?
+              </h3>
+              <p className="text-muted-foreground">
+                Yes! FormulaGenie works with both Excel and Google Sheets. Most formulas are compatible between the two platforms, and our AI understands the context.
+              </p>
+            </Card>
+
+            <Card className="p-6 hover:shadow-soft transition-shadow">
+              <h3 className="font-semibold text-lg text-foreground mb-2">
+                What if I'm not satisfied with my purchase?
+              </h3>
+              <p className="text-muted-foreground">
+                We offer a 14-day money-back guarantee on all paid plans. If you're not completely satisfied, just contact us for a full refund—no questions asked.
+              </p>
+            </Card>
+
+            <Card className="p-6 hover:shadow-soft transition-shadow">
+              <h3 className="font-semibold text-lg text-foreground mb-2">
+                Does FormulaGenie support other programming languages?
+              </h3>
+              <p className="text-muted-foreground">
+                Absolutely! In addition to Excel formulas, FormulaGenie can generate SQL queries, Python scripts, JavaScript code, and regular expressions—all from natural language descriptions.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-hero">
         <div className="container max-w-4xl mx-auto text-center">
