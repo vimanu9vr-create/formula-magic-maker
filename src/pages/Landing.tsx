@@ -131,6 +131,92 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Excel Formula Tools & Guides Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary/5">
+        <div className="container max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Free Excel Formula Tools & Guides
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Explore our comprehensive collection of Excel formula generators and tutorials
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Link to="/vlookup-generator">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">VLOOKUP Generator</h3>
+                <p className="text-sm text-muted-foreground">Create VLOOKUP formulas instantly with AI</p>
+              </Card>
+            </Link>
+
+            <Link to="/if-formula-generator">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">IF Formula Generator</h3>
+                <p className="text-sm text-muted-foreground">Generate IF statements and nested conditions</p>
+              </Card>
+            </Link>
+
+            <Link to="/sumif-generator">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">SUMIF & SUMIFS Generator</h3>
+                <p className="text-sm text-muted-foreground">Create conditional sum formulas easily</p>
+              </Card>
+            </Link>
+
+            <Link to="/index-match-generator">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">INDEX MATCH Generator</h3>
+                <p className="text-sm text-muted-foreground">Better than VLOOKUP - powerful lookup formulas</p>
+              </Card>
+            </Link>
+
+            <Link to="/pivot-table-guide">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">Pivot Table Guide</h3>
+                <p className="text-sm text-muted-foreground">Master pivot tables and GETPIVOTDATA</p>
+              </Card>
+            </Link>
+
+            <Link to="/vlookup-tutorial">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">VLOOKUP Tutorial</h3>
+                <p className="text-sm text-muted-foreground">Complete step-by-step VLOOKUP guide</p>
+              </Card>
+            </Link>
+
+            <Link to="/excel-date-formulas">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">Excel Date Formulas</h3>
+                <p className="text-sm text-muted-foreground">TODAY, DATE, DATEDIF and more</p>
+              </Card>
+            </Link>
+
+            <Link to="/excel-tips-tricks">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">Excel Tips & Tricks</h3>
+                <p className="text-sm text-muted-foreground">Boost productivity with shortcuts and hacks</p>
+              </Card>
+            </Link>
+
+            <Link to="/common-excel-formulas">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">Common Excel Formulas</h3>
+                <p className="text-sm text-muted-foreground">Quick reference for essential functions</p>
+              </Card>
+            </Link>
+
+            <Link to="/conditional-formatting-guide">
+              <Card className="p-6 hover:shadow-elegant transition-all hover:scale-105 h-full">
+                <h3 className="font-bold text-lg text-foreground mb-2">Conditional Formatting</h3>
+                <p className="text-sm text-muted-foreground">Visualize data with dynamic formatting</p>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Preview Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="container max-w-7xl mx-auto">
