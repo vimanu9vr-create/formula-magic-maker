@@ -17,6 +17,16 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
 import PurchaseSuccess from "./pages/PurchaseSuccess";
 import ProtectedRoute from "./components/ProtectedRoute";
+import VlookupGenerator from "./pages/VlookupGenerator";
+import IfFormulaGenerator from "./pages/IfFormulaGenerator";
+import SumifGenerator from "./pages/SumifGenerator";
+import IndexMatchGenerator from "./pages/IndexMatchGenerator";
+import PivotTableGuide from "./pages/PivotTableGuide";
+import VlookupTutorial from "./pages/VlookupTutorial";
+import ExcelDateFormulas from "./pages/ExcelDateFormulas";
+import ExcelTipsAndTricks from "./pages/ExcelTipsAndTricks";
+import CommonExcelFormulas from "./pages/CommonExcelFormulas";
+import ConditionalFormattingGuide from "./pages/ConditionalFormattingGuide";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +66,16 @@ const App = () => (
               <Library />
             </ProtectedRoute>
           } />
+          <Route path="/vlookup-generator" element={<VlookupGenerator />} />
+          <Route path="/if-formula-generator" element={<IfFormulaGenerator />} />
+          <Route path="/sumif-generator" element={<SumifGenerator />} />
+          <Route path="/index-match-generator" element={<IndexMatchGenerator />} />
+          <Route path="/pivot-table-guide" element={<PivotTableGuide />} />
+          <Route path="/vlookup-tutorial" element={<VlookupTutorial />} />
+          <Route path="/excel-date-formulas" element={<ExcelDateFormulas />} />
+          <Route path="/excel-tips-tricks" element={<ExcelTipsAndTricks />} />
+          <Route path="/common-excel-formulas" element={<CommonExcelFormulas />} />
+          <Route path="/conditional-formatting-guide" element={<ConditionalFormattingGuide />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
