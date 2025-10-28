@@ -3,11 +3,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Copy, RefreshCw, ArrowLeftRight, Zap, Clock, RotateCcw } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Copy, RefreshCw, ArrowLeftRight, Zap, Clock, RotateCcw, Mic, MicOff, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useUsageCount } from "@/hooks/useUsageCount";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
@@ -18,11 +20,23 @@ const Dashboard = () => {
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [recentHistory, setRecentHistory] = useState<any[]>([]);
+  const [selectedLanguage, setSelectedLanguage] = useState("en-US");
   
   const { user, session } = useAuth();
   const { profile, loading: profileLoading, refreshProfile } = useProfile();
   const { usageCount, refreshUsageCount } = useUsageCount();
   const { toast } = useToast();
+  
+  const { isListening, isSupported, startListening, stopListening } = useVoiceInput({
+    onResult: (transcript) => {
+      setInput(transcript);
+      toast({
+        title: "Voice input received",
+        description: "Your speech has been converted to text",
+      });
+    },
+    language: selectedLanguage,
+  });
   
   const planLower = (profile?.plan || 'free').toLowerCase();
   const isExpired = profile?.plan_status === 'expired';
@@ -337,6 +351,59 @@ const Dashboard = () => {
                         {getModeDisplay()}
                       </Badge>
                     </div>
+                    
+                    <div className="flex gap-2 mb-3">
+                      <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                        <SelectTrigger className="w-[200px]">
+                          <Globe className="h-4 w-4 mr-2" />
+                          <SelectValue placeholder="Language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="en-US">English (US)</SelectItem>
+                          <SelectItem value="en-GB">English (UK)</SelectItem>
+                          <SelectItem value="es-ES">Spanish</SelectItem>
+                          <SelectItem value="fr-FR">French</SelectItem>
+                          <SelectItem value="de-DE">German</SelectItem>
+                          <SelectItem value="it-IT">Italian</SelectItem>
+                          <SelectItem value="pt-BR">Portuguese (BR)</SelectItem>
+                          <SelectItem value="pt-PT">Portuguese (PT)</SelectItem>
+                          <SelectItem value="zh-CN">Chinese (CN)</SelectItem>
+                          <SelectItem value="ja-JP">Japanese</SelectItem>
+                          <SelectItem value="ko-KR">Korean</SelectItem>
+                          <SelectItem value="ar-SA">Arabic</SelectItem>
+                          <SelectItem value="hi-IN">Hindi</SelectItem>
+                          <SelectItem value="ru-RU">Russian</SelectItem>
+                          <SelectItem value="nl-NL">Dutch</SelectItem>
+                          <SelectItem value="pl-PL">Polish</SelectItem>
+                          <SelectItem value="tr-TR">Turkish</SelectItem>
+                          <SelectItem value="sv-SE">Swedish</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      
+                      {isSupported && (
+                        <Button
+                          type="button"
+                          variant={isListening ? "destructive" : "outline"}
+                          size="icon"
+                          onClick={isListening ? stopListening : startListening}
+                          className="shrink-0 h-10 w-10"
+                          title={isListening ? "Stop recording" : "Start voice input"}
+                        >
+                          {isListening ? (
+                            <MicOff className="h-4 w-4" />
+                          ) : (
+                            <Mic className="h-4 w-4" />
+                          )}
+                        </Button>
+                      )}
+                      
+                      {!isSupported && (
+                        <span className="text-xs text-muted-foreground flex items-center">
+                          Voice input not supported in this browser
+                        </span>
+                      )}
+                    </div>
+                    
                     <Textarea
                       placeholder={getPlaceholder()}
                       value={input}
