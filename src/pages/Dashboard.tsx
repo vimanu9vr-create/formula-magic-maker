@@ -377,6 +377,7 @@ const Dashboard = () => {
                           <SelectItem value="pl-PL">Polish</SelectItem>
                           <SelectItem value="tr-TR">Turkish</SelectItem>
                           <SelectItem value="sv-SE">Swedish</SelectItem>
+                          <SelectItem value="fil-PH">Filipino</SelectItem>
                         </SelectContent>
                       </Select>
                       
