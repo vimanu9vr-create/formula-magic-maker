@@ -1,14 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Copy, ArrowRight } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Copy, ArrowRight, Mic, MicOff, Globe } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
+import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/dashboard-screenshot.png";
 
 const Hero = () => {
   const [inputText, setInputText] = useState("Find the average of values in column A where column B contains 'completed'");
   const [outputFormula] = useState("=AVERAGEIF(B:B,\"completed\",A:A)");
+  const [selectedLanguage, setSelectedLanguage] = useState("en-US");
+  const { toast } = useToast();
+
+  const { isListening, isSupported, startListening, stopListening } = useVoiceInput({
+    onResult: (transcript) => {
+      setInputText(transcript);
+      toast({
+        title: "Voice input received",
+        description: "Your speech has been converted to text",
+      });
+    },
+    language: selectedLanguage,
+  });
 
   return (
     <section className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
@@ -45,6 +61,54 @@ const Hero = () => {
                     English to Excel Formula
                   </div>
                 </div>
+                
+                <div className="flex gap-2 mb-3">
+                  <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                    <SelectTrigger className="w-[180px]">
+                      <Globe className="h-4 w-4 mr-2" />
+                      <SelectValue placeholder="Language" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border shadow-lg z-50">
+                      <SelectItem value="en-US">English (US)</SelectItem>
+                      <SelectItem value="en-GB">English (UK)</SelectItem>
+                      <SelectItem value="es-ES">Spanish</SelectItem>
+                      <SelectItem value="fr-FR">French</SelectItem>
+                      <SelectItem value="de-DE">German</SelectItem>
+                      <SelectItem value="it-IT">Italian</SelectItem>
+                      <SelectItem value="pt-BR">Portuguese (BR)</SelectItem>
+                      <SelectItem value="pt-PT">Portuguese (PT)</SelectItem>
+                      <SelectItem value="zh-CN">Chinese (CN)</SelectItem>
+                      <SelectItem value="ja-JP">Japanese</SelectItem>
+                      <SelectItem value="ko-KR">Korean</SelectItem>
+                      <SelectItem value="ar-SA">Arabic</SelectItem>
+                      <SelectItem value="hi-IN">Hindi</SelectItem>
+                      <SelectItem value="ru-RU">Russian</SelectItem>
+                      <SelectItem value="nl-NL">Dutch</SelectItem>
+                      <SelectItem value="pl-PL">Polish</SelectItem>
+                      <SelectItem value="tr-TR">Turkish</SelectItem>
+                      <SelectItem value="sv-SE">Swedish</SelectItem>
+                      <SelectItem value="fil-PH">Filipino</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  {isSupported && (
+                    <Button
+                      type="button"
+                      variant={isListening ? "destructive" : "outline"}
+                      size="icon"
+                      onClick={isListening ? stopListening : startListening}
+                      className="shrink-0 h-10 w-10"
+                      title={isListening ? "Stop recording" : "Start voice input"}
+                    >
+                      {isListening ? (
+                        <MicOff className="h-4 w-4" />
+                      ) : (
+                        <Mic className="h-4 w-4" />
+                      )}
+                    </Button>
+                  )}
+                </div>
+                
                 <Textarea
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
