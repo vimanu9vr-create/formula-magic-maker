@@ -31,7 +31,7 @@ const Hero = () => {
       <div className="container max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Excel AI - Generate Formulas, Charts & Analysis{" "}
+            Excel AI - Formula Generator, Charts & Analysis{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
               For Free
             </span>
