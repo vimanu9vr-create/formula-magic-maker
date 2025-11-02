@@ -8,3 +8,9 @@ verify_jwt = false
 
 [functions.check-expired-plans]
 verify_jwt = false
+
+[functions.manage-api-key]
+verify_jwt = true
+
+[functions.sheets-addon-generate]
+verify_jwt = false

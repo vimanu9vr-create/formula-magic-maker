@@ -74,16 +74,24 @@ const Navigation = () => {
                 >
                   Library
                 </Link>
-                <Link 
-                  to="/account" 
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    location.pathname === '/account' ? 'text-primary' : 'text-muted-foreground'
-                  }`}
-                >
-                  Account
-                </Link>
-              </>
-            )}
+                  <Link 
+                    to="/account" 
+                    className={`text-sm font-medium transition-colors hover:text-primary ${
+                      location.pathname === '/account' ? 'text-primary' : 'text-muted-foreground'
+                    }`}
+                  >
+                    Account
+                  </Link>
+                  <Link 
+                    to="/google-sheets-addon" 
+                    className={`text-sm font-medium transition-colors hover:text-primary ${
+                      location.pathname === '/google-sheets-addon' ? 'text-primary' : 'text-muted-foreground'
+                    }`}
+                  >
+                    Google Sheets
+                  </Link>
+                </>
+              )}
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-4">
@@ -141,14 +149,21 @@ const Navigation = () => {
                       >
                         Library
                       </Link>
-                      <Link 
-                        to="/account" 
-                        className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        Account
-                      </Link>
-                      <div className="pt-4 border-t border-border">
+                        <Link 
+                          to="/account" 
+                          className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Account
+                        </Link>
+                        <Link 
+                          to="/google-sheets-addon" 
+                          className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          Google Sheets
+                        </Link>
+                        <div className="pt-4 border-t border-border">
                         <Button 
                           variant="outline" 
                           className="w-full" 

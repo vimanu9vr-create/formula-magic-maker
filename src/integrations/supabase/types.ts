@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      api_keys: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          key_hash: string
+          key_prefix: string
+          last_used_at: string | null
+          name: string
+          revoked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          key_hash: string
+          key_prefix: string
+          last_used_at?: string | null
+          name: string
+          revoked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          key_hash?: string
+          key_prefix?: string
+          last_used_at?: string | null
+          name?: string
+          revoked_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       feedback: {
         Row: {
           created_at: string
@@ -218,17 +254,15 @@ export type Database = {
         }
         Returns: boolean
       }
-      reset_daily_usage: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      trigger_plan_expiration_check: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      update_expired_plans: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
+      reset_daily_usage: { Args: never; Returns: undefined }
+      trigger_plan_expiration_check: { Args: never; Returns: undefined }
+      update_expired_plans: { Args: never; Returns: undefined }
+      validate_api_key: {
+        Args: { api_key: string }
+        Returns: {
+          key_id: string
+          user_id: string
+        }[]
       }
     }
     Enums: {

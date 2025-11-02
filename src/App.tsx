@@ -28,6 +28,7 @@ import ExcelTipsAndTricks from "./pages/ExcelTipsAndTricks";
 import CommonExcelFormulas from "./pages/CommonExcelFormulas";
 import ConditionalFormattingGuide from "./pages/ConditionalFormattingGuide";
 import Install from "./pages/Install";
+import GoogleSheetsAddon from "./pages/GoogleSheetsAddon";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,11 @@ const App = () => (
           <Route path="/common-excel-formulas" element={<CommonExcelFormulas />} />
           <Route path="/conditional-formatting-guide" element={<ConditionalFormattingGuide />} />
           <Route path="/install" element={<Install />} />
+          <Route path="/google-sheets-addon" element={
+            <ProtectedRoute>
+              <GoogleSheetsAddon />
+            </ProtectedRoute>
+          } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
