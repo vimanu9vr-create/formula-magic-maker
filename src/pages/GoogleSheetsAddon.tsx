@@ -434,7 +434,7 @@ Example: Sum all values in column A"></textarea>
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Google Sheets Add-on</h1>
           <p className="text-muted-foreground">
-            Generate formulas directly in Google Sheets with FormulaGenie
+            Generate formulas directly in Google Sheets with FormulaGenie. Available for all paid plans including LTD.
           </p>
         </div>
 

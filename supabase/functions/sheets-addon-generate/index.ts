@@ -76,7 +76,8 @@ serve(async (req) => {
     // Check usage limits
     const dailyLimit = profile.plan === 'free' ? 50 : 
                       profile.plan === 'basic' ? 200 :
-                      profile.plan === 'pro' ? 500 : 999999;
+                      profile.plan === 'pro' ? 500 :
+                      profile.plan === 'ltd' ? 999999 : 999999;
 
     // Count today's usage
     const today = new Date();
@@ -154,8 +155,8 @@ serve(async (req) => {
       });
     }
 
-    const data = await response.json();
-    const output = data.choices[0].message.content.trim();
+    const aiResponse = await response.json();
+    const output = aiResponse.choices[0].message.content.trim();
 
     // Save request to database
     await supabase
