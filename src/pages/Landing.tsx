@@ -137,6 +137,87 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Google Sheets Integration Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-primary/10">
+        <div className="container max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-block bg-gradient-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium mb-4">
+                Now Available
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
+                FormulaGenie for Google Sheets
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                Generate formulas directly inside Google Sheets with our powerful add-on. No more switching between tabs or copy-pasting formulas.
+              </p>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-foreground">Work directly in Google Sheets</p>
+                    <p className="text-sm text-muted-foreground">Generate formulas without leaving your spreadsheet</p>
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-foreground">Easy API integration</p>
+                    <p className="text-sm text-muted-foreground">Secure API keys for seamless access</p>
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-foreground">Available for all paid plans</p>
+                    <p className="text-sm text-muted-foreground">Included with Pro and LTD subscriptions</p>
+                  </div>
+                </li>
+              </ul>
+              <Button size="lg" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant" asChild>
+                <Link to={user ? "/google-sheets-addon" : "/auth"}>
+                  Get Google Sheets Add-on
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+              </Button>
+            </div>
+            <div className="relative">
+              <Card className="p-6 shadow-elegant">
+                <div className="bg-muted rounded-lg p-4 mb-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  <div className="space-y-2 text-sm font-mono">
+                    <div className="bg-background p-2 rounded">
+                      <span className="text-primary">function</span> <span className="text-foreground">FORMULAGENIE</span>
+                    </div>
+                    <div className="bg-background p-2 rounded text-muted-foreground">
+                      Generate formulas in real-time
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-sm text-foreground">Formula generation</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-sm text-foreground">SQL queries</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-sm text-foreground">Regex patterns</span>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Excel Formula Tools & Guides Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary/5">
         <div className="container max-w-7xl mx-auto">
