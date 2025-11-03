@@ -56,6 +56,14 @@ const Navigation = () => {
                 Pricing
               </Link>
             )}
+            <Link 
+              to="/google-sheets-addon" 
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                location.pathname === '/google-sheets-addon' ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Google Sheets
+            </Link>
             {user && (
               <>
                 <Link 
@@ -81,14 +89,6 @@ const Navigation = () => {
                     }`}
                   >
                     Account
-                  </Link>
-                  <Link 
-                    to="/google-sheets-addon" 
-                    className={`text-sm font-medium transition-colors hover:text-primary ${
-                      location.pathname === '/google-sheets-addon' ? 'text-primary' : 'text-muted-foreground'
-                    }`}
-                  >
-                    Google Sheets
                   </Link>
                 </>
               )}
@@ -133,6 +133,13 @@ const Navigation = () => {
                       Pricing
                     </Link>
                   )}
+                  <Link 
+                    to="/google-sheets-addon" 
+                    className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Google Sheets
+                  </Link>
                   {user ? (
                     <>
                       <Link 
@@ -155,13 +162,6 @@ const Navigation = () => {
                           onClick={() => setIsOpen(false)}
                         >
                           Account
-                        </Link>
-                        <Link 
-                          to="/google-sheets-addon" 
-                          className="text-base font-medium transition-colors hover:text-primary text-foreground py-2"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          Google Sheets
                         </Link>
                         <div className="pt-4 border-t border-border">
                         <Button 
