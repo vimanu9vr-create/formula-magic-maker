@@ -17,6 +17,7 @@ const Pricing = () => {
       features: [
         "Everything in Pro plan",
         "25 conversions per day",
+        "Google Sheets add-on included",
         "Advanced formula support",
         "Priority email support",
         "Formula history & saved templates",
@@ -59,6 +60,7 @@ const Pricing = () => {
       features: [
         "Everything in Free",
         "Unlimited conversions",
+        "Google Sheets add-on included",
         "Advanced formula support",
         "Priority email support",
         "Formula history & saved templates",
