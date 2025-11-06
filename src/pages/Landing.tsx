@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
+import { DemoAnimation } from "@/components/DemoAnimation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight } from "lucide-react";
@@ -140,6 +141,9 @@ const Landing = () => {
           </p>
         </div>
       </section>
+
+      {/* Demo Animation Section */}
+      <DemoAnimation />
 
       {/* Features Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
