@@ -16,36 +16,37 @@ const Landing = () => {
   const { user } = useAuth();
   const features = [
     {
-      title: "English to Formula",
-      description: "Convert plain English descriptions into perfect Excel formulas instantly.",
+      title: "Excel Formula Generator",
+      description: "Turn plain English into complex Excel formulas instantly.",
+      popular: true,
     },
     {
-      title: "SQL Query Generator",
-      description: "Generate complex SQL queries from natural language descriptions for any database.",
+      title: "SQL Query Assistant",
+      description: "Generate queries from natural language for any database.",
     },
     {
-      title: "Regex Pattern Builder",
-      description: "Create and test regular expressions with plain English input and explanations.",
+      title: "Regex Simplifier",
+      description: "Create regex patterns without memorizing syntax.",
     },
     {
-      title: "Python Code Generator",
-      description: "Generate Python scripts and functions from natural language requirements.",
+      title: "Python Snippet Generator",
+      description: "Generate Python functions from natural-language descriptions.",
     },
     {
-      title: "JavaScript Generator",
-      description: "Create JavaScript code snippets, functions, and logic from simple descriptions.",
+      title: "Formula & Code Explainer",
+      description: "Paste a formula/code — get instant plain-English explanation.",
     },
     {
-      title: "Code Explanation",
-      description: "Paste complex code and get clear, simple explanations of what it does.",
+      title: "Smart Error Fixer",
+      description: "Auto-correct syntax and logic issues in Excel formulas.",
     },
     {
       title: "Multi-Language Support",
       description: "Generate code in multiple programming languages from the same natural language input.",
     },
     {
-      title: "Error Detection & Fixes",
-      description: "Automatically detect syntax errors and get intelligent suggestions for fixes.",
+      title: "JavaScript Code Generator",
+      description: "Create JavaScript snippets, functions, and automation from simple descriptions.",
     },
   ];
 
@@ -55,8 +56,10 @@ const Landing = () => {
       price: "$0",
       period: "forever",
       requests: "5 requests/day",
+      microcopy: "Perfect for testing the AI — up to 5 requests/day.",
       features: ["English to Formula", "Formula Explanation", "Basic Support"],
-      cta: "Get Started",
+      cta: "Get Started Free",
+      ctaArrow: true,
       popular: false,
     },
     {
@@ -64,18 +67,22 @@ const Landing = () => {
       price: "$9",
       period: "month",
       requests: "Unlimited requests",
+      microcopy: "For daily users who rely on Excel or SQL.",
       features: ["Everything in Free", "Unlimited conversions", "Google Sheets add-on", "Priority support", "Advanced formulas"],
-      cta: "Start Pro Trial",
+      cta: "Upgrade to Pro",
+      ctaArrow: true,
       popular: false,
       lemonSqueezyUrl: "https://xcel.lemonsqueezy.com/buy/f0d43528-f380-4b5a-9aea-02b471a0104d",
     },
     {
-      name: "LTD Special",
+      name: "Lifetime Deal",
       price: "$49",
-      period: "lifetime",
+      period: "one-time",
       requests: "25 conversions/day",
+      microcopy: "One-time payment, unlimited power. No recurring fees.",
       features: ["Everything in Pro", "Google Sheets add-on", "Lifetime access", "Formula library", "Error detection", "Data analysis", "Formula optimization", "No recurring fees"],
-      cta: "Get Lifetime Deal",
+      cta: "Grab Lifetime Access",
+      ctaArrow: true,
       popular: true,
       lemonSqueezyUrl: "https://xcel.lemonsqueezy.com/buy/a169b4c4-c7c8-4bed-a3e6-ead8aaf6ed8c?discount=0",
     },
@@ -87,32 +94,55 @@ const Landing = () => {
       
       <Hero />
 
-      {/* SEO Content Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-background">
-        <div className="container max-w-6xl mx-auto">
-          <div className="prose prose-lg max-w-none">
-            <h2 className="text-3xl font-bold text-foreground mb-6 text-center">
-              AI Excel Formula Generator - Free Online Tool
-            </h2>
-            <div className="text-muted-foreground space-y-4 text-center max-w-4xl mx-auto">
-              <p className="text-lg leading-relaxed">
-                Transform the way you work with Excel using our powerful <strong>AI Excel Formula Generator</strong>. 
-                Whether you need to create complex formulas, analyze data, or generate charts, our free tool makes it simple. 
-                Just describe what you want in plain English, and our Excel AI instantly converts your text instructions into 
-                accurate formulas.
-              </p>
-              <p className="text-lg leading-relaxed">
-                Our <strong>Excel AI tool</strong> supports formula generation, explanation, optimization, and error detection. 
-                Beyond Excel, generate SQL queries, Python scripts, JavaScript code, and regular expressions - all from natural language. 
-                Perfect for beginners and professionals looking to boost productivity and eliminate formula errors.
-              </p>
-            </div>
+      {/* Problem & Solution Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-secondary/30">
+        <div className="container max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
+            Built for Data Analysts Who Live in Excel
+          </h2>
+          <div className="text-muted-foreground space-y-4 max-w-4xl mx-auto">
+            <p className="text-lg leading-relaxed">
+              Every analyst knows the struggle — nested IFs, missing brackets, or Google searches for formulas that never quite fit.
+            </p>
+            <p className="text-lg leading-relaxed">
+              <strong>FormulaGenie saves hours by translating your text into working formulas instantly</strong> — error-free and explained clearly.
+            </p>
           </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 mt-12 max-w-4xl mx-auto">
+            <Card className="p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 mx-auto">
+                <CheckCircle className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <h3 className="font-bold text-foreground mb-2">Excel & Google Sheets</h3>
+              <p className="text-sm text-muted-foreground">Works seamlessly with both platforms</p>
+            </Card>
+            
+            <Card className="p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 mx-auto">
+                <CheckCircle className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <h3 className="font-bold text-foreground mb-2">SQL Queries</h3>
+              <p className="text-sm text-muted-foreground">For data extraction and analysis</p>
+            </Card>
+            
+            <Card className="p-6 text-center">
+              <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 mx-auto">
+                <CheckCircle className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <h3 className="font-bold text-foreground mb-2">Python & JavaScript</h3>
+              <p className="text-sm text-muted-foreground">Snippets for automation</p>
+            </Card>
+          </div>
+          
+          <p className="text-xl font-semibold text-foreground mt-12">
+            Just tell it what you want. FormulaGenie writes it for you.
+          </p>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/30">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
@@ -125,7 +155,12 @@ const Landing = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="p-6 hover:shadow-soft transition-shadow">
+              <Card key={index} className={`p-6 hover:shadow-soft transition-shadow ${(feature as any).popular ? 'border-primary ring-1 ring-primary/20' : ''}`}>
+                {(feature as any).popular && (
+                  <div className="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium mb-3">
+                    ⭐ Most Used by Analysts
+                  </div>
+                )}
                 <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4">
                   <CheckCircle className="w-6 h-6 text-primary-foreground" />
                 </div>
@@ -146,10 +181,10 @@ const Landing = () => {
                 Now Available
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
-                FormulaGenie for Google Sheets
+                Now in Google Sheets — Generate Formulas Without Leaving Your Spreadsheet
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Generate formulas directly inside Google Sheets with our powerful add-on. No more switching between tabs or copy-pasting formulas.
+                With the FormulaGenie Sheets Add-on, you can generate formulas, SQL queries, and regex patterns right inside your sheet. No tab-switching. No copy-pasting. Just pure flow.
               </p>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start">
@@ -176,7 +211,7 @@ const Landing = () => {
               </ul>
               <Button size="lg" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant" asChild>
                 <Link to={user ? "/google-sheets-addon" : "/auth"}>
-                  Get Google Sheets Add-on
+                  Install the Sheets Add-on
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </Button>
@@ -226,7 +261,7 @@ const Landing = () => {
               Free Excel Formula Tools & Guides
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Explore our comprehensive collection of Excel formula generators and tutorials
+              Explore ready-made AI generators for common analyst formulas — from VLOOKUPs and Pivot Tables to SUMIFS and advanced date formulas.
             </p>
           </div>
 
@@ -309,7 +344,7 @@ const Landing = () => {
         <div className="container max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Simple, transparent pricing
+              Simple Plans. Serious Productivity.
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Choose the plan that's right for you. Start free, upgrade when you need more.
@@ -336,7 +371,8 @@ const Landing = () => {
                     <span className="text-4xl font-bold text-foreground">{plan.price}</span>
                     <span className="text-muted-foreground">/{plan.period}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">{plan.requests}</p>
+                  <p className="text-sm text-muted-foreground mb-3">{plan.requests}</p>
+                  <p className="text-xs text-muted-foreground italic">{(plan as any).microcopy}</p>
                 </div>
 
                 <ul className="space-y-3 mb-8">
@@ -355,7 +391,7 @@ const Landing = () => {
                     onClick={() => window.open((plan as any).lemonSqueezyUrl, '_blank')}
                   >
                     {plan.cta}
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    {(plan as any).ctaArrow && <ArrowRight className="ml-2 w-4 h-4" />}
                   </Button>
                 ) : (
                   <Button 
@@ -365,25 +401,29 @@ const Landing = () => {
                   >
                     <Link to={user ? "/dashboard" : "/auth"}>
                       {plan.cta}
-                      <ArrowRight className="ml-2 w-4 h-4" />
+                      {(plan as any).ctaArrow && <ArrowRight className="ml-2 w-4 h-4" />}
                     </Link>
                   </Button>
                 )}
               </Card>
             ))}
           </div>
+          
+          <p className="text-center text-sm text-muted-foreground mt-12">
+            Trusted by 500+ analysts, freelancers, and businesses worldwide.
+          </p>
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Social Proof Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              What Our Users Say
+              What Early Users Are Saying
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Join thousands of professionals who've simplified their Excel work
+              Real feedback from data professionals who've transformed their workflow
             </p>
           </div>
 
@@ -399,15 +439,15 @@ const Landing = () => {
                 </div>
               </div>
               <p className="text-muted-foreground mb-4">
-                "FormulaGenie saved me hours every week! No more struggling with complex Excel formulas. Just describe what I need and it generates perfect formulas instantly."
+                "I saved 2 hours cleaning data with FormulaGenie."
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold">
-                  SM
+                  A
                 </div>
                 <div className="ml-3">
-                  <p className="font-semibold text-foreground">Sarah Mitchell</p>
-                  <p className="text-sm text-muted-foreground">Financial Analyst</p>
+                  <p className="font-semibold text-foreground">Anjali</p>
+                  <p className="text-sm text-muted-foreground">Data Analyst</p>
                 </div>
               </div>
             </Card>
@@ -423,15 +463,15 @@ const Landing = () => {
                 </div>
               </div>
               <p className="text-muted-foreground mb-4">
-                "As a data analyst, I work with complex formulas daily. FormulaGenie is like having an Excel expert on my team 24/7. The SQL and Python generators are game changers!"
+                "No more Googling syntax. It just works."
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold">
-                  JC
+                  T
                 </div>
                 <div className="ml-3">
-                  <p className="font-semibold text-foreground">James Chen</p>
-                  <p className="text-sm text-muted-foreground">Data Analyst</p>
+                  <p className="font-semibold text-foreground">Tom</p>
+                  <p className="text-sm text-muted-foreground">BI Consultant</p>
                 </div>
               </div>
             </Card>
@@ -447,15 +487,15 @@ const Landing = () => {
                 </div>
               </div>
               <p className="text-muted-foreground mb-4">
-                "I'm not an Excel expert, but FormulaGenie makes me feel like one! The formula explanations help me learn while I work. Absolutely worth the investment."
+                "The Sheets add-on changed my workflow."
               </p>
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground font-semibold">
-                  EP
+                  R
                 </div>
                 <div className="ml-3">
-                  <p className="font-semibold text-foreground">Emily Parker</p>
-                  <p className="text-sm text-muted-foreground">Small Business Owner</p>
+                  <p className="font-semibold text-foreground">Raj</p>
+                  <p className="text-sm text-muted-foreground">Finance Analyst</p>
                 </div>
               </div>
             </Card>
@@ -545,19 +585,20 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-hero">
-        <div className="container max-w-4xl mx-auto text-center">
+      {/* Final CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-hero relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"></div>
+        <div className="container max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground mb-6">
-            Ready to transform your spreadsheet workflow?
+            Ready to Let AI Handle Your Excel Formulas?
           </h2>
           <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Join thousands of professionals who've already simplified their Excel work with FormulaGenie.
+            Join hundreds of data analysts who've eliminated formula frustration forever.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90" asChild>
+            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90 shadow-elegant" asChild>
               <Link to={user ? "/dashboard" : "/auth"}>
-                Start Free Trial
+                Try FormulaGenie Free
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>

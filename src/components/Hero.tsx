@@ -31,20 +31,19 @@ const Hero = () => {
       <div className="container max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Excel AI - Formula Generator, Charts & Analysis{" "}
+            Stop Wasting Hours Debugging Excel Formulas —{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              For Free
+              Let AI Do It in Seconds
             </span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            AI Excel Formula Generator: Convert your text instructions into formulas or input a formula to have it explained. 
-            Our Excel AI tool helps you generate Excel formulas, SQL queries, Python scripts, JavaScript code, and more instantly.
+            <strong>For data analysts and Excel pros:</strong> Type what you need in plain English — get perfect Excel formulas, SQL queries, and charts instantly.
           </p>
           
           <div className="flex justify-center mb-12">
             <Button size="lg" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant" asChild>
               <Link to="/auth">
-                Start Free Trial
+                Try Free Formula Generator
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
