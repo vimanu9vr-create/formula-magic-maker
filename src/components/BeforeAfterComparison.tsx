@@ -77,7 +77,7 @@ export const BeforeAfterComparison = () => {
                     <Zap className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-1">10-30 Seconds Per Formula</h4>
+                    <h4 className="font-semibold text-foreground mb-1">3-5 Seconds Per Formula</h4>
                     <p className="text-sm text-muted-foreground">Type what you need in plain English, get instant results</p>
                   </div>
                 </div>
