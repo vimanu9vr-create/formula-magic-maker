@@ -37,7 +37,7 @@ const Hero = () => {
             </span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            <strong>For data analysts and Excel pros:</strong> Type what you need in plain English — get perfect Excel formulas, SQL queries, and charts instantly.
+            No more endless searching or trial and error. Just describe what you need in plain English, and get working Excel formulas, SQL queries, and code — instantly.
           </p>
           
           <div className="flex justify-center mb-12">
