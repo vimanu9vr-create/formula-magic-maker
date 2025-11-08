@@ -31,9 +31,9 @@ const Hero = () => {
       <div className="container max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Stop Wasting Hours Debugging Excel Formulas —{" "}
+            Stop Googling Formulas —{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Let AI Do It in Seconds
+              Type Your Question, Get the Exact Answer Instantly
             </span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
