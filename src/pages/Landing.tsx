@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import { DemoAnimation } from "@/components/DemoAnimation";
 import { BeforeAfterComparison } from "@/components/BeforeAfterComparison";
+import { TrustBadges } from "@/components/TrustBadges";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight } from "lucide-react";
@@ -95,6 +96,9 @@ const Landing = () => {
       <Navigation />
       
       <Hero />
+
+      {/* Trust Badges Section */}
+      <TrustBadges />
 
       {/* Problem & Solution Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-secondary/30">
