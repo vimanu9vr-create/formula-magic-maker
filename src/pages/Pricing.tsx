@@ -13,10 +13,10 @@ const Pricing = () => {
       price: "$49",
       period: "lifetime",
       description: "Limited time launch offer - Pay once, use forever",
-      requests: "25 requests per day",
+      requests: "Unlimited conversions",
       features: [
         "Everything in Pro plan",
-        "25 conversions per day",
+        "Unlimited conversions",
         "Google Sheets add-on included",
         "Advanced formula support",
         "Priority email support",

@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import { DemoAnimation } from "@/components/DemoAnimation";
+import { BeforeAfterComparison } from "@/components/BeforeAfterComparison";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowRight } from "lucide-react";
@@ -79,9 +80,9 @@ const Landing = () => {
       name: "Lifetime Deal",
       price: "$49",
       period: "one-time",
-      requests: "25 conversions/day",
+      requests: "Unlimited conversions",
       microcopy: "One-time payment, unlimited power. No recurring fees.",
-      features: ["Everything in Pro", "Google Sheets add-on", "Lifetime access", "Formula library", "Error detection", "Data analysis", "Formula optimization", "No recurring fees"],
+      features: ["Everything in Pro", "Unlimited conversions", "Google Sheets add-on", "Lifetime access", "Formula library", "Error detection", "Data analysis", "Formula optimization", "No recurring fees"],
       cta: "Grab Lifetime Access",
       ctaArrow: true,
       popular: true,
@@ -144,6 +145,9 @@ const Landing = () => {
 
       {/* Demo Animation Section */}
       <DemoAnimation />
+
+      {/* Before vs After Comparison */}
+      <BeforeAfterComparison />
 
       {/* Features Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
