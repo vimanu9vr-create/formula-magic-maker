@@ -31,13 +31,15 @@ const Hero = () => {
       <div className="container max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Stop Googling Formulas —{" "}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Type Your Question, Get the Exact Answer Instantly
+              Excel AI: Generate Formulas, Data Analysis, Visualizations & More
             </span>
           </h1>
           <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto leading-relaxed">
-            <strong>With Voice Input & Google Sheets Add-on</strong> — No more endless searching or trial and error. Just describe what you need in plain English, and get working Excel formulas, SQL queries, and code — instantly.
+            Formula Bot is your AI-powered data analyst that instantly transforms data into charts, insights, reports, and more.
+          </p>
+          <p className="text-lg text-muted-foreground mb-4 max-w-3xl mx-auto">
+            <strong>With Voice Input & Google Sheets Add-on</strong> — No more endless searching or trial and error.
           </p>
           <div className="flex flex-wrap justify-center gap-3 mb-8 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
