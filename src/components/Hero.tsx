@@ -8,26 +8,29 @@ import { Link } from "react-router-dom";
 import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { useToast } from "@/hooks/use-toast";
 import heroImage from "@/assets/dashboard-demo.png";
-
 const Hero = () => {
   const [inputText, setInputText] = useState("Find the average of values in column A where column B contains 'completed'");
   const [outputFormula] = useState("=AVERAGEIF(B:B,\"completed\",A:A)");
   const [selectedLanguage, setSelectedLanguage] = useState("en-US");
-  const { toast } = useToast();
-
-  const { isListening, isSupported, startListening, stopListening } = useVoiceInput({
-    onResult: (transcript) => {
+  const {
+    toast
+  } = useToast();
+  const {
+    isListening,
+    isSupported,
+    startListening,
+    stopListening
+  } = useVoiceInput({
+    onResult: transcript => {
       setInputText(transcript);
       toast({
         title: "Voice input received",
-        description: "Your speech has been converted to text",
+        description: "Your speech has been converted to text"
       });
     },
-    language: selectedLanguage,
+    language: selectedLanguage
   });
-
-  return (
-    <section className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+  return <section className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="container max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
@@ -35,9 +38,7 @@ const Hero = () => {
               Excel AI: Generate Formulas, Data Analysis, Visualizations & More
             </span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto leading-relaxed">
-            Formula Bot is your AI-powered data analyst that instantly transforms data into charts, insights, reports, and more.
-          </p>
+          <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto leading-relaxed">Formula Genie is your AI-powered data analyst that instantly transforms data into charts, insights, reports, and more.</p>
           <p className="text-lg text-muted-foreground mb-4 max-w-3xl mx-auto">
             <strong>With Voice Input & Google Sheets Add-on</strong> — No more endless searching or trial and error.
           </p>
@@ -112,30 +113,12 @@ const Hero = () => {
                     </SelectContent>
                   </Select>
                   
-                  {isSupported && (
-                    <Button
-                      type="button"
-                      variant={isListening ? "destructive" : "outline"}
-                      size="icon"
-                      onClick={isListening ? stopListening : startListening}
-                      className="shrink-0 h-10 w-10"
-                      title={isListening ? "Stop recording" : "Start voice input"}
-                    >
-                      {isListening ? (
-                        <MicOff className="h-4 w-4" />
-                      ) : (
-                        <Mic className="h-4 w-4" />
-                      )}
-                    </Button>
-                  )}
+                  {isSupported && <Button type="button" variant={isListening ? "destructive" : "outline"} size="icon" onClick={isListening ? stopListening : startListening} className="shrink-0 h-10 w-10" title={isListening ? "Stop recording" : "Start voice input"}>
+                      {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                    </Button>}
                 </div>
                 
-                <Textarea
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Describe what you want your formula to do..."
-                  className="min-h-[100px] resize-none border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-background"
-                />
+                <Textarea value={inputText} onChange={e => setInputText(e.target.value)} placeholder="Describe what you want your formula to do..." className="min-h-[100px] resize-none border-2 border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 bg-background" />
               </div>
               
               <div className="border-t-2 border-primary/10 pt-4">
@@ -169,11 +152,7 @@ const Hero = () => {
 
           <div className="relative">
             <div className="relative">
-              <img
-                src={heroImage}
-                alt="FormulaGenie AI Code Generator Dashboard - Excel formula generation with voice input and Google Sheets integration for data analysts"
-                className="rounded-2xl shadow-elegant w-full h-auto border-2 border-primary/20"
-              />
+              <img src={heroImage} alt="FormulaGenie AI Code Generator Dashboard - Excel formula generation with voice input and Google Sheets integration for data analysts" className="rounded-2xl shadow-elegant w-full h-auto border-2 border-primary/20" />
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-2xl"></div>
               <div className="absolute -bottom-4 -right-4 bg-background border-2 border-primary/30 rounded-xl p-4 shadow-elegant">
                 <div className="flex items-center gap-2">
@@ -185,8 +164,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
