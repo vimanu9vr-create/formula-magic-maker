@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Copy, ArrowRight, Mic, MicOff, Globe } from "lucide-react";
+import { Copy, ArrowRight, Mic, MicOff, Globe, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useVoiceInput } from "@/hooks/useVoiceInput";
 import { useToast } from "@/hooks/use-toast";
-import heroImage from "@/assets/dashboard-screenshot.png";
+import heroImage from "@/assets/dashboard-demo.png";
 
 const Hero = () => {
   const [inputText, setInputText] = useState("Find the average of values in column A where column B contains 'completed'");
@@ -36,18 +36,38 @@ const Hero = () => {
               Type Your Question, Get the Exact Answer Instantly
             </span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            No more endless searching or trial and error. Just describe what you need in plain English, and get working Excel formulas, SQL queries, and code — instantly.
+          <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto leading-relaxed">
+            <strong>With Voice Input & Google Sheets Add-on</strong> — No more endless searching or trial and error. Just describe what you need in plain English, and get working Excel formulas, SQL queries, and code — instantly.
           </p>
+          <div className="flex flex-wrap justify-center gap-3 mb-8 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+              <Mic className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-foreground">Voice Input Enabled</span>
+            </div>
+            <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+              <Globe className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-foreground">Google Sheets Integration</span>
+            </div>
+            <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-foreground">99% Accuracy</span>
+            </div>
+          </div>
           
-          <div className="flex justify-center mb-12">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
             <Button size="lg" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant" asChild>
               <Link to="/auth">
-                Try Free Formula Generator
+                Start Free — 5 Requests/Day
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
+            <Button size="lg" variant="outline" className="border-2 border-primary/30 hover:bg-primary/5" asChild>
+              <Link to="/pricing">
+                View Pricing
+              </Link>
+            </Button>
           </div>
+          <p className="text-sm text-muted-foreground mb-12">No credit card required • Upgrade anytime</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -146,12 +166,20 @@ const Hero = () => {
           </div>
 
           <div className="relative">
-            <img
-              src={heroImage}
-              alt="FormulaGenie AI Code Generator Dashboard showing Excel formula generation"
-              className="rounded-2xl shadow-elegant w-full h-auto"
-            />
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-2xl"></div>
+            <div className="relative">
+              <img
+                src={heroImage}
+                alt="FormulaGenie AI Code Generator Dashboard - Excel formula generation with voice input and Google Sheets integration for data analysts"
+                className="rounded-2xl shadow-elegant w-full h-auto border-2 border-primary/20"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-2xl"></div>
+              <div className="absolute -bottom-4 -right-4 bg-background border-2 border-primary/30 rounded-xl p-4 shadow-elegant">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-semibold text-foreground">Live & Ready</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
