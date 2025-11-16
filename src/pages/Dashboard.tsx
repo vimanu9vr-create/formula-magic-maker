@@ -276,7 +276,10 @@ const Dashboard = () => {
               <div className="flex flex-wrap items-center gap-3">
                 <Badge variant="outline" className="flex items-center gap-2 px-3 py-2 bg-primary/5 border-primary/20 hover:bg-primary/10 transition-colors">
                   <Zap className="w-4 h-4 text-primary" />
-                  <span className="text-xs sm:text-sm font-medium text-primary">{profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} Plan</span>
+                  <span className="text-xs sm:text-sm font-medium text-primary">
+                    {profile?.plan ? profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1) : 'Free'} 
+                    {isExpired && ' (Expired)'} Plan
+                  </span>
                 </Badge>
                 <Badge 
                   variant={requestsRemaining > 1 || requestsRemaining === Infinity ? "default" : "destructive"} 
