@@ -73,7 +73,7 @@ const Account = () => {
 
   const getPlanDisplayName = (plan: string, status?: string) => {
     if (status === 'expired') {
-      return `${plan?.toUpperCase() || 'FREE'} (EXPIRED)`;
+      return 'FREE';
     }
     return plan?.toUpperCase() || 'FREE';
   };
